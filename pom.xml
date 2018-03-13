@@ -62,9 +62,9 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://localhost:8080/manager/text</url>
-                    <server>Tomcat</server>
-                    <path>/NWA</path>
+                    <url>http://ec2-13-58-141-35.us-east-2.compute.amazonaws.com:8081/manager/text</url>
+                    <server>TomcatRemote</server>
+                    <path>/NetworkingAssistant</path>
                 </configuration>
             </plugin>
             <plugin>
