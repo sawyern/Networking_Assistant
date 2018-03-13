@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Networking_Assistant:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="NetworkingAssistant.war">
+      <element id="artifact" artifact-name="Networking_Assistant:war exploded" />
+    </root>
+  </artifact>
+</component>
