@@ -8,6 +8,7 @@
     <artifactId>NetworkingAssistant</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -61,10 +62,9 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://ec2-13-58-141-35.us-east-2.compute.amazonaws.com:8080/manager/text</url>
-                    <server>TomcatRemote</server>
-                    <path>/NetworkingAssistant</path>
-                    <update>true</update>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>Tomcat</server>
+                    <path>/NWA</path>
                 </configuration>
             </plugin>
             <plugin>
@@ -76,9 +76,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
             </plugin>
         </plugins>
     </build>
