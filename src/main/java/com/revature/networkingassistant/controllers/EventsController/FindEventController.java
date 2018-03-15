@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @RestController
-public class ListEventsController {
+public class FindEventController {
 
     @Autowired
     EventRepo eventRepo;
@@ -22,10 +23,18 @@ public class ListEventsController {
     @Autowired
     SessionTokenRepo tokenRepo;
 
-    @RequestMapping(path = "/api/list-events/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Event> listEvents(@PathVariable("session-token")SessionToken token, HttpServletResponse response) {
+    @RequestMapping(path = "/api/find-event/{session-token}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Optional<Event> findEvent(@PathVariable("session-token")SessionToken token,
+                                     @PathVariable("id") int id,
+                                     HttpServletResponse response) {
         if (tokenRepo.existsById(token.getId())) {
-            return eventRepo.findAll();
+            Optional<Event> event = eventRepo.findById(id);
+            if (event.isPresent()) {
+                return event;
+            } else {
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                return event;
+            }
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return null;
