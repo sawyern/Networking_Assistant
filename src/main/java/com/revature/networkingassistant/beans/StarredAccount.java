@@ -29,9 +29,9 @@ public class StarredAccount {
     }
 
     public StarredAccount(String id, int ownerId, int starredAccountId) {
-        this.id = id;
         this.ownerId = ownerId;
         this.starredAccountId = starredAccountId;
+        this.id = String.valueOf(ownerId) + "|" + String.valueOf(starredAccountId);
     }
 
     public String getId() {
