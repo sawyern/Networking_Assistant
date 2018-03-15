@@ -27,15 +27,16 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  login() {
-    // this.authService.login(this.email, this.password)
-    //   .subscribe(
-    //     data => {
-    //       this.router.navigate([this.returnUrl]);
-    //     },
-    //     error => {
-    //       // change this later
-    //       console.log(error);
-    //     });
+  onSubmit() {
+    console.log('onSubmit called');
+    this.authService.login(this.email, this.password)
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          // change this later
+          console.log(error);
+        });
   }
 }
