@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AuthenticationService} from '../_services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -10,7 +10,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
-  model: any = {};
+  email : string;
+  password : string;
+
   returnUrl: string;
 
   // incorrectLogin: boolean = false;
@@ -26,14 +28,14 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.model.email, this.model.password)
-      .subscribe(
-        data => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          // change this later
-          console.log(error);
-        });
+    // this.authService.login(this.email, this.password)
+    //   .subscribe(
+    //     data => {
+    //       this.router.navigate([this.returnUrl]);
+    //     },
+    //     error => {
+    //       // change this later
+    //       console.log(error);
+    //     });
   }
 }

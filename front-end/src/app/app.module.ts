@@ -12,24 +12,9 @@ import { AuthenticationService } from './_services/authentication.service';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './_guards/auth.guard';
 import { HomeComponent } from './home/home.component';
-
-const appRoutes: Routes = [
-  {
-    path: '',
-    // change this later
-    component: HomeComponent
-  },
-  {
-    path: '',
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'register',
-        component: RegisterComponent
-      }
-    ]
-  }
-];
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -42,10 +27,13 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    AppRoutingModule
+    RouterModule.forRoot([]),
+    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, AppRoutingModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

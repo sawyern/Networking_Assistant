@@ -4,8 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 // import { RegisterComponent } from "./register/register.component";
 import { AuthGuard} from './_guards/auth.guard';
+import {HomeComponent} from './home/home.component';
 
 const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
   // { path: '', component: LandingComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
@@ -16,7 +18,8 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild(appRoutes)
   ],
   declarations: []
 })
