@@ -55,8 +55,13 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>0.3m</version>
 		</dependency>
+<!--I need this in order for the app to run, don't know why -Son -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+<!--==============================================================-->
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

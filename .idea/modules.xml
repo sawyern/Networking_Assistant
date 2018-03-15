@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Networking_Assistant.iml" filepath="$PROJECT_DIR$/.idea/Networking_Assistant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/networking-assistant.iml" filepath="$PROJECT_DIR$/networking-assistant.iml" />
     </modules>
   </component>
 </project>
