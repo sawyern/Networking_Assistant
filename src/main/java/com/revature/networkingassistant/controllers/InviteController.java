@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class InviteController {
 
-    @Autowired
-    SessionTokenRepo tokenRepo;
+    private SessionTokenRepo tokenRepo;
+    private InviteRepo inviteRepo;
 
     @Autowired
-    InviteRepo inviteRepo;
+    public InviteController(SessionTokenRepo tokenRepo, InviteRepo inviteRepo) {
+        this.tokenRepo = tokenRepo;
+        this.inviteRepo = inviteRepo;
+    }
 
     @RequestMapping(path = "/api/send-invite/{eventId}/{fromId}/{toId}")
     public void sendInvite(@RequestBody JsonRequestBody requestBody,
