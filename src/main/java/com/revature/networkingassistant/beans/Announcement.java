@@ -6,14 +6,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Announcements")
-@IdClass(Announcement.class)
 public class Announcement implements Serializable{
 
+    //Primary key for junction tables is a String: eventId|accountID
     @Id
+    @Column(name = "id")
+    private String id;
+
     @Column(name = "eventId")
     private int eventId;
 
-    @Id
     @Column(name = "accountId")
     private int accountId;
 
@@ -21,6 +23,17 @@ public class Announcement implements Serializable{
     private String message;
 
     public Announcement() {
+    }
+
+    public Announcement(int eventId, int accountId, String message) {
+        this.eventId = eventId;
+        this.accountId = accountId;
+        this.message = message;
+        this.id = String.valueOf(eventId) + "|" + String.valueOf(accountId);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getEventId() {

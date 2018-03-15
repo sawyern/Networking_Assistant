@@ -4,19 +4,30 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "EventInvites")
-@IdClass(Invite.class)
 public class Invite implements Serializable {
 
+    //Primary key for junction tables is a String: eventId|accountID
     @Id
+    @Column(name = "id")
+    private String id;
+
     @Column(name = "eventId")
     private int eventId;
 
-    @Id
     @Column(name = "accountId")
     private int accountId;
 
     public Invite() {
+    }
+
+    public Invite(int eventId, int accountId) {
+        this.eventId = eventId;
+        this.accountId = accountId;
+        this.id = String.valueOf(eventId) + "|" + String.valueOf(accountId);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getEventId() {

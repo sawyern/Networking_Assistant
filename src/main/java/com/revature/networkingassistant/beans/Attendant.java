@@ -1,19 +1,20 @@
 package com.revature.networkingassistant.beans;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "Attendants")
-@IdClass(Attendant.class)
-public class Attendant implements Serializable{
+public class Attendant {
 
+    //Primary key for junction tables is a String: eventId|accountID
     @Id
+    @Column(name = "id")
+    private String id;
+
     @Column(name = "eventId")
     private int eventId;
 
-    @Id
-    @Column(name="accountId")
+    @Column(name = "accountId")
     private int accountId;
 
     @Column(name = "role")
@@ -26,6 +27,12 @@ public class Attendant implements Serializable{
         this.eventId = eventId;
         this.accountId = accountId;
         this.role = role;
+        //primary key is a combination of both foreign keys
+        this.id = String.valueOf(eventId) + "|" + String.valueOf(accountId);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getEventId() {
