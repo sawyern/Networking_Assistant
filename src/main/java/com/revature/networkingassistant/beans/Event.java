@@ -1,9 +1,13 @@
 package com.revature.networkingassistant.beans;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Events")
@@ -13,35 +17,28 @@ public class Event {
     //postgresql serial generation
     @SequenceGenerator(name = "events_id_seq", sequenceName = "events_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "events_id_seq")
-    @Column(name = "id")
-    @JsonView(Views.Public.class)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-    @Column(name = "coordinatorId")
     @JsonView(Views.Public.class)
-    private int coordinatorId;
-
     @Column(name = "name")
-    @JsonView(Views.Public.class)
     private String name;
 
-    @Column(name = "location")
     @JsonView(Views.Public.class)
+    @Column(name = "location")
     private String location;
 
-    @Column(name = "date")
     @JsonView(Views.Public.class)
-    private String date;
+    @Column(name = "date")
+    private Date date;
 
     @Column(name = "time")
-    @JsonView(Views.Public.class)
     private String time;
 
     public Event() {
     }
 
-    public Event(int coordinatorId, String name, String location, String date, String time) {
-        this.coordinatorId = coordinatorId;
+    public Event(String name, String location, Date date, String time) {
         this.name = name;
         this.location = location;
         this.date = date;
@@ -54,14 +51,6 @@ public class Event {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCoordinatorId() {
-        return coordinatorId;
-    }
-
-    public void setCoordinatorId(int coordinatorId) {
-        this.coordinatorId = coordinatorId;
     }
 
     public String getName() {
@@ -80,11 +69,11 @@ public class Event {
         this.location = location;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -94,5 +83,33 @@ public class Event {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return id == event.id &&
+                Objects.equals(name, event.name) &&
+                Objects.equals(location, event.location) &&
+                Objects.equals(date, event.date) &&
+                Objects.equals(time, event.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, location, date, time);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", date=" + date +
+                ", time='" + time + '\'' +
+                '}';
     }
 }

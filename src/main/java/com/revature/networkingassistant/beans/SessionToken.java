@@ -14,6 +14,7 @@ public class SessionToken {
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
     @JsonView(Views.Public.class)
+    @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
     @JoinColumn(name="accounts")

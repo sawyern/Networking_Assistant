@@ -10,8 +10,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "Accounts")
 public class Account {
+
     @Id
     @GeneratedValue
+    @Column(name = "id", updatable = false, nullable = false)
+    @JsonView(Views.Public.class)
     private int id;
 
     @JsonView(Views.Public.class)

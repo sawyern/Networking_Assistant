@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="28ef58fe-ef14-465d-a4d4-d932dfd0a999">
-        <schema name="public" object-types="column, function, sequence, table, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="28ef58fe-ef14-465d-a4d4-d932dfd0a999">
@@ -46,6 +42,11 @@
     <filter-list connection-id="28ef58fe-ef14-465d-a4d4-d932dfd0a999" dataset="public.session_tokens" active-filter-id="e82fa0f4-4c6c-4a85-a355-596c16d76c79">
       <filter id="e82fa0f4-4c6c-4a85-a355-596c16d76c79" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="is not null" value="" active="true" />
+      </filter>
+    </filter-list>
+    <filter-list connection-id="28ef58fe-ef14-465d-a4d4-d932dfd0a999" dataset="public.announcements" active-filter-id="af234682-72ac-469c-8038-00aba3967568">
+      <filter id="af234682-72ac-469c-8038-00aba3967568" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="account_id" operator="is not null" value="" active="true" />
       </filter>
     </filter-list>
   </component>

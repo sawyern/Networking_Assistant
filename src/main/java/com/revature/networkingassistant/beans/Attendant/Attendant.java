@@ -1,4 +1,4 @@
-package com.revature.networkingassistant.beans;
+package com.revature.networkingassistant.beans.Attendant;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Invites")
-@IdClass(Invite.class)
-public class Invite implements Serializable{
+@Table(name = "Attendants")
+@IdClass(Attendant.class)
+public class Attendant implements Serializable {
 
     @Id
     @JsonView(Views.Public.class)
@@ -20,20 +20,20 @@ public class Invite implements Serializable{
     @Id
     @JsonView(Views.Public.class)
     @JoinColumn(name="Accounts", updatable = false, nullable = false)
-    private int inviter;
+    private int accountId;
 
-    @Id
     @JsonView(Views.Public.class)
-    @JoinColumn(name="Accounts", updatable = false, nullable = false)
-    private int invitee;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public Invite() {
+    public Attendant() {
     }
 
-    public Invite(int eventId, int inviter, int invitee) {
+    public Attendant(int eventId, int accountId, Role role) {
         this.eventId = eventId;
-        this.inviter = inviter;
-        this.invitee = invitee;
+        this.accountId = accountId;
+        this.role = role;
     }
 
     public int getEventId() {
@@ -44,43 +44,43 @@ public class Invite implements Serializable{
         this.eventId = eventId;
     }
 
-    public int getInviter() {
-        return inviter;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setInviter(int inviter) {
-        this.inviter = inviter;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
-    public int getInvitee() {
-        return invitee;
+    public Role getRole() {
+        return role;
     }
 
-    public void setInvitee(int invitee) {
-        this.invitee = invitee;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Invite invite = (Invite) o;
-        return eventId == invite.eventId &&
-                inviter == invite.inviter &&
-                invitee == invite.invitee;
+        Attendant attendant = (Attendant) o;
+        return eventId == attendant.eventId &&
+                accountId == attendant.accountId &&
+                role == attendant.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(eventId, inviter, invitee);
+        return Objects.hash(eventId, accountId, role);
     }
 
     @Override
     public String toString() {
-        return "Invite{" +
+        return "Attendant{" +
                 "eventId=" + eventId +
-                ", inviter=" + inviter +
-                ", invitee=" + invitee +
+                ", accountId=" + accountId +
+                ", role=" + role +
                 '}';
     }
 }
