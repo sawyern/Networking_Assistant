@@ -1,15 +1,16 @@
 package com.revature.networkingassistant.beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Events")
 public class Event {
 
     @Id
+    //postgresql serial generation
+    @SequenceGenerator(name = "events_id_seq", sequenceName = "events_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "events_id_seq")
+    @Column(name = "id")
     private int id;
 
     @Column(name = "coordinatorId")
@@ -30,8 +31,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(int id, int coordinatorId, String name, String location, String date, String time) {
-        this.id = id;
+    public Event(int coordinatorId, String name, String location, String date, String time) {
         this.coordinatorId = coordinatorId;
         this.name = name;
         this.location = location;
