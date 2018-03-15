@@ -27,4 +27,34 @@ public class StarredAccount {
 
     public StarredAccount() {
     }
+
+    public StarredAccount(String id, int ownerId, int starredAccountId) {
+        this.id = id;
+        this.ownerId = ownerId;
+        this.starredAccountId = starredAccountId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public int getStarredAccountId() {
+        return starredAccountId;
+    }
+
+    public void setStarredAccountId(int starredAccountId) {
+        this.starredAccountId = starredAccountId;
+    }
 }

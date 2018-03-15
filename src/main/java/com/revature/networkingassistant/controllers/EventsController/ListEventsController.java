@@ -17,11 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class ListEventsController {
 
-    @Autowired
     EventRepo eventRepo;
+    SessionTokenRepo tokenRepo;
 
     @Autowired
-    SessionTokenRepo tokenRepo;
+    public ListEventsController(EventRepo eventRepo, SessionTokenRepo tokenRepo) {
+        this.eventRepo = eventRepo;
+        this.tokenRepo = tokenRepo;
+    }
 
     @Transactional
     @RequestMapping(path = "/api/list-events/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
