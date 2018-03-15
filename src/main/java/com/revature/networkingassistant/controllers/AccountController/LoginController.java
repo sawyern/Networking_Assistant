@@ -8,7 +8,6 @@ import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,11 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class LoginController {
+public abstract class LoginController {
+
+    private AccountRepo accountRepo;
+    private SessionTokenRepo sessionTokenRepo;
+
+    public LoginController() { }
+
     @Autowired
-    AccountRepo accountRepo;
-    @Autowired
-    SessionTokenRepo sessionTokenRepo;
+    public LoginController(AccountRepo accountRepo, SessionTokenRepo sessionTokenRepo) {
+        this.accountRepo = accountRepo;
+        this.sessionTokenRepo = sessionTokenRepo;
+    }
 
     @Transactional
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -44,13 +50,9 @@ public class LoginController {
         return null;
     }
 
-    public boolean checkPassword(String password_plaintext, String stored_hash) {
-        boolean password_verified = false;
-
-        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+    private boolean checkPassword(String password_plaintext, String stored_hash) {
+        if(stored_hash == null || !stored_hash.startsWith("$2a$"))
             throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
-
-        password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
-        return(password_verified);
+        return BCrypt.checkpw(password_plaintext, stored_hash);
     }
 }
