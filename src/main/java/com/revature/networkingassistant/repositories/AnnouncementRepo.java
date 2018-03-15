@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AnnouncementRepo extends CrudRepository<Announcement, String>{
 
-    Iterable<Announcement> getByIdStartingWith (String eventId);
+    Iterable<Announcement> findByEventId(int eventId);
 
-    Iterable<Announcement> getByIdEndingWith (String accountId);
+    Iterable<Announcement> findByaccountId(int accountId);
 }

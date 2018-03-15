@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AttendantRepo extends CrudRepository<Attendant, String> {
 
-    Iterable<Attendant> findByIdStartingWith(String eventId);
+    Iterable<Attendant> findByEventId(int eventId);
 
-    Iterable<Attendant> findByIdEndingWith(String accountId);
+    Iterable<Attendant> findByAccountId(int accountId);
 }

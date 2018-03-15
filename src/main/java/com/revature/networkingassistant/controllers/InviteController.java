@@ -8,6 +8,8 @@ import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+// Which package should this go in?
+
 @RestController
 public class InviteController {
 
