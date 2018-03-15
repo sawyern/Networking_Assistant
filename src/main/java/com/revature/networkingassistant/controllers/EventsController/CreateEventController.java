@@ -36,12 +36,12 @@ public class CreateEventController {
     AttendantRepo attendantRepo;
 
     @Transactional
-    @RequestMapping(path = "/api/create-event/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event createEvent(@RequestParam("session-token")SessionToken token,
-                             @org.springframework.web.bind.annotation.RequestBody RequestBody<Event> requestBody,
+    @RequestMapping(path = "/api/create-event", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Event createEvent(@org.springframework.web.bind.annotation.RequestBody RequestBody<Event> requestBody,
                              HttpServletResponse response) {
+        SessionToken token = requestBody.getToken();
         Optional<Account> optional = accountRepo.findById(token.getAccountId());
-        //verify token
+        //verify token and account
         if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
             //get form information
             Event toSave = requestBody.getObject();
