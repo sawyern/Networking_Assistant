@@ -5,7 +5,7 @@ import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.beans.Attendant.Role;
 import com.revature.networkingassistant.beans.Event;
 import com.revature.networkingassistant.beans.SessionToken;
-import com.revature.networkingassistant.controllers.DTO.RequestBody;
+import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.AttendantRepo;
 import com.revature.networkingassistant.repositories.EventRepo;
@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
@@ -40,13 +37,13 @@ public class CreateEventController {
     @Transactional
     @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public Event createEvent(@RequestParam("session-token")SessionToken token,
-                             @org.springframework.web.bind.annotation.RequestBody RequestBody<Event> requestBody,
+                             @RequestBody JsonRequestBody<Event> jsonRequestBody,
                              HttpServletResponse response) {
         Optional<Account> optional = accountRepo.findById(token.getAccountId());
         //verify token
         if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
             //get form information
-            Event toSave = requestBody.getObject();
+            Event toSave = jsonRequestBody.getObject();
             //insert into events table
             Event event = eventRepo.save(toSave);
             //get ids for junction table
