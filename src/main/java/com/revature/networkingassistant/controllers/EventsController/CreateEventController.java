@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,17 +22,18 @@ import java.util.Optional;
 @RestController
 public class CreateEventController {
 
-    @Autowired
-    EventRepo eventRepo;
+    private EventRepo eventRepo;
+    private AccountRepo accountRepo;
+    private SessionTokenRepo tokenRepo;
+    private AttendantRepo attendantRepo;
 
     @Autowired
-    AccountRepo accountRepo;
-
-    @Autowired
-    SessionTokenRepo tokenRepo;
-
-    @Autowired
-    AttendantRepo attendantRepo;
+    public CreateEventController(EventRepo eventRepo, AccountRepo accountRepo, SessionTokenRepo tokenRepo, AttendantRepo attendantRepo) {
+        this.eventRepo = eventRepo;
+        this.accountRepo = accountRepo;
+        this.tokenRepo = tokenRepo;
+        this.attendantRepo = attendantRepo;
+    }
 
     @Transactional
     @RequestMapping(path = "/api/create-event", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,5 +1,8 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.controllers.DTO.Views;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,21 +14,27 @@ public class Event {
     @SequenceGenerator(name = "events_id_seq", sequenceName = "events_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "events_id_seq")
     @Column(name = "id")
+    @JsonView(Views.Public.class)
     private int id;
 
     @Column(name = "coordinatorId")
+    @JsonView(Views.Public.class)
     private int coordinatorId;
 
     @Column(name = "name")
+    @JsonView(Views.Public.class)
     private String name;
 
     @Column(name = "location")
+    @JsonView(Views.Public.class)
     private String location;
 
     @Column(name = "date")
+    @JsonView(Views.Public.class)
     private String date;
 
     @Column(name = "time")
+    @JsonView(Views.Public.class)
     private String time;
 
     public Event() {

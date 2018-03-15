@@ -19,11 +19,14 @@ import java.util.Optional;
 @RestController
 public class FindEventController {
 
-    @Autowired
-    EventRepo eventRepo;
+    private EventRepo eventRepo;
+    private SessionTokenRepo tokenRepo;
 
     @Autowired
-    SessionTokenRepo tokenRepo;
+    public FindEventController(EventRepo eventRepo, SessionTokenRepo tokenRepo) {
+        this.eventRepo = eventRepo;
+        this.tokenRepo = tokenRepo;
+    }
 
     @Transactional
     @RequestMapping(path = "/api/find-event/{session-token}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,7 +43,7 @@ public class FindEventController {
             }
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return null;
+            return Optional.empty();
         }
     }
 }

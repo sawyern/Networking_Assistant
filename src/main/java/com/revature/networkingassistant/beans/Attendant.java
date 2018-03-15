@@ -1,5 +1,8 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.controllers.DTO.Views;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,15 +12,19 @@ public class Attendant {
     //Primary key for junction tables is a String: eventId|accountID
     @Id
     @Column(name = "id")
+    @JsonView(Views.Public.class)
     private String id;
 
     @Column(name = "eventId")
+    @JsonView(Views.Public.class)
     private int eventId;
 
     @Column(name = "accountId")
+    @JsonView(Views.Public.class)
     private int accountId;
 
     @Column(name = "role")
+    @JsonView(Views.Public.class)
     private String role;
 
     public Attendant() {
