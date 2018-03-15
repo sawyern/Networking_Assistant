@@ -1,22 +1,39 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.controllers.DTO.Views;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name = "EventInvites")
+@Table(name = "Invites")
 @IdClass(Invite.class)
-public class Invite implements Serializable {
+public class Invite implements Serializable{
 
     @Id
-    @Column(name = "eventId")
+    @JsonView(Views.Public.class)
+    @JoinColumn(name="Events")
     private int eventId;
 
     @Id
-    @Column(name = "accountId")
-    private int accountId;
+    @JsonView(Views.Public.class)
+    @JoinColumn(name="Accounts")
+    private int inviter;
+
+    @Id
+    @JsonView(Views.Public.class)
+    @JoinColumn(name="Accounts")
+    private int invitee;
 
     public Invite() {
+    }
+
+    public Invite(int eventId, int inviter, int invitee) {
+        this.eventId = eventId;
+        this.inviter = inviter;
+        this.invitee = invitee;
     }
 
     public int getEventId() {
@@ -27,11 +44,43 @@ public class Invite implements Serializable {
         this.eventId = eventId;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getInviter() {
+        return inviter;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public void setInviter(int inviter) {
+        this.inviter = inviter;
+    }
+
+    public int getInvitee() {
+        return invitee;
+    }
+
+    public void setInvitee(int invitee) {
+        this.invitee = invitee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invite invite = (Invite) o;
+        return eventId == invite.eventId &&
+                inviter == invite.inviter &&
+                invitee == invite.invitee;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, inviter, invitee);
+    }
+
+    @Override
+    public String toString() {
+        return "Invite{" +
+                "eventId=" + eventId +
+                ", inviter=" + inviter +
+                ", invitee=" + invitee +
+                '}';
     }
 }
