@@ -7,6 +7,7 @@ import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,6 @@ public class LoginController {
         //account exists
         if (accountRepo.existsByEmail((requestBody.getObject().getEmail()))) {
             Account account = accountRepo.findByEmail(requestBody.getObject().getEmail());
-
             //passwords match
             if (account.getPasswordHash().equals(requestBody.getObject().getPasswordHash())) {
 

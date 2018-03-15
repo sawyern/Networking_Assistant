@@ -1,5 +1,9 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.controllers.DTO.Views;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -7,10 +11,13 @@ import java.util.Objects;
 @Table(name = "SessionTokens")
 public class SessionToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid")
+    @GeneratedValue(generator = "uuid-gen")
+    @JsonView(Views.Public.class)
     private String id;
 
     @JoinColumn(name="accounts")
+    @JsonView(Views.Public.class)
     private int accountId;
 
     public SessionToken() {}
