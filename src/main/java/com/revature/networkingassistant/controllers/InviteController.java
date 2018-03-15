@@ -2,12 +2,11 @@ package com.revature.networkingassistant.controllers;
 
 import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.beans.SessionToken;
+import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.InviteRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class InviteController {
@@ -18,12 +17,14 @@ public class InviteController {
     @Autowired
     InviteRepo inviteRepo;
 
-    @RequestMapping(path = "/api/send-invite/{session-token}/{eventId}/{accountId}")
-    public void sendInvite(@RequestParam("session-token")SessionToken token,
-                           @RequestParam("accountId") int accountId,
-                           @RequestParam("eventId") int eventId) {
+    @RequestMapping(path = "/api/send-invite/{eventId}/{fromId}/{toId}")
+    public void sendInvite(@RequestBody JsonRequestBody requestBody,
+                           @PathVariable("eventId") int eventId,
+                           @PathVariable("fromId") int fromId,
+                           @PathVariable("toId") int toId) {
+        SessionToken token = requestBody.getToken();
         if (tokenRepo.existsById(token.getId())) {
-            Invite invite = new Invite(eventId, accountId);
+            Invite invite = new Invite(eventId, fromId, toId);
             inviteRepo.save(invite);
         }
     }
