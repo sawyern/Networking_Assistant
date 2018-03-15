@@ -1,13 +1,11 @@
 package com.revature.networkingassistant.beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "EventInvites")
+@IdClass(Invite.class)
 public class Invite implements Serializable {
 
     @Id

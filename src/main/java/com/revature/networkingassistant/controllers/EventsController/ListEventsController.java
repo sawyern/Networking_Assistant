@@ -7,6 +7,7 @@ import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class ListEventsController {
     @Autowired
     SessionTokenRepo tokenRepo;
 
+    @Transactional
     @RequestMapping(path = "/api/list-events/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Event> listEvents(@PathVariable("session-token")SessionToken token, HttpServletResponse response) {
         if (tokenRepo.existsById(token.getId())) {

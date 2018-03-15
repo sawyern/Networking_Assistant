@@ -22,6 +22,12 @@ public class Attendant implements Serializable{
     public Attendant() {
     }
 
+    public Attendant(int eventId, int accountId, String role) {
+        this.eventId = eventId;
+        this.accountId = accountId;
+        this.role = role;
+    }
+
     public int getEventId() {
         return eventId;
     }
