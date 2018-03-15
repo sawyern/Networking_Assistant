@@ -3,6 +3,7 @@ package com.revature.networkingassistant.beans;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Announcements")
@@ -45,5 +46,20 @@ public class Announcement implements Serializable{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Announcement that = (Announcement) o;
+        return eventId == that.eventId &&
+                accountId == that.accountId &&
+                Objects.equals(message, that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, accountId, message);
     }
 }

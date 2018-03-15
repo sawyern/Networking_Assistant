@@ -3,6 +3,8 @@ package com.revature.networkingassistant.beans;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -26,7 +28,7 @@ public class Event {
     private String location;
 
     @Column(name = "date")
-    private String date;
+    private Date date;
 
     @Column(name = "time")
     private String time;
@@ -34,7 +36,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(int coordinatorId, String name, String location, String date, String time) {
+    public Event(int coordinatorId, String name, String location, Date date, String time) {
         this.coordinatorId = coordinatorId;
         this.name = name;
         this.location = location;
@@ -74,11 +76,11 @@ public class Event {
         this.location = location;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -88,5 +90,35 @@ public class Event {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return id == event.id &&
+                coordinatorId == event.coordinatorId &&
+                Objects.equals(name, event.name) &&
+                Objects.equals(location, event.location) &&
+                Objects.equals(date, event.date) &&
+                Objects.equals(time, event.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, coordinatorId, name, location, date, time);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", coordinatorId=" + coordinatorId +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", date=" + date +
+                ", time='" + time + '\'' +
+                '}';
     }
 }
