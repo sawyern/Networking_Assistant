@@ -31,7 +31,7 @@ public class FindEventController {
     }
 
     @Transactional
-    @RequestMapping(path = "/api/find-event/{session-token}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/api/find-event/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<Event> findEvent(@RequestBody JsonRequestBody requestBody,
                                      @PathVariable("id") int id,
                                      HttpServletResponse response) {

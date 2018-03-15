@@ -1,13 +1,11 @@
 package com.revature.networkingassistant.beans;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "Events")

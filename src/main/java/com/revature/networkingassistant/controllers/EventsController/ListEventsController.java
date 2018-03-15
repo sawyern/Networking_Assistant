@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class ListEventsController {
 
-    EventRepo eventRepo;
-    SessionTokenRepo tokenRepo;
+    private EventRepo eventRepo;
+    private SessionTokenRepo tokenRepo;
 
     @Autowired
     public ListEventsController(EventRepo eventRepo, SessionTokenRepo tokenRepo) {
