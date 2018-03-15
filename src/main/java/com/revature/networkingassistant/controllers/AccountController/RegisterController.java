@@ -4,6 +4,7 @@ import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.controllers.DTO.RequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Isolation;
@@ -31,6 +32,8 @@ public class RegisterController {
     //5 digit USA zip code
     private final String zipRegex = "^\\d{5}$";
 
+    private final int genRounds = 12;
+
     @Transactional
     @RequestMapping(value = "/api/register", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Account registerAccount(@org.springframework.web.bind.annotation.RequestBody RequestBody<Account> requestBody) {
@@ -49,9 +52,16 @@ public class RegisterController {
             assert(requestBody.getObject().getZipCode().matches(zipRegex));
             assert(requestBody.getObject().getBackground() != null);
 
+            //hash password
+            requestBody.getObject().setPasswordHash(hashPassword(requestBody.getObject().getPasswordHash()));
             //create the account
             return accountRepo.save(requestBody.getObject());
         }
         return null;
+    }
+
+    public String hashPassword(String pw) {
+        String salt = BCrypt.gensalt(genRounds);
+        return BCrypt.hashpw(pw, salt);
     }
 }
