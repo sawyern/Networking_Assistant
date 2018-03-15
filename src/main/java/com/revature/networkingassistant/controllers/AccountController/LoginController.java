@@ -5,6 +5,7 @@ import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.RequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Isolation;
@@ -28,7 +29,7 @@ public class LoginController {
         if (accountRepo.existsByEmail((requestBody.getObject().getEmail()))) {
             Account account = accountRepo.findByEmail(requestBody.getObject().getEmail());
             //passwords match
-            if (account.getPasswordHash().equals(requestBody.getObject().getPasswordHash())) {
+            if (checkPassword(requestBody.getObject().getPasswordHash(), account.getPasswordHash())) {
 
                 //if token does not exist, create new one
                 if (!sessionTokenRepo.existsByAccountId(account.getId())) {
@@ -41,5 +42,15 @@ public class LoginController {
             }
         }
         return null;
+    }
+
+    public boolean checkPassword(String password_plaintext, String stored_hash) {
+        boolean password_verified = false;
+
+        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+            throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
+
+        password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+        return(password_verified);
     }
 }
