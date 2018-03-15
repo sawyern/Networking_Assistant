@@ -36,14 +36,14 @@ public class CreateEventController {
 
     @Transactional
     @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event createEvent(@RequestParam("session-token")SessionToken token,
-                             @RequestBody JsonRequestBody<Event> jsonRequestBody,
+    public Event createEvent(@RequestBody JsonRequestBody<Event> requestBody,
                              HttpServletResponse response) {
+        SessionToken token = requestBody.getToken();
         Optional<Account> optional = accountRepo.findById(token.getAccountId());
         //verify token
         if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
             //get form information
-            Event toSave = jsonRequestBody.getObject();
+            Event toSave = requestBody.getObject();
             //insert into events table
             Event event = eventRepo.save(toSave);
             //get ids for junction table
