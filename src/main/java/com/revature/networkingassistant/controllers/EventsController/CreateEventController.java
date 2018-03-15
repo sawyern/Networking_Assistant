@@ -1,7 +1,8 @@
 package com.revature.networkingassistant.controllers.EventsController;
 
 import com.revature.networkingassistant.beans.Account;
-import com.revature.networkingassistant.beans.Attendant;
+import com.revature.networkingassistant.beans.Attendant.Attendant;
+import com.revature.networkingassistant.beans.Attendant.Role;
 import com.revature.networkingassistant.beans.Event;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +38,7 @@ public class CreateEventController {
     AttendantRepo attendantRepo;
 
     @Transactional
-    @RequestMapping(path = "/api/create-event/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public Event createEvent(@RequestParam("session-token")SessionToken token,
                              @org.springframework.web.bind.annotation.RequestBody RequestBody<Event> requestBody,
                              HttpServletResponse response) {
@@ -51,7 +53,7 @@ public class CreateEventController {
             int accountId = optional.get().getId();
             int eventId = event.getId();
             //insert into junction table
-            Attendant attendant = new Attendant(eventId, accountId, "Coordinator");
+            Attendant attendant = new Attendant(eventId, accountId, Role.COORDINATOR);
             attendantRepo.save(attendant);
             //return newly created event
             return event;

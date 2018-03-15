@@ -1,6 +1,9 @@
 package com.revature.networkingassistant.beans;
 
+import com.revature.networkingassistant.beans.Attendant.Attendant;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Events")
