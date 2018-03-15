@@ -11,14 +11,14 @@ import java.util.Objects;
 public class Announcement implements Serializable{
 
     @Id
-    @Column(name = "eventId")
+    @Column(name = "eventId", updatable = false, nullable = false)
     private int eventId;
 
     @Id
-    @Column(name = "accountId")
+    @Column(name = "accountId", updatable = false, nullable = false)
     private int accountId;
 
-    @Column(name = "message")
+    @Column(name = "message", nullable = false)
     private String message;
 
     public Announcement() {

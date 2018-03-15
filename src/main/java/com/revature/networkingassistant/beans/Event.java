@@ -15,7 +15,7 @@ public class Event {
     //postgresql serial generation
     @SequenceGenerator(name = "events_id_seq", sequenceName = "events_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "events_id_seq")
-    @Column(name = "id")
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     @Column(name = "coordinatorId")

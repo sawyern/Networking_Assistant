@@ -14,17 +14,17 @@ public class Invite implements Serializable{
 
     @Id
     @JsonView(Views.Public.class)
-    @JoinColumn(name="Events")
+    @JoinColumn(name="Events", updatable = false, nullable = false)
     private int eventId;
 
     @Id
     @JsonView(Views.Public.class)
-    @JoinColumn(name="Accounts")
+    @JoinColumn(name="Accounts", updatable = false, nullable = false)
     private int inviter;
 
     @Id
     @JsonView(Views.Public.class)
-    @JoinColumn(name="Accounts")
+    @JoinColumn(name="Accounts", updatable = false, nullable = false)
     private int invitee;
 
     public Invite() {
