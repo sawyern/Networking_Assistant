@@ -1,14 +1,22 @@
 package com.revature.networkingassistant.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Attendants")
-public class Attendant {
+@IdClass(Attendant.class)
+public class Attendant implements Serializable{
 
+    @Id
+    @Column(name = "eventId")
     private int eventId;
+
+    @Id
+    @Column(name="accountId")
     private int accountId;
+
+    @Column(name = "role")
     private String role;
 
     public Attendant() {
