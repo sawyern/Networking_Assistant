@@ -7,12 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="networking-assistant" />
-        <module name="Networking_Assistant" />
+        <!--<module name="Networking_Assistant" />-->
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="networking-assistant" target="1.8" />
-      <module name="Networking_Assistant" target="1.8" />
+      <!--<module name="Networking_Assistant" target="1.8" />-->
     </bytecodeTargetLevel>
   </component>
 </project>

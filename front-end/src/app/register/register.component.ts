@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import {GoToService} from "../_services/go-to.service";
 
 @Component({
   selector: 'app-register',
@@ -8,13 +9,9 @@ import { Router } from "@angular/router";
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private goToService: GoToService) { }
 
   ngOnInit() {
-  }
-
-  goToProfile(){
-    this.router.navigate(['profile']);
   }
 
 }

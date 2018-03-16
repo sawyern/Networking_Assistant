@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
   checkPath(): void{
     let url = this.router.url;
-    if(url=="/login" || url=="/register" || url=="/profile" || url=="/eventdashboard" || url=="/newevent") this.login = false;
+    if(url=="/login" || url=="/register" || url=="/profile" || url=="/event/dashboard" || url=="/event/new") this.login = false;
     else this.login = true;
     if(url == "/" || url=="/login" || url=="/register") this.logout = false;
     else this.logout = true;

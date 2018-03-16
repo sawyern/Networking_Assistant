@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { AuthenticationService} from '../_services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import { GoToService } from "../_services/go-to.service";
 
 @Component({
   selector: 'app-login',
@@ -20,19 +21,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private goToService:GoToService
   ) {}
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
-
-  goToProfile(){
-    this.router.navigate(['profile']);
-  }
-
-  goToRegister(){
-    this.router.navigate(['register']);
   }
 
   login() {

@@ -16,8 +16,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'eventdashboard', component: EventDashboardComponent },
-  { path: 'newevent', component: NewEventComponent },
+  { path: 'event/dashboard', component: EventDashboardComponent },
+  { path: 'event/new', component: NewEventComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

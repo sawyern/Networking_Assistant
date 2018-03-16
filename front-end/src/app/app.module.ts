@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import { EventDashboardComponent } from './event-dashboard/event-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NewEventComponent } from './new-event/new-event.component';
+import {GoToService} from "./_services/go-to.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { NewEventComponent } from './new-event/new-event.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService, AppRoutingModule],
+  providers: [AuthenticationService, AppRoutingModule, GoToService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
