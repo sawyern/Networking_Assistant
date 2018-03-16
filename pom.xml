@@ -55,6 +55,13 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>0.3m</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.jayway.restassured/rest-assured -->
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>2.9.0</version>
+			<scope>test</scope>
+		</dependency>
 <!--I need this in order for the app to run, don't know why -Son -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -67,6 +74,7 @@
             <scope>test</scope>
         </dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
