@@ -27,6 +27,14 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  goToProfile(){
+    this.router.navigate(['profile']);
+  }
+
+  goToRegister(){
+    this.router.navigate(['register']);
+  }
+
   login() {
     // this.authService.login(this.email, this.password)
     //   .subscribe(

@@ -15,6 +15,9 @@ import { HomeComponent } from './home/home.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import { EventDashboardComponent } from './event-dashboard/event-dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NewEventComponent } from './new-event/new-event.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import {FormsModule} from "@angular/forms";
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    EventDashboardComponent,
+    ProfileComponent,
+    NewEventComponent
   ],
   imports: [
     BrowserModule,
