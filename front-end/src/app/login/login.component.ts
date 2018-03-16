@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { AuthenticationService} from '../_services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import  * as $ from 'jquery';
+import { GoToService } from "../_services/go-to.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private authService: AuthenticationService) {
   }
-
+  
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
