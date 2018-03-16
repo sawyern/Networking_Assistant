@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+  import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -10,20 +10,45 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
+  serverAuth(): Observable<any> {
+
+    let obj = {
+      token: {
+        id: "1234",
+        accountId: "1"
+      },
+      object: {
+        email: "snovak@test.com",
+        passwordHash: "password",
+        phone: "808-222-2222",
+        background: "I love revature",
+        zipCode: "89521",
+        attachment: ""
+      }
+    };
+
+    return of(obj);
+  }
+
+
   login(email: string, password: string) {
     console.log('authservice.login called!');
-    return this.http.post<any>('/api/login', { email, password })
-      .map(user => {
-        // login success -- save token to local storage
-        if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user.token));
-        }
-        // } else {
-        //   catchError(err => of(`Error:' ${err}`))
-        // }
-        return user;
-      });
+    return new Promise<any>((res, rej) => {
+      this.serverAuth().toPromise()
+        .then(token => {
+          if (token) {
+            console.log('success ' + token);
+            localStorage.setItem('token', token);
+            res(token);
+          } else {
+            console.log('error ' + token);
+            rej(token);
+          }
+        })
+    });
   }
+
+
 
   logout() {
     localStorage.removeItem('currentUser');
