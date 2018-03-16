@@ -7,16 +7,20 @@ import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.ws.Response;
+
 
 @RestController
-public abstract class LoginController {
+public class LoginController {
 
     private AccountRepo accountRepo;
     private SessionTokenRepo sessionTokenRepo;
@@ -31,24 +35,23 @@ public abstract class LoginController {
 
     @Transactional
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SessionToken verifyCredentials(@RequestBody JsonRequestBody<Account> jsonRequestBody) {
+    public ResponseEntity<SessionToken> verifyCredentials(@RequestBody JsonRequestBody<Account> jsonRequestBody) {
         //account exists
         if (accountRepo.existsByEmail((jsonRequestBody.getObject().getEmail()))) {
             Account account = accountRepo.findByEmail(jsonRequestBody.getObject().getEmail());
             //passwords match
             if (checkPassword(jsonRequestBody.getObject().getPasswordHash(), account.getPasswordHash())) {
-
                 //if token does not exist, create new one
                 if (!sessionTokenRepo.existsByAccountId(account.getId())) {
                     SessionToken token = new SessionToken();
                     token.setAccountId(account.getId());
-                    return sessionTokenRepo.save(token);
+                    return new ResponseEntity<>(sessionTokenRepo.save(token), HttpStatus.OK);
                 }
                 //return same token if already exists
-                else return sessionTokenRepo.findByAccountId(account.getId());
+                else return new ResponseEntity<>(sessionTokenRepo.findByAccountId(account.getId()), HttpStatus.OK);
             }
         }
-        return null;
+        return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_REQUEST);
     }
 
     private boolean checkPassword(String password_plaintext, String stored_hash) {

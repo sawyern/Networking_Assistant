@@ -62,7 +62,7 @@ public class RegisterController {
         return null;
     }
 
-    private String hashPassword(String pw) {
+    public static String hashPassword(String pw) {
         String salt = BCrypt.gensalt(genRounds);
         return BCrypt.hashpw(pw, salt);
     }
