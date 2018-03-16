@@ -1,3 +1,17 @@
-<p>
-  header works!
-</p>
+<div class="container">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <h3 class="navbar-brand">Networking Assistant</h3>
+    <ul class="navbar-nav" *ngIf="tabs">
+      <li class="nav-item active"><a class="nav-link" [routerLink]="['profile']">Profile</a></li>
+      <li class="nav-item"><a class="nav-link" [routerLink]="['eventdashboard']">Event Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" [routerLink]="['newevent']">Create Event</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="login">
+      <li class="nav-item"><a class="nav-link" [routerLink]="['register']">Register</a></li>
+      <li class="nav-item"><a class="nav-link" [routerLink]="['login']">Log In</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="logout">
+      <li class="nav-item"><a class="nav-link" [routerLink]="['home']">Log Out</a></li>
+    </ul>
+  </nav>
+</div>
