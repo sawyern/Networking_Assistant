@@ -25,6 +25,14 @@ public class Account {
     private String passwordHash;
 
     @JsonView(Views.Public.class)
+    @Column(name = "firstName")
+    private String firstName;
+
+    @JsonView(Views.Public.class)
+    @Column(name = "lastName")
+    private String lastName;
+
+    @JsonView(Views.Public.class)
     @Column(name = "phone")
     private String phone;
 
@@ -44,9 +52,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(String email, String passwordHash, String phone, String background, String zipCode, Byte[] attachment) {
+    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, Byte[] attachment) {
         this.email = email;
         this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phone = phone;
         this.background = background;
         this.zipCode = zipCode;
@@ -75,6 +85,22 @@ public class Account {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {
@@ -117,6 +143,8 @@ public class Account {
         return id == account.id &&
                 Objects.equals(email, account.email) &&
                 Objects.equals(passwordHash, account.passwordHash) &&
+                Objects.equals(firstName, account.firstName) &&
+                Objects.equals(lastName, account.lastName) &&
                 Objects.equals(phone, account.phone) &&
                 Objects.equals(background, account.background) &&
                 Objects.equals(zipCode, account.zipCode) &&
@@ -125,7 +153,7 @@ public class Account {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, email, passwordHash, phone, background, zipCode);
+        int result = Objects.hash(id, email, passwordHash, firstName, lastName, phone, background, zipCode);
         result = 31 * result + Arrays.hashCode(attachment);
         return result;
     }
@@ -136,6 +164,8 @@ public class Account {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", background='" + background + '\'' +
                 ", zipCode='" + zipCode + '\'' +
