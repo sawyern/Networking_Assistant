@@ -16,18 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public abstract class LoginController {
-
-    private AccountRepo accountRepo;
-    private SessionTokenRepo sessionTokenRepo;
-
-    public LoginController() { }
+public class LoginController {
 
     @Autowired
-    public LoginController(AccountRepo accountRepo, SessionTokenRepo sessionTokenRepo) {
-        this.accountRepo = accountRepo;
-        this.sessionTokenRepo = sessionTokenRepo;
-    }
+    private AccountRepo accountRepo;
+
+    @Autowired
+    private SessionTokenRepo sessionTokenRepo;
 
     @Transactional
     @RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
