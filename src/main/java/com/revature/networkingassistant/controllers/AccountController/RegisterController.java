@@ -1,12 +1,13 @@
 package com.revature.networkingassistant.controllers.AccountController;
 
 import com.revature.networkingassistant.beans.Account;
-import com.revature.networkingassistant.controllers.DTO.RequestBody;
+import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,26 +38,26 @@ public class RegisterController {
 
     @Transactional
     @RequestMapping(value = "/api/register", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Account registerAccount(@org.springframework.web.bind.annotation.RequestBody RequestBody<Account> requestBody) {
-        System.out.println(requestBody.getObject());
-        if (requestBody.getObject() == null)
+    public Account registerAccount(@RequestBody JsonRequestBody<Account> jsonRequestBody) {
+        System.out.println(jsonRequestBody.getObject());
+        if (jsonRequestBody.getObject() == null)
             return null;
 
         //if email does not exist
-        if (!accountRepo.existsByEmail(requestBody.getObject().getEmail())) {
+        if (!accountRepo.existsByEmail(jsonRequestBody.getObject().getEmail())) {
 
             //verify the info
-            assert(requestBody.getObject().getEmail().matches(emailRegex));
-            assert(requestBody.getObject().getPasswordHash().matches(passwordRegex));
-            assert(requestBody.getObject().getPhone().matches(phoneRegex));
-            assert(requestBody.getObject().getAttachment() != null);
-            assert(requestBody.getObject().getZipCode().matches(zipRegex));
-            assert(requestBody.getObject().getBackground() != null);
+            assert(jsonRequestBody.getObject().getEmail().matches(emailRegex));
+            assert(jsonRequestBody.getObject().getPasswordHash().matches(passwordRegex));
+            assert(jsonRequestBody.getObject().getPhone().matches(phoneRegex));
+            assert(jsonRequestBody.getObject().getAttachment() != null);
+            assert(jsonRequestBody.getObject().getZipCode().matches(zipRegex));
+            assert(jsonRequestBody.getObject().getBackground() != null);
 
             //hash password
-            requestBody.getObject().setPasswordHash(hashPassword(requestBody.getObject().getPasswordHash()));
+            jsonRequestBody.getObject().setPasswordHash(hashPassword(jsonRequestBody.getObject().getPasswordHash()));
             //create the account
-            return accountRepo.save(requestBody.getObject());
+            return accountRepo.save(jsonRequestBody.getObject());
         }
         return null;
     }

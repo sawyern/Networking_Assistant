@@ -15,6 +15,10 @@ import { HomeComponent } from './home/home.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import { EventDashboardComponent } from './event-dashboard/event-dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NewEventComponent } from './new-event/new-event.component';
+import {GoToService} from "./_services/go-to.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +27,10 @@ import {FormsModule} from "@angular/forms";
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    EventDashboardComponent,
+    ProfileComponent,
+    NewEventComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +40,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService, AppRoutingModule],
+  providers: [AuthenticationService, AppRoutingModule, GoToService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

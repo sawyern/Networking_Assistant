@@ -5,17 +5,17 @@ import com.revature.networkingassistant.beans.SessionToken;
 
 import java.util.Objects;
 
-public class RequestBody<T> {
+public class JsonRequestBody<T> {
     @JsonView(Views.Public.class)
     protected SessionToken token;
 
     @JsonView(Views.Public.class)
     protected T object;
 
-    public RequestBody() {
+    public JsonRequestBody() {
     }
 
-    public RequestBody(SessionToken token, T object) {
+    public JsonRequestBody(SessionToken token, T object) {
         this.token = token;
         this.object = object;
     }
@@ -40,7 +40,7 @@ public class RequestBody<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RequestBody<?> that = (RequestBody<?>) o;
+        JsonRequestBody<?> that = (JsonRequestBody<?>) o;
         return Objects.equals(token, that.token) &&
                 Objects.equals(object, that.object);
     }
@@ -52,7 +52,7 @@ public class RequestBody<T> {
 
     @Override
     public String toString() {
-        return "RequestBody{" +
+        return "JsonRequestBody{" +
                 "token=" + token +
                 ", object=" + object +
                 '}';

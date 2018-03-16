@@ -1,8 +1,12 @@
 package com.revature.networkingassistant.beans;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.controllers.DTO.Views;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -16,10 +20,16 @@ public class Announcement implements Serializable{
 
     @Id
     @Column(name = "accountId", updatable = false, nullable = false)
+    @JsonView(Views.Public.class)
     private int accountId;
 
+    @JsonView(Views.Public.class)
     @Column(name = "message", nullable = false)
     private String message;
+
+    @JsonView(Views.Public.class)
+    @Column(name = "timestamp", updatable = false, nullable = false)
+    private Date timestamp;
 
     public Announcement() {
     }

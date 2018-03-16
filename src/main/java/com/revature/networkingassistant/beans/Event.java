@@ -1,6 +1,8 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
+import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,15 +20,15 @@ public class Event {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-    @Column(name = "coordinatorId")
-    private int coordinatorId;
-
+    @JsonView(Views.Public.class)
     @Column(name = "name")
     private String name;
 
+    @JsonView(Views.Public.class)
     @Column(name = "location")
     private String location;
 
+    @JsonView(Views.Public.class)
     @Column(name = "date")
     private Date date;
 
@@ -36,8 +38,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(int coordinatorId, String name, String location, Date date, String time) {
-        this.coordinatorId = coordinatorId;
+    public Event(String name, String location, Date date, String time) {
         this.name = name;
         this.location = location;
         this.date = date;
@@ -50,14 +51,6 @@ public class Event {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCoordinatorId() {
-        return coordinatorId;
-    }
-
-    public void setCoordinatorId(int coordinatorId) {
-        this.coordinatorId = coordinatorId;
     }
 
     public String getName() {
@@ -98,7 +91,6 @@ public class Event {
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
         return id == event.id &&
-                coordinatorId == event.coordinatorId &&
                 Objects.equals(name, event.name) &&
                 Objects.equals(location, event.location) &&
                 Objects.equals(date, event.date) &&
@@ -107,14 +99,13 @@ public class Event {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, coordinatorId, name, location, date, time);
+        return Objects.hash(id, name, location, date, time);
     }
 
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
-                ", coordinatorId=" + coordinatorId +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 ", date=" + date +
