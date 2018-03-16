@@ -39,12 +39,12 @@ public class Account {
     @JsonView(Views.Public.class)
     @Column(name = "attachment")
     @Lob
-    private Byte[] attachment;
+    private byte[] attachment;
 
     public Account() {
     }
 
-    public Account(String email, String passwordHash, String phone, String background, String zipCode, Byte[] attachment) {
+    public Account(String email, String passwordHash, String phone, String background, String zipCode, byte[] attachment) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.phone = phone;
@@ -101,11 +101,11 @@ public class Account {
         this.zipCode = zipCode;
     }
 
-    public Byte[] getAttachment() {
+    public byte[] getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(Byte[] attachment) {
+    public void setAttachment(byte[] attachment) {
         this.attachment = attachment;
     }
 
