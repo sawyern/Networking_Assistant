@@ -8,6 +8,7 @@ import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,13 +31,12 @@ public class ListEventsController {
 
     @Transactional
     @RequestMapping(path = "/api/list-events/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Event> listEvents(@RequestBody JsonRequestBody requestBody, HttpServletResponse response) {
+    public ResponseEntity<Iterable<Event>> listEvents(@RequestBody JsonRequestBody requestBody, HttpServletResponse response) {
         SessionToken token = requestBody.getToken();
         if (tokenRepo.existsById(token.getId())) {
-            return eventRepo.findAll();
+            return new ResponseEntity<Iterable<Event>>(eventRepo.findAll(), HttpStatus.OK);
         } else {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return null;
+            return new ResponseEntity<Iterable<Event>>(eventRepo.findAll(), HttpStatus.UNAUTHORIZED);
         }
     }
 }
