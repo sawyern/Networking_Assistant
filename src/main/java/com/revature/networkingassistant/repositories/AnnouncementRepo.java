@@ -7,5 +7,5 @@ public interface AnnouncementRepo extends CrudRepository<Announcement, String>{
 
     Iterable<Announcement> findByEventId(int eventId);
 
-    Iterable<Announcement> findByaccountId(int accountId);
+    Iterable<Announcement> findByAccountId(int accountId);
 }

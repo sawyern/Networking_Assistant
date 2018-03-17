@@ -13,6 +13,7 @@ import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,7 @@ public class CreateEventController {
 
     @Transactional
     @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event createEvent(@RequestBody JsonRequestBody<Event> requestBody,
-                             HttpServletResponse response) {
+    public ResponseEntity<Event> createEvent(@RequestBody JsonRequestBody<Event> requestBody) {
         SessionToken token = requestBody.getToken();
         Optional<Account> optional = accountRepo.findById(token.getAccountId());
         //verify token
@@ -54,10 +54,9 @@ public class CreateEventController {
             Attendant attendant = new Attendant(eventId, accountId, Role.COORDINATOR);
             attendantRepo.save(attendant);
             //return newly created event
-            return event;
+            return new ResponseEntity<Event>(event, HttpStatus.OK);
         } else {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return null;
+            return new ResponseEntity<Event>(new Event(), HttpStatus.UNAUTHORIZED);
         }
     }
 }
