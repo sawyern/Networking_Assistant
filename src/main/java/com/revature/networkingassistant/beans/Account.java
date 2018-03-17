@@ -52,8 +52,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String email, String passwordHash, String phone, String background, String zipCode, byte[] attachment) {
-    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, Byte[] attachment) {
+    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, byte[] attachment) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.firstName = firstName;
