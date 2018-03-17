@@ -8,8 +8,10 @@ import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
+import org.apache.http.HttpStatus;
 import org.junit.After;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +24,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = AppConfig.class)
 @WebAppConfiguration
-class RegisterControllerTest {
+public class RegisterControllerTest {
 
     private JsonRequestBody<Account> requestBody;
     private Account testAccount;
@@ -30,13 +32,8 @@ class RegisterControllerTest {
     @Autowired
     private AccountRepo accountRepo;
 
-    @After
-    public void rollback() {
-        accountRepo.delete(testAccount);
-    }
-
-    @Test
-    void registerAccountTest() throws JsonProcessingException {
+    @Before
+    public void setup() {
         requestBody = new JsonRequestBody<>();
         testAccount = new Account();
         byte[] test = "test".getBytes();
@@ -50,17 +47,28 @@ class RegisterControllerTest {
         testAccount.setZipCode("12345");
         testAccount.setAttachment(test);
         requestBody.setObject(testAccount);
-        requestBody = new JsonRequestBody<>();
+
         requestBody.setObject(testAccount);
+        requestBody.setToken(token);
         System.out.println(requestBody);
+    }
+
+    @After
+    public void rollback() {
+        accountRepo.delete(testAccount);
+    }
+
+    @Test
+    public void registerAccountTest() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
-                .body(mapper.writeValueAsString(requestBody))
-                .contentType(ContentType.JSON)
-                .when()
-                .put("/api/register")
-                .then()
-                .statusCode(200)
-                .assertThat().body("email", equalTo(testAccount.getEmail()));
+            .body(mapper.writeValueAsString(requestBody))
+            .contentType(ContentType.JSON)
+        .when()
+            .put("/api/register")
+        .then()
+            .statusCode(HttpStatus.SC_CREATED)
+            .assertThat().body("email", equalTo(testAccount.getEmail()));
     }
+
 }

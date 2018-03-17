@@ -27,7 +27,7 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/api/register", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public HttpStatus registerAccount(@RequestBody JsonRequestBody<Account> jsonRequestBody) {
+    public ResponseEntity<Account> registerAccount(@RequestBody JsonRequestBody<Account> jsonRequestBody) {
         return registerService.registerAccount(jsonRequestBody);
     }
 }

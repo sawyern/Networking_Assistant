@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="28ef58fe-ef14-465d-a4d4-d932dfd0a999">
+        <schema name="public" object-types="function, sequence, table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="28ef58fe-ef14-465d-a4d4-d932dfd0a999">
@@ -45,6 +49,7 @@
         <condition column="id" operator="is not null" value="" active="true" />
       </filter>
     </filter-list>
+    <filter-list connection-id="28ef58fe-ef14-465d-a4d4-d932dfd0a999" dataset="public.starred_accounts" active-filter-id="" />
     <filter-list connection-id="28ef58fe-ef14-465d-a4d4-d932dfd0a999" dataset="public.announcements" active-filter-id="af234682-72ac-469c-8038-00aba3967568">
       <filter id="af234682-72ac-469c-8038-00aba3967568" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="account_id" operator="is not null" value="" active="true" />

@@ -6,6 +6,7 @@ import com.revature.networkingassistant.repositories.AccountRepo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class RegisterService {
     private static final int genRounds = 12;
 
     @Transactional
-    public HttpStatus registerAccount(JsonRequestBody<Account> jsonRequestBody) {
+    public ResponseEntity<Account> registerAccount(JsonRequestBody<Account> jsonRequestBody) {
         try {
             //if email does not exist
             if (!accountRepo.existsByEmail(jsonRequestBody.getObject().getEmail())) {
@@ -55,12 +56,12 @@ public class RegisterService {
                 //hash password
                 jsonRequestBody.getObject().setPasswordHash(hashPassword(jsonRequestBody.getObject().getPasswordHash()));
                 //create the account
-                accountRepo.save(jsonRequestBody.getObject());
-                return HttpStatus.CREATED;
+                Account account = accountRepo.save(jsonRequestBody.getObject());
+                return new ResponseEntity<>(account, HttpStatus.CREATED);
             }
-            return null;
+            return new ResponseEntity<>(new Account(),HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(new Account(),HttpStatus.BAD_REQUEST);
         }
     }
 
