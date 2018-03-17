@@ -5,5 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttendantRepo extends CrudRepository<Attendant, Integer> {
+public interface AttendantRepo extends CrudRepository<Attendant, String> {
+
+    Iterable<Attendant> findByEventId(int eventId);
+
+    Iterable<Attendant> findByAccountId(int accountId);
 }

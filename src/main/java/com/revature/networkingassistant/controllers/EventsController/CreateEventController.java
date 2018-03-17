@@ -22,28 +22,29 @@ import java.util.Optional;
 @RestController
 public class CreateEventController {
 
-    @Autowired
-    EventRepo eventRepo;
+    private EventRepo eventRepo;
+    private AccountRepo accountRepo;
+    private SessionTokenRepo tokenRepo;
+    private AttendantRepo attendantRepo;
 
     @Autowired
-    AccountRepo accountRepo;
-
-    @Autowired
-    SessionTokenRepo tokenRepo;
-
-    @Autowired
-    AttendantRepo attendantRepo;
+    public CreateEventController(EventRepo eventRepo, AccountRepo accountRepo, SessionTokenRepo tokenRepo, AttendantRepo attendantRepo) {
+        this.eventRepo = eventRepo;
+        this.accountRepo = accountRepo;
+        this.tokenRepo = tokenRepo;
+        this.attendantRepo = attendantRepo;
+    }
 
     @Transactional
     @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event createEvent(@RequestParam("session-token")SessionToken token,
-                             @RequestBody JsonRequestBody<Event> jsonRequestBody,
+    public Event createEvent(@RequestBody JsonRequestBody<Event> requestBody,
                              HttpServletResponse response) {
+        SessionToken token = requestBody.getToken();
         Optional<Account> optional = accountRepo.findById(token.getAccountId());
         //verify token
         if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
             //get form information
-            Event toSave = jsonRequestBody.getObject();
+            Event toSave = requestBody.getObject();
             //insert into events table
             Event event = eventRepo.save(toSave);
             //get ids for junction table

@@ -6,32 +6,41 @@ import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "Announcements")
-@IdClass(Announcement.class)
 public class Announcement implements Serializable{
 
+    //Primary key for junction tables is a String: eventId|accountID
     @Id
-    @Column(name = "eventId", updatable = false, nullable = false)
+    @Column(name = "id")
+    @JsonView(Views.Public.class)
+    private String id;
+
+    @Column(name = "eventId")
+    @JsonView(Views.Public.class)
     private int eventId;
 
-    @Id
-    @Column(name = "accountId", updatable = false, nullable = false)
+    @Column(name = "accountId")
     @JsonView(Views.Public.class)
     private int accountId;
 
+    @Column(name = "message")
     @JsonView(Views.Public.class)
-    @Column(name = "message", nullable = false)
     private String message;
 
-    @JsonView(Views.Public.class)
-    @Column(name = "timestamp", updatable = false, nullable = false)
-    private Date timestamp;
-
     public Announcement() {
+    }
+
+    public Announcement(int eventId, int accountId, String message) {
+        this.eventId = eventId;
+        this.accountId = accountId;
+        this.message = message;
+        this.id = String.valueOf(eventId) + "|" + String.valueOf(accountId);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getEventId() {
@@ -56,20 +65,5 @@ public class Announcement implements Serializable{
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Announcement that = (Announcement) o;
-        return eventId == that.eventId &&
-                accountId == that.accountId &&
-                Objects.equals(message, that.message);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(eventId, accountId, message);
     }
 }

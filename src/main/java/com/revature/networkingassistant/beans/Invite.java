@@ -13,16 +13,17 @@ import java.util.Objects;
 public class Invite implements Serializable{
 
     @Id
+    @Column(name = "id")
+    private String id;
+
     @JsonView(Views.Public.class)
     @JoinColumn(name="Events", updatable = false, nullable = false)
     private int eventId;
 
-    @Id
     @JsonView(Views.Public.class)
     @JoinColumn(name="Accounts", updatable = false, nullable = false)
     private int inviter;
 
-    @Id
     @JsonView(Views.Public.class)
     @JoinColumn(name="Accounts", updatable = false, nullable = false)
     private int invitee;
@@ -34,6 +35,7 @@ public class Invite implements Serializable{
         this.eventId = eventId;
         this.inviter = inviter;
         this.invitee = invitee;
+        this.id = String.valueOf(eventId) + "|"  + String.valueOf(inviter) + "|" + String.valueOf(invitee);
     }
 
     public int getEventId() {
