@@ -29,7 +29,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @SpringBootTest(classes = AppConfig.class)
 @WebAppConfiguration
 public class LoginControllerTest {
-    private JsonRequestBody<Account> requestBody;
+
     private Account testAccount;
 
     @Autowired
@@ -37,8 +37,13 @@ public class LoginControllerTest {
     @Autowired
     private SessionTokenRepo sessionTokenRepo;
 
-    @Before
-    public void setup() {
+    @After
+    public void rollback() {
+        accountRepo.delete(testAccount);
+    }
+
+    @Test
+    public void loginTest() throws IOException {
         SessionToken sessionToken = new SessionToken();
 
         testAccount = new Account();
@@ -50,20 +55,12 @@ public class LoginControllerTest {
         sessionToken.setAccountId(testAccount.getId());
         sessionToken = sessionTokenRepo.save(sessionToken);
 
-        requestBody = new JsonRequestBody<>();
+        JsonRequestBody<Account> requestBody = new JsonRequestBody<>();
         requestBody.setObject(testAccount);
         requestBody.setToken(sessionToken);
 
         testAccount.setPasswordHash("password");
-    }
 
-    @After
-    public void rollback() {
-        accountRepo.delete(testAccount);
-    }
-
-    @Test
-    public void loginTest() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         given()
