@@ -8,6 +8,7 @@ import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import com.revature.networkingassistant.services.AccountServices.RegisterService;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
@@ -42,7 +43,7 @@ public class LoginControllerTest {
 
         testAccount = new Account();
         testAccount.setEmail("snovak@test.com");
-        testAccount.setPasswordHash(RegisterController.hashPassword("password"));
+        testAccount.setPasswordHash(RegisterService.hashPassword("password"));
 
         testAccount = accountRepo.save(testAccount);
 

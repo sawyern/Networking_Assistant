@@ -14,7 +14,7 @@ public class Invite implements Serializable{
 
     @Id
     @Column(name = "id")
-    private String id;
+    private int id;
 
     @JsonView(Views.Public.class)
     @JoinColumn(name="Events", updatable = false, nullable = false)
@@ -35,7 +35,14 @@ public class Invite implements Serializable{
         this.eventId = eventId;
         this.inviter = inviter;
         this.invitee = invitee;
-        this.id = String.valueOf(eventId) + "|"  + String.valueOf(inviter) + "|" + String.valueOf(invitee);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getEventId() {
@@ -67,20 +74,22 @@ public class Invite implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invite invite = (Invite) o;
-        return eventId == invite.eventId &&
+        return id == invite.id &&
+                eventId == invite.eventId &&
                 inviter == invite.inviter &&
                 invitee == invite.invitee;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(eventId, inviter, invitee);
+        return Objects.hash(id, eventId, inviter, invitee);
     }
 
     @Override
     public String toString() {
         return "Invite{" +
-                "eventId=" + eventId +
+                "id=" + id +
+                ", eventId=" + eventId +
                 ", inviter=" + inviter +
                 ", invitee=" + invitee +
                 '}';
