@@ -16,6 +16,8 @@ public class InviteController {
     private SessionTokenRepo tokenRepo;
     private InviteRepo inviteRepo;
 
+    public InviteController() {}
+
     @Autowired
     public InviteController(SessionTokenRepo tokenRepo, InviteRepo inviteRepo) {
         this.tokenRepo = tokenRepo;
