@@ -11,38 +11,30 @@ import java.util.ArrayList;
 
 @Service
 public class GetAccountService {
-    private AccountRepo accountRepo;
-
-    public GetAccountService() { }
 
     @Autowired
-    public GetAccountService(AccountRepo accountRepo) {
-        this.accountRepo = accountRepo;
-    }
+    private AccountRepo accountRepo;
 
     public ResponseEntity<Account> getByEmail(String email) {
-        try {
-            return new ResponseEntity<>(accountRepo.findByEmail(email), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
-        }
+        System.out.println(email);
+        Account result = accountRepo.findByEmail(email);
+        if (result == null) {
+            return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     public ResponseEntity<Account> getByFirstName(String name) {
-        try {
-            return new ResponseEntity<>(accountRepo.findByFirstName(name), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
-        }
-
+        Account result = accountRepo.findByFirstName(name);
+        if (result == null) {
+            return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     public ResponseEntity<Account> getByLastName(String name) {
-        try {
-            return new ResponseEntity<>(accountRepo.findByLastName(name), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
-        }
+        Account result = accountRepo.findByLastName(name);
+        if (result == null) {
+            return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     public ResponseEntity<ArrayList<Account>> getByPartialEmail(String partialEmail) {

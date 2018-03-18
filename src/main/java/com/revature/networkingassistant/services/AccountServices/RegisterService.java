@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegisterService {
+
+    @Autowired
     private AccountRepo accountRepo;
 
     public RegisterService() { }
