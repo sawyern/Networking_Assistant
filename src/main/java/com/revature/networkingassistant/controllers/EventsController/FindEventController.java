@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -21,7 +18,7 @@ public class FindEventController {
     FindEventService eventService;
 
     @Transactional
-    @RequestMapping(path = "/api/find-event/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/api/event/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<Event>> findEvent(@RequestBody JsonRequestBody requestBody,
                                                     @PathVariable("id") int id) {
         return eventService.findEvent(requestBody, id);

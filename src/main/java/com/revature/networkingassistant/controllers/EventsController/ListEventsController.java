@@ -20,7 +20,7 @@ public class ListEventsController {
     private ListEventsService eventsService;
 
     @Transactional
-    @RequestMapping(path = "/api/list-events/{session-token}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/api/events", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Event>> listEvents(@RequestBody JsonRequestBody requestBody) {
         return eventsService.listEvents(requestBody);
     }

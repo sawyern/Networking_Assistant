@@ -7,16 +7,14 @@ import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.beans.Event;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
+import com.revature.networkingassistant.controllers.TestUtil;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.EventRepo;
-import com.revature.networkingassistant.repositories.SessionTokenRepo;
-import com.revature.networkingassistant.services.AccountServices.RegisterService;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,17 +35,20 @@ public class CreateEventControllerTest {
     @Autowired
     private EventRepo eventRepo;
 
+    @Autowired
+    private TestUtil testUtil;
+
     private JsonRequestBody<Event> requestBody;
     private ObjectMapper mapper;
+    private Account testAccount;
 
     @Before
     public void setup() {
         mapper = new ObjectMapper();
+        testAccount = testUtil.createTestAccount();
 
         //create test token
-        SessionToken token = new SessionToken();
-        token.setAccountId(-1);
-        token.setId("testToken");
+        SessionToken token = testUtil.loginTestUser(testAccount);
 
         //create test event
         Event testEvent = new Event();
@@ -61,6 +62,7 @@ public class CreateEventControllerTest {
 
     @After
     public void rollback() throws IOException {
+        testUtil.removeTestAccount(testAccount);
     }
 
 

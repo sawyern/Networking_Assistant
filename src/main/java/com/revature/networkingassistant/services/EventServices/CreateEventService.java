@@ -51,7 +51,7 @@ public class CreateEventService {
             Attendant attendant = new Attendant(eventId, accountId, Role.COORDINATOR);
             attendantRepo.save(attendant);
             //return newly created event
-            return new ResponseEntity<>(event, HttpStatus.OK);
+            return new ResponseEntity<>(event, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>((Event)null, HttpStatus.UNAUTHORIZED);
         }
