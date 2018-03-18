@@ -3,7 +3,7 @@ package com.revature.networkingassistant.services.EventServices;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.beans.Attendant.Role;
-import com.revature.networkingassistant.beans.Event;
+import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
