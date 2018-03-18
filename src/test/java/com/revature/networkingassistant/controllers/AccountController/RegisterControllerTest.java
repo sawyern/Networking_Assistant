@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.http.ContentType;
 import com.revature.networkingassistant.AppConfig;
 import com.revature.networkingassistant.beans.Account;
-import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
-import com.revature.networkingassistant.repositories.AccountRepo;
+import com.revature.networkingassistant.controllers.TestUtil;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
@@ -30,32 +29,28 @@ public class RegisterControllerTest {
     private Account testAccount;
 
     @Autowired
-    private AccountRepo accountRepo;
+    private TestUtil testUtil;
 
     @Before
     public void setup() {
-        requestBody = new JsonRequestBody<>();
-        testAccount = new Account();
-        byte[] test = "test".getBytes();
-        SessionToken token = new SessionToken();
-        testAccount.setEmail("test@test.test");
-        testAccount.setPasswordHash("test");
-        testAccount.setFirstName("test");
-        testAccount.setLastName("test");
-        testAccount.setBackground("test");
-        testAccount.setPhone("123-456-7890");
-        testAccount.setZipCode("12345");
-        testAccount.setAttachment(test);
-        requestBody.setObject(testAccount);
+        Account account = new Account();
+        account.setEmail("test@test.com");
+        account.setPasswordHash("password");
+        account.setFirstName("First");
+        account.setLastName("Last");
+        account.setBackground("Test background info.");
+        account.setPhone("808-222-2222");
+        account.setZipCode("96813");
+        account.setAttachment(new byte[0]);
 
+        requestBody = new JsonRequestBody<>();
+        testAccount = account;
         requestBody.setObject(testAccount);
-        requestBody.setToken(token);
-        System.out.println(requestBody);
     }
 
     @After
     public void rollback() {
-        accountRepo.delete(testAccount);
+        testUtil.removeTestAccount(testAccount);
     }
 
     @Test
@@ -68,7 +63,11 @@ public class RegisterControllerTest {
             .put("/api/register")
         .then()
             .statusCode(HttpStatus.SC_CREATED)
-            .assertThat().body("email", equalTo(testAccount.getEmail()));
+            .assertThat().body("email", equalTo(testAccount.getEmail()))
+            .assertThat().body("firstName", equalTo(testAccount.getFirstName()))
+            .assertThat().body("lastName", equalTo(testAccount.getLastName()))
+            .assertThat().body("phone", equalTo(testAccount.getPhone()))
+            .assertThat().body("background", equalTo(testAccount.getBackground()));
     }
 
 }

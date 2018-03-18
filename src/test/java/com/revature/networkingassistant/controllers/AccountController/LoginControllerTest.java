@@ -4,11 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.http.ContentType;
 import com.revature.networkingassistant.AppConfig;
 import com.revature.networkingassistant.beans.Account;
-import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
+import com.revature.networkingassistant.controllers.TestUtil;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
-import com.revature.networkingassistant.services.AccountServices.RegisterService;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
@@ -18,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -33,33 +33,21 @@ public class LoginControllerTest {
     private Account testAccount;
 
     @Autowired
-    private AccountRepo accountRepo;
+    private TestUtil testUtil;
     @Autowired
     private SessionTokenRepo sessionTokenRepo;
 
     @Before
     public void setup() {
-        SessionToken sessionToken = new SessionToken();
-
-        testAccount = new Account();
-        testAccount.setEmail("snovak@test.com");
-        testAccount.setPasswordHash(RegisterService.hashPassword("password"));
-
-        testAccount = accountRepo.save(testAccount);
-
-        sessionToken.setAccountId(testAccount.getId());
-        sessionToken = sessionTokenRepo.save(sessionToken);
-
+        testAccount = testUtil.createTestAccount();
+        testAccount.setPasswordHash("password");
         requestBody = new JsonRequestBody<>();
         requestBody.setObject(testAccount);
-        requestBody.setToken(sessionToken);
-
-        testAccount.setPasswordHash("password");
     }
 
     @After
     public void rollback() {
-        accountRepo.delete(testAccount);
+        testUtil.removeTestAccount(testAccount);
     }
 
     @Test
@@ -73,7 +61,7 @@ public class LoginControllerTest {
             .post("/api/login")
         .then()
             .statusCode(HttpStatus.SC_OK)
-            .assertThat().body("id", is(requestBody.getToken().getId()))
-            .assertThat().body("accountId", equalTo(requestBody.getToken().getAccountId()));
+            .assertThat().body("id", equalTo(sessionTokenRepo.findByAccountId(testAccount.getId()).getId()))
+                .assertThat().body("accountId", equalTo(sessionTokenRepo.findByAccountId(testAccount.getId()).getAccountId()));
     }
 }

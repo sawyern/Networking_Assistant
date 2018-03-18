@@ -1,72 +1,49 @@
 package com.revature.networkingassistant.controllers.EventController;
 
-import com.revature.networkingassistant.NetworkingAssistantApplication;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.restassured.http.ContentType;
+import com.revature.networkingassistant.AppConfig;
+import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.beans.Event;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
-import com.revature.networkingassistant.controllers.EventsController.CreateEventController;
+import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.EventRepo;
+import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import com.revature.networkingassistant.services.AccountServices.RegisterService;
+import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.persistence.EntityManagerFactory;
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(CreateEventController.class)
-@Transactional
+@SpringBootTest(classes = AppConfig.class)
+@WebAppConfiguration
 public class CreateEventControllerTest {
 
     @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
-
-    @MockBean
     private EventRepo eventRepo;
 
-
-    @Mock
-    private JsonRequestBody<Event> testBody;
-
-    @Test
-    public void createEventTest() throws Exception {
-        given(eventRepo.findById(-1).get()).willReturn(testBody.getObject());
-        Mockito.when(testBody.getToken()).thenReturn(testBody.getToken());
-
-
-        mvc.perform(put("/api/event/create")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect((ResultMatcher) jsonPath("$[1].name", is("test event")));
-    }
+    private JsonRequestBody<Event> requestBody;
+    private ObjectMapper mapper;
 
     @Before
     public void setup() {
+        mapper = new ObjectMapper();
+
         //create test token
         SessionToken token = new SessionToken();
         token.setAccountId(-1);
@@ -74,12 +51,28 @@ public class CreateEventControllerTest {
 
         //create test event
         Event testEvent = new Event();
-        testEvent.setId(-1);
         testEvent.setName("test event");
         testEvent.setDate(new Date());
         testEvent.setLocation("test loc");
 
         //create new body
-        testBody = new JsonRequestBody<>(token, testEvent);
+        requestBody = new JsonRequestBody<>(token, testEvent);
+    }
+
+    @After
+    public void rollback() throws IOException {
+    }
+
+
+    @Test
+    public void createEventTest() throws Exception {
+        given()
+                .body(mapper.writeValueAsString(requestBody))
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/event/create")
+                .then()
+                .statusCode(HttpStatus.SC_CREATED);
+        //.assertThat().body()
     }
 }
