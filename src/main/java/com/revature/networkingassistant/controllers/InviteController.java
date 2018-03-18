@@ -23,6 +23,8 @@ public class InviteController {
     @Autowired
     private InviteRepo inviteRepo;
 
+    public InviteController() {}
+
     @Autowired
     private AccountRepo accountRepo;
 

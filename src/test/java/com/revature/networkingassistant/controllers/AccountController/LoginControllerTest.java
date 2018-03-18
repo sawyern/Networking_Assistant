@@ -11,6 +11,7 @@ import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import com.revature.networkingassistant.services.AccountServices.RegisterService;
 import org.apache.http.HttpStatus;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @SpringBootTest(classes = AppConfig.class)
 @WebAppConfiguration
 public class LoginControllerTest {
-
+    private JsonRequestBody<Account> requestBody;
     private Account testAccount;
 
     @Autowired
@@ -36,13 +37,8 @@ public class LoginControllerTest {
     @Autowired
     private SessionTokenRepo sessionTokenRepo;
 
-    @After
-    public void rollback() {
-        accountRepo.delete(testAccount);
-    }
-
-    @Test
-    public void loginTest() throws IOException {
+    @Before
+    public void setup() {
         SessionToken sessionToken = new SessionToken();
 
         testAccount = new Account();
@@ -54,12 +50,20 @@ public class LoginControllerTest {
         sessionToken.setAccountId(testAccount.getId());
         sessionToken = sessionTokenRepo.save(sessionToken);
 
-        JsonRequestBody<Account> requestBody = new JsonRequestBody<>();
+        requestBody = new JsonRequestBody<>();
         requestBody.setObject(testAccount);
         requestBody.setToken(sessionToken);
 
         testAccount.setPasswordHash("password");
+    }
 
+    @After
+    public void rollback() {
+        accountRepo.delete(testAccount);
+    }
+
+    @Test
+    public void loginTest() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         given()

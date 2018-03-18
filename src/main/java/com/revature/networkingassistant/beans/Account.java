@@ -152,7 +152,7 @@ public class Account {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, email, passwordHash, phone, background, zipCode);
+        int result = Objects.hash(id, email, passwordHash, firstName, lastName, phone, background, zipCode);
         result = 31 * result + Arrays.hashCode(attachment);
         return result;
     }
