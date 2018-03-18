@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "StarredAccounts")
@@ -15,30 +16,30 @@ public class StarredAccount {
     @Id
     @Column(name = "id")
     @JsonView(Views.Public.class)
-    private String id;
+    private int id;
 
-    @Column(name = "owner")
+    @Column(name = "ownerId")
     @JsonView(Views.Public.class)
     private int ownerId;
 
-    @Column(name = "starredAccount")
+    @Column(name = "starredAccountId")
     @JsonView(Views.Public.class)
     private int starredAccountId;
 
     public StarredAccount() {
     }
 
-    public StarredAccount(String id, int ownerId, int starredAccountId) {
+    public StarredAccount(int id, int ownerId, int starredAccountId) {
+        this.id = id;
         this.ownerId = ownerId;
         this.starredAccountId = starredAccountId;
-        this.id = String.valueOf(ownerId) + "|" + String.valueOf(starredAccountId);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -56,5 +57,29 @@ public class StarredAccount {
 
     public void setStarredAccountId(int starredAccountId) {
         this.starredAccountId = starredAccountId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StarredAccount that = (StarredAccount) o;
+        return id == that.id &&
+                ownerId == that.ownerId &&
+                starredAccountId == that.starredAccountId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, ownerId, starredAccountId);
+    }
+
+    @Override
+    public String toString() {
+        return "StarredAccount{" +
+                "id=" + id +
+                ", ownerId=" + ownerId +
+                ", starredAccountId=" + starredAccountId +
+                '}';
     }
 }
