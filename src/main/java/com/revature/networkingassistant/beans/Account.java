@@ -47,7 +47,6 @@ public class Account {
 
     @JsonView(Views.Public.class)
     @Column(name = "attachment")
-    @Lob
     private byte[] attachment;
 
     public Account() {

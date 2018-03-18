@@ -10,6 +10,7 @@ import com.revature.networkingassistant.repositories.AccountRepo;
 import com.revature.networkingassistant.repositories.AttendantRepo;
 import com.revature.networkingassistant.repositories.EventRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import com.revature.networkingassistant.services.EventServices.CreateEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,40 +24,12 @@ import java.util.Optional;
 @RestController
 public class CreateEventController {
 
-    private EventRepo eventRepo;
-    private AccountRepo accountRepo;
-    private SessionTokenRepo tokenRepo;
-    private AttendantRepo attendantRepo;
-
     @Autowired
-    public CreateEventController(EventRepo eventRepo, AccountRepo accountRepo, SessionTokenRepo tokenRepo, AttendantRepo attendantRepo) {
-        this.eventRepo = eventRepo;
-        this.accountRepo = accountRepo;
-        this.tokenRepo = tokenRepo;
-        this.attendantRepo = attendantRepo;
-    }
+    private CreateEventService eventService;
 
     @Transactional
     @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> createEvent(@RequestBody JsonRequestBody<Event> requestBody) {
-        SessionToken token = requestBody.getToken();
-        Optional<Account> optional = accountRepo.findById(token.getAccountId());
-        //verify token
-        if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
-            //get form information
-            Event toSave = requestBody.getObject();
-            //insert into events table
-            Event event = eventRepo.save(toSave);
-            //get ids for junction table
-            int accountId = optional.get().getId();
-            int eventId = event.getId();
-            //insert into junction table
-            Attendant attendant = new Attendant(eventId, accountId, Role.COORDINATOR);
-            attendantRepo.save(attendant);
-            //return newly created event
-            return new ResponseEntity<Event>(event, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Event>(new Event(), HttpStatus.UNAUTHORIZED);
-        }
+        return eventService.createEvent(requestBody);
     }
 }

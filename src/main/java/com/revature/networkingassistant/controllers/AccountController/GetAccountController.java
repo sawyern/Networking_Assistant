@@ -1,16 +1,10 @@
 package com.revature.networkingassistant.controllers.AccountController;
 
 import com.revature.networkingassistant.beans.Account;
-import com.revature.networkingassistant.beans.SessionToken;
-import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
-import com.revature.networkingassistant.repositories.AccountRepo;
-import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import com.revature.networkingassistant.services.AccountServices.GetAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
