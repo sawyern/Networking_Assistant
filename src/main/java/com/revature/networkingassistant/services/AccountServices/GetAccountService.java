@@ -16,32 +16,43 @@ public class GetAccountService {
     private AccountRepo accountRepo;
 
     public ResponseEntity<Account> getByEmail(String email) {
-        System.out.println(email);
-        Account result = accountRepo.findByEmail(email);
-        if (result == null) {
-            return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+            Account result = accountRepo.findByEmail(email);
+            if (result == null) {
+                return new ResponseEntity<>((Account) null, HttpStatus.BAD_REQUEST);
+            } else return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((Account) null, HttpStatus.BAD_GATEWAY);
+        }
     }
 
     public ResponseEntity<Account> getByFirstName(String name) {
-        Account result = accountRepo.findByFirstName(name);
-        if (result == null) {
-            return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+            Account result = accountRepo.findByFirstName(name);
+            if (result == null) {
+                return new ResponseEntity<>((Account) null, HttpStatus.BAD_REQUEST);
+            } else return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((Account) null, HttpStatus.BAD_GATEWAY);
+        }
     }
 
     public ResponseEntity<Account> getByLastName(String name) {
-        Account result = accountRepo.findByLastName(name);
-        if (result == null) {
-            return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+            Account result = accountRepo.findByLastName(name);
+            if (result == null) {
+                return new ResponseEntity<>((Account) null, HttpStatus.BAD_REQUEST);
+            } else return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((Account) null, HttpStatus.BAD_GATEWAY);
+        }
     }
 
     public ResponseEntity<ArrayList<Account>> getByPartialEmail(String partialEmail) {
         try {
             return new ResponseEntity<>(accountRepo.findAccountsByEmailContaining(partialEmail), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_GATEWAY);
         }
     }
 
@@ -49,7 +60,7 @@ public class GetAccountService {
         try {
             return new ResponseEntity<>(accountRepo.findAccountsByFirstNameContaining(partialEmail), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_GATEWAY);
         }
     }
 
@@ -57,7 +68,7 @@ public class GetAccountService {
         try {
             return new ResponseEntity<>(accountRepo.findAccountsByLastNameContaining(partialEmail), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_GATEWAY);
         }
     }
 }

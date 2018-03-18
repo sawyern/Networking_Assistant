@@ -25,11 +25,15 @@ public class ListEventsService {
 
     @Transactional
     public ResponseEntity<Iterable<Event>> listEvents(JsonRequestBody requestBody) {
-        SessionToken token = requestBody.getToken();
-        if (tokenRepo.existsById(token.getId())) {
-            return new ResponseEntity<>(eventRepo.findAll(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>((Iterable<Event>)null, HttpStatus.UNAUTHORIZED);
+        try {
+            SessionToken token = requestBody.getToken();
+            if (tokenRepo.existsById(token.getId())) {
+                return new ResponseEntity<>(eventRepo.findAll(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>((Iterable<Event>) null, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>((Iterable<Event>)null, HttpStatus.BAD_GATEWAY);
         }
     }
 }

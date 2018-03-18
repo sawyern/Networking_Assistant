@@ -36,24 +36,28 @@ public class CreateEventService {
 
     @Transactional
     public ResponseEntity<Event> createEvent(JsonRequestBody<Event> requestBody) {
-        SessionToken token = requestBody.getToken();
-        Optional<Account> optional = accountRepo.findById(token.getAccountId());
-        //verify token
-        if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
-            //get form information
-            Event toSave = requestBody.getObject();
-            //insert into events table
-            Event event = eventRepo.save(toSave);
-            //get ids for junction table
-            int accountId = optional.get().getId();
-            int eventId = event.getId();
-            //insert into junction table
-            Attendant attendant = new Attendant(eventId, accountId, Role.COORDINATOR);
-            attendantRepo.save(attendant);
-            //return newly created event
-            return new ResponseEntity<>(event, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>((Event)null, HttpStatus.UNAUTHORIZED);
+        try {
+            SessionToken token = requestBody.getToken();
+            Optional<Account> optional = accountRepo.findById(token.getAccountId());
+            //verify token
+            if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
+                //get form information
+                Event toSave = requestBody.getObject();
+                //insert into events table
+                Event event = eventRepo.save(toSave);
+                //get ids for junction table
+                int accountId = optional.get().getId();
+                int eventId = event.getId();
+                //insert into junction table
+                Attendant attendant = new Attendant(eventId, accountId, Role.COORDINATOR);
+                attendantRepo.save(attendant);
+                //return newly created event
+                return new ResponseEntity<>(event, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>((Event) null, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>((Event) null, HttpStatus.BAD_GATEWAY);
         }
     }
 }

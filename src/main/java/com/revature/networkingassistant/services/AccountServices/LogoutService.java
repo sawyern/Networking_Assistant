@@ -28,7 +28,7 @@ public class LogoutService {
             sessionTokenRepo.delete(jsonRequestBody.getToken());
             return new ResponseEntity<>(new Account(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Account(), HttpStatus.BAD_GATEWAY);
         }
     }
 }

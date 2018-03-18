@@ -29,14 +29,18 @@ public class AnnouncementService {
     }
 
     public ResponseEntity<Announcement> createAnnouncement(@RequestBody JsonRequestBody<Announcement> requestBody) {
-        SessionToken token = requestBody.getToken();
-        if (sessionTokenRepo.existsById(token.getId())) {
-            if (accountRepo.existsById(requestBody.getObject().getAccountId())) {
-                Announcement announcement = new Announcement(requestBody.getObject().getEventId(), requestBody.getObject().getAccountId(), requestBody.getObject().getMessage());
-                return new ResponseEntity<>(announcementRepo.save(announcement), HttpStatus.OK);
+        try {
+            SessionToken token = requestBody.getToken();
+            if (sessionTokenRepo.existsById(token.getId())) {
+                if (accountRepo.existsById(requestBody.getObject().getAccountId())) {
+                    Announcement announcement = new Announcement(requestBody.getObject().getEventId(), requestBody.getObject().getAccountId(), requestBody.getObject().getMessage());
+                    return new ResponseEntity<>(announcementRepo.save(announcement), HttpStatus.OK);
+                }
+                return new ResponseEntity<>((Announcement) null, HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>((Announcement)null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>((Announcement) null, HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            return new ResponseEntity<>((Announcement) null, HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>((Announcement)null, HttpStatus.UNAUTHORIZED);
     }
 }

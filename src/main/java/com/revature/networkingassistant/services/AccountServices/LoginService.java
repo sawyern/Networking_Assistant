@@ -45,7 +45,7 @@ public class LoginService {
                 }
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(new SessionToken(), HttpStatus.UNAUTHORIZED);
     }

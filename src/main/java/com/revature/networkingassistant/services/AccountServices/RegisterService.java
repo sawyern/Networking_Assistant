@@ -61,7 +61,7 @@ public class RegisterService {
             }
             return new ResponseEntity<>(new Account(),HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(new Account(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Account(),HttpStatus.BAD_GATEWAY);
         }
     }
 
