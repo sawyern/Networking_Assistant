@@ -47,7 +47,7 @@ public class LoginService {
         } catch (Exception e) {
             return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new SessionToken(), HttpStatus.UNAUTHORIZED);
     }
 
     private boolean checkPassword(String password_plaintext, String stored_hash) {
