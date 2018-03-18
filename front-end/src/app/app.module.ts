@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,9 @@ import { EventDashboardComponent } from './event-dashboard/event-dashboard.compo
 import { ProfileComponent } from './profile/profile.component';
 import { NewEventComponent } from './new-event/new-event.component';
 import {GoToService} from "./_services/go-to.service";
+import { EventComponent } from './event/event.component';
+import { EventlistComponent } from './eventlist/eventlist.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import {GoToService} from "./_services/go-to.service";
     HomeComponent,
     EventDashboardComponent,
     ProfileComponent,
-    NewEventComponent
+    NewEventComponent,
+    EventComponent,
+    EventlistComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +43,12 @@ import {GoToService} from "./_services/go-to.service";
     AppRoutingModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs'
+    })
   ],
-  providers: [AuthenticationService, AppRoutingModule, GoToService],
+  providers: [AuthenticationService, AppRoutingModule, GoToService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

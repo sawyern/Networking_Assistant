@@ -25,7 +25,7 @@ public class Event {
     private String name;
 
     @JsonView(Views.Public.class)
-    @Column(name = "location")
+    @Column(name = "location.ts")
     private String location;
 
     @JsonView(Views.Public.class)
@@ -107,7 +107,7 @@ public class Event {
         return "Event{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
+                ", location.ts='" + location + '\'' +
                 ", date=" + date +
                 ", time='" + time + '\'' +
                 '}';
