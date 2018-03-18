@@ -39,11 +39,11 @@ public class InviteService {
                 if (accountRepo.existsById(invite.getInviter()) && accountRepo.existsById(invite.getInvitee()) && eventRepo.existsById(invite.getEventId())) {
                     return new ResponseEntity<>(inviteRepo.save(invite), HttpStatus.OK);
                 }
-                return new ResponseEntity<>((Invite) null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new Invite(), HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>((Invite) null, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new Invite(), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            return new ResponseEntity<>((Invite) null, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new Invite(), HttpStatus.BAD_GATEWAY);
         }
     }
 }

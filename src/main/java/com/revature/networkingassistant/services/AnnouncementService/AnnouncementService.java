@@ -36,11 +36,11 @@ public class AnnouncementService {
                     Announcement announcement = new Announcement(requestBody.getObject().getEventId(), requestBody.getObject().getAccountId(), requestBody.getObject().getMessage());
                     return new ResponseEntity<>(announcementRepo.save(announcement), HttpStatus.OK);
                 }
-                return new ResponseEntity<>((Announcement) null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new Announcement(), HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>((Announcement) null, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new Announcement(), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            return new ResponseEntity<>((Announcement) null, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new Announcement(), HttpStatus.BAD_GATEWAY);
         }
     }
 }

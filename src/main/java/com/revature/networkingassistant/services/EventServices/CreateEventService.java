@@ -54,10 +54,10 @@ public class CreateEventService {
                 //return newly created event
                 return new ResponseEntity<>(event, HttpStatus.CREATED);
             } else {
-                return new ResponseEntity<>((Event) null, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(new Event(), HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>((Event) null, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new Event(), HttpStatus.BAD_GATEWAY);
         }
     }
 }

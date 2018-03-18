@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ListEventsService {
 
@@ -24,16 +27,16 @@ public class ListEventsService {
     }
 
     @Transactional
-    public ResponseEntity<Iterable<Event>> listEvents(JsonRequestBody requestBody) {
+    public ResponseEntity<List<Event>> listEvents(JsonRequestBody requestBody) {
         try {
             SessionToken token = requestBody.getToken();
             if (tokenRepo.existsById(token.getId())) {
                 return new ResponseEntity<>(eventRepo.findAll(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>((Iterable<Event>) null, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(new ArrayList<Event>(), HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>((Iterable<Event>)null, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new ArrayList<Event>(), HttpStatus.BAD_GATEWAY);
         }
     }
 }
