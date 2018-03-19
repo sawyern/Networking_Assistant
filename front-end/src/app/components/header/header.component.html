@@ -20,7 +20,7 @@
         <li class="navitem">
           <!--<a class="nav-link" routerLink="profile" href=""><i class="fas fa-user-circle fa-2x fa-fw"></i>Tycho</a>-->
           <!--<a class="nav-link" *ngIf="getUsername() != ''" (click)="logout()">Logout</a>-->
-          <a class="nav-link" routerLink="home" href="">Logout</a>
+          <a class="nav-link" (click)="onLogoutSubmit()">Logout</a>
         </li>
       </ul>
   </nav>

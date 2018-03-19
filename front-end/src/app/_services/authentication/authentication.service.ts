@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
+import { Token } from '../token'
 
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   serverRegisterAuth(fname: string, lname: string, email: string, password: string): Observable<any> {
 
@@ -19,7 +20,8 @@ export class AuthenticationService {
         email: email,
         passwordHash: password
       }
-    }
+    };
+
     return this.http.put<any>('http:/localhost:8080/api/register', reqParams)
   }
 
@@ -32,7 +34,32 @@ export class AuthenticationService {
       }
     };
 
+    let obj = {
+      token: {
+        id: "1234",
+        accountId: "1"
+      },
+      object: {
+        email: "snovak@test.com",
+        passwordHash: "password",
+        phone: "808-222-2222",
+        background: "I love revature",
+        zipCode: "89521",
+        attachment: ""
+      }
+    };
+
     return this.http.post<any>('http:/localhost:8080/api/login', reqParams)
+  }
+
+  serverAuthLogout(id: string, accountId: string): Observable<any> {
+    let reqParams = {
+      token: {
+        id: localStorage.getItem(id),
+        accountId: localStorage.getItem(accountId)
+      },
+    };
+    return this.http.post<any>('http:/localhost:8080/api/logout', reqParams)
   }
 
   register(fname: string, lname: string, email: string, password: string) {
@@ -67,17 +94,6 @@ export class AuthenticationService {
           }
         })
     });
-  }
-
-  serverAuthLogout(id: string, accountId: string): Observable<any> {
-
-    let reqParams = {
-      token: {
-        id: localStorage.getItem(id),
-        accountId: localStorage.getItem(accountId)
-      }
-    };
-    return this.http.post<any>('http:/localhost:8080/api/logout', reqParams)
   }
 
   logout(id: string, accountId: string) : Promise<any> {

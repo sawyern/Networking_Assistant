@@ -19,6 +19,11 @@ export class LoginComponent implements OnInit {
   @Input() remail: string;
   @Input() rpassword: string;
 
+  tokenid = localStorage.getItem('token')
+
+  id: string;
+  accountId: string;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authService: AuthenticationService) {
@@ -57,5 +62,20 @@ onRegisterSubmit() {
         console.log(error);
       });
   }
+
+  onLogoutSubmit() {
+    console.log('onLogoutSubmit called');
+    this.authService.logout(this.id, this.accountId)
+      .then(data => {
+        this.router.navigateByUrl('');
+      })
+      .catch(
+        error => {
+          // change this later
+          console.log(error);
+        });
+  }
+
 }
+
 

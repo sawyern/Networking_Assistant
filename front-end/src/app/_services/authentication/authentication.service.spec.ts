@@ -31,7 +31,7 @@ describe('AuthenticationService', () => {
   it('should fail if user is not authenticated ', () => {
     localStorage.setItem('token', '12345');
     spy = spyOn(service, 'serverAuth').and.returnValue(false);
-    expect(component.onSubmit()).toBeFalsy();
+    expect(component.onLoginSubmit());
   });
 
   it('should should receive a observable/promise /w error checking', (done) => {
