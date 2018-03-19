@@ -16,7 +16,7 @@ import java.util.Optional;
 public class GetEventController {
 
     @Autowired
-    GetEventService eventService;
+    private GetEventService eventService;
 
     @RequestMapping(path = "/api/events/getAll", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<Event>> getAllEvents() {

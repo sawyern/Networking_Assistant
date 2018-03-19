@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface StarredAccountRepo extends CrudRepository<StarredAccount, String> {
 
-    List<StarredAccount> getByOwnderId(String ownerId);
+    List<StarredAccount> findByOwnerId(String ownerId);
 }
-
