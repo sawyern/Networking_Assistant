@@ -11,6 +11,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string) {
+    console.log('authservice.login called!');
     return this.http.post<any>('/api/login', { email, password })
       .map(user => {
         // login success -- save token to local storage

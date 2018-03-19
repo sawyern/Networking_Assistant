@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AuthenticationService} from '../_services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -10,7 +10,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
-  model: any = {};
+  email : string;
+  password : string;
+
   returnUrl: string;
 
   // incorrectLogin: boolean = false;
@@ -25,8 +27,9 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  login() {
-    this.authService.login(this.model.email, this.model.password)
+  onSubmit() {
+    console.log('onSubmit called');
+    this.authService.login(this.email, this.password)
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);
