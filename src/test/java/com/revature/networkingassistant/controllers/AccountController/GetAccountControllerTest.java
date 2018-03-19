@@ -3,42 +3,53 @@ package com.revature.networkingassistant.controllers.AccountController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.http.ContentType;
+import com.revature.networkingassistant.AppConfig;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
+import com.revature.networkingassistant.services.AccountServices.RegisterService;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
-class GetAccountControllerTest {
 
-    @Autowired
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = AppConfig.class)
+@WebAppConfiguration
+public class GetAccountControllerTest {
+
     private static JsonRequestBody requestBody;
-
-    @Autowired
     private static Account testAccount;
 
+    @Autowired
+    RegisterService registerService;
+
     @Before
-    public static void setup() {
+    public void setup() {
         requestBody = new JsonRequestBody<>();
         testAccount = new Account();
         byte[] test = "test".getBytes();
         testAccount.setEmail("test@test.test");
-        testAccount.setPasswordHash("Pieis3141");
+        testAccount.setPasswordHash("password1");
         testAccount.setFirstName("test");
         testAccount.setLastName("test");
         testAccount.setBackground("test");
-        testAccount.setPhone("123-456-7890");
+        testAccount.setPhone("223-456-7890");
         testAccount.setZipCode("12345");
         testAccount.setAttachment(test);
         requestBody = new JsonRequestBody<>();
         requestBody.setObject(testAccount);
+        registerService.registerAccount(requestBody);
     }
+
     @Test
-    void getByEmail() throws JsonProcessingException {
-        setup();
+    public void getByEmail() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
@@ -51,8 +62,7 @@ class GetAccountControllerTest {
     }
 
     @Test
-    void getByFirstName() throws JsonProcessingException {
-        setup();
+    public void getByFirstName() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
@@ -65,8 +75,7 @@ class GetAccountControllerTest {
     }
 
     @Test
-    void getByLastName() throws JsonProcessingException {
-        setup();
+    public void getByLastName() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
@@ -79,8 +88,7 @@ class GetAccountControllerTest {
     }
 
     @Test
-    void getByPartialEmail() throws JsonProcessingException {
-        setup();
+    public void getByPartialEmail() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
@@ -92,8 +100,7 @@ class GetAccountControllerTest {
     }
 
     @Test
-    void getByPartialFirstName() throws JsonProcessingException {
-        setup();
+    public void getByPartialFirstName() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
@@ -105,8 +112,7 @@ class GetAccountControllerTest {
     }
 
     @Test
-    void getByPartialLastName() throws JsonProcessingException {
-        setup();
+    public void getByPartialLastName() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))

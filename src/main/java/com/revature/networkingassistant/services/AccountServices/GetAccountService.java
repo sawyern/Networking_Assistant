@@ -16,7 +16,6 @@ public class GetAccountService {
     private AccountRepo accountRepo;
 
     public ResponseEntity<Account> getByEmail(String email) {
-        System.out.println(email);
         Account result = accountRepo.findByEmail(email);
         if (result == null) {
             return new ResponseEntity<>((Account)null, HttpStatus.BAD_REQUEST);
@@ -38,26 +37,23 @@ public class GetAccountService {
     }
 
     public ResponseEntity<ArrayList<Account>> getByPartialEmail(String partialEmail) {
-        try {
-            return new ResponseEntity<>(accountRepo.findAccountsByEmailContaining(partialEmail), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
-        }
+        ArrayList<Account> accounts = accountRepo.findAccountsByEmailContaining(partialEmail);
+        if (accounts.size() == 0) {
+            return new ResponseEntity<>(accounts, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-    public ResponseEntity<ArrayList<Account>> getByPartialFirstName(String partialEmail) {
-        try {
-            return new ResponseEntity<>(accountRepo.findAccountsByFirstNameContaining(partialEmail), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<ArrayList<Account>> getByPartialFirstName(String partialFirstName) {
+        ArrayList<Account> accounts = accountRepo.findAccountsByEmailContaining(partialFirstName);
+        if (accounts.size() == 0) {
+            return new ResponseEntity<>(accounts, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
-    public ResponseEntity<ArrayList<Account>> getByPartialLastName(String partialEmail) {
-        try {
-            return new ResponseEntity<>(accountRepo.findAccountsByLastNameContaining(partialEmail), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<ArrayList<Account>> getByPartialLastName(String partialLastName) {
+        ArrayList<Account> accounts = accountRepo.findAccountsByEmailContaining(partialLastName);
+        if (accounts.size() == 0) {
+            return new ResponseEntity<>(accounts, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 }

@@ -9,7 +9,8 @@ import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
 import org.junit.After;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,13 +32,8 @@ class RegisterControllerTest {
     @Autowired
     private AccountRepo accountRepo;
 
-    @After
-    public void rollback() {
-        accountRepo.delete(testAccount);
-    }
-
-    @Test
-    void registerAccountTest() throws JsonProcessingException {
+    @Before
+    public void setup() {
         requestBody = new JsonRequestBody<>();
         testAccount = new Account();
         byte[] test = "test".getBytes();
@@ -54,6 +50,15 @@ class RegisterControllerTest {
         requestBody = new JsonRequestBody<>();
         requestBody.setObject(testAccount);
         System.out.println(requestBody);
+    }
+
+    @After
+    public void rollback() {
+        accountRepo.delete(testAccount);
+    }
+
+    @Test
+    void registerAccountTest() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
