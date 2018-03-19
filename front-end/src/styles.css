@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 html, body{
-  background: #1488CC;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #1488CC;
+  background: linear-gradient(#2B32B2, #1488CC 12%, transparent),
+  url(https://s3.amazonaws.com/nwasquad/hunters-race-408744-unsplash.jpg) no-repeat center center fixed;
+
+  /*background: no-repeat center center; !* fallback for old browsers *!*/
+  /*background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);  !* Chrome 10-25, Safari 5.1-6 *!*/
+
+  background-size: cover;
+  background-repeat: no-repeat;/* W3C, IE 10+/ Edge, Firefox 16+, Chr/ome 26+, Opera 12+, Safari 7+ */
 
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;

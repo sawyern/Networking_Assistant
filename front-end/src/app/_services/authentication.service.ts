@@ -10,31 +10,35 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  serverAuth(): Observable<any> {
+  serverRegisterAuth(fname: string, lname: string, email: string, password: string): Observable<any> {
 
-    let obj = {
-      token: {
-        id: "1234",
-        accountId: "1"
-      },
+    let reqParams = {
       object: {
-        email: "snovak@test.com",
-        passwordHash: "password",
-        phone: "808-222-2222",
-        background: "I love revature",
-        zipCode: "89521",
-        attachment: ""
+        first_name: fname,
+        last_name: lname,
+        email: email,
+        passwordHash: password
+      }
+    }
+    return this.http.put<any>('http:/localhost:8080/api/register', reqParams)
+  }
+
+  serverAuth(email: string, password: string): Observable<any> {
+
+    let reqParams = {
+      object: {
+        email: email,
+        passwordHash: password
       }
     };
 
-    return of(obj);
+    return this.http.post<any>('http:/localhost:8080/api/login', reqParams)
   }
 
-
-  login(email: string, password: string) {
-    console.log('authservice.login called!');
+  register(fname: string, lname: string, email: string, password: string) {
+    console.log('authservice.register called!');
     return new Promise<any>((res, rej) => {
-      this.serverAuth().toPromise()
+      this.serverRegisterAuth(fname, lname, email, password).toPromise()
         .then(token => {
           if (token) {
             console.log('success ' + token);
@@ -48,10 +52,45 @@ export class AuthenticationService {
     });
   }
 
+  login(email: string, password: string) {
+    console.log('authservice.login called!');
+    return new Promise<any>((res, rej) => {
+      this.serverAuth(email, password).toPromise()
+        .then(token => {
+          if (token) {
+            console.log('success ' + token);
+            localStorage.setItem('token', token);
+            res(token);
+          } else {
+            console.log('error ' + token);
+            rej(token);
+          }
+        })
+    });
+  }
 
+  serverAuthLogout(id: string, accountId: string): Observable<any> {
 
-  logout() {
-    localStorage.removeItem('currentUser');
+    let reqParams = {
+      token: {
+        id: localStorage.getItem(id),
+        accountId: localStorage.getItem(accountId)
+      }
+    };
+    return this.http.post<any>('http:/localhost:8080/api/logout', reqParams)
+  }
+
+  logout(id: string, accountId: string) : Promise<any> {
+    console.log('logout initiated');
+    return new Promise<any>((res, rej) => {
+      this.serverAuthLogout(id, accountId).toPromise()
+        .then(() => {
+          localStorage.removeItem('token');
+          res();
+        }).catch(() => {
+          rej();
+      });
+    });
   }
 
 }

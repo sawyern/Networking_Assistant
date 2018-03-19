@@ -13,28 +13,30 @@ import { GoToService } from "../_services/go-to.service";
 export class LoginComponent implements OnInit {
   @Input() email: string;
   @Input() password: string;
-  returnUrl: string;
 
-  // incorrectLogin: boolean = false;
+  @Input() rfname: string;
+  @Input() rlname: string;
+  @Input() remail: string;
+  @Input() rpassword: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authService: AuthenticationService) {
   }
-  
-  ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
+  ngOnInit() {
+
+    //jquery login animation - may refactor later
     $('.message a').click(function () {
       $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
     });
   }
 
-  onSubmit() {
-    console.log('onSubmit called');
+  onLoginSubmit() {
+    console.log('onLoginSubmit called');
     this.authService.login(this.email, this.password)
       .then(data => {
-        this.router.navigate([this.returnUrl]);
+        this.router.navigateByUrl('');
       })
       .catch(
     error => {
@@ -42,4 +44,18 @@ export class LoginComponent implements OnInit {
       console.log(error);
     });
   }
+
+onRegisterSubmit() {
+  console.log('onRegisterSubmit called');
+  this.authService.register(this.rfname, this.rlname, this.remail, this.rpassword)
+    .then(data => {
+      this.router.navigateByUrl('');
+    })
+    .catch(
+      error => {
+        // change this later
+        console.log(error);
+      });
+  }
 }
+
