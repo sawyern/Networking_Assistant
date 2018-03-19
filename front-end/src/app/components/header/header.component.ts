@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService} from "../_services/authentication.service";
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,12 @@ export class HeaderComponent implements OnInit {
 
   private login: boolean;
   private logout:boolean;
-  private tabs:boolean;
+  private tabs:boolean
 
-  constructor(private router:Router) {
+  id: string;
+  accountId: string;
+
+  constructor(private router:Router, private authService: AuthenticationService) {
     this.checkPath();
     router.events.subscribe(() => {
       this.checkPath();
@@ -28,6 +32,20 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onLogoutSubmit() {
+    console.log('onLogoutSubmit called');
+    this.authService.logout(this.id, this.accountId)
+      .then(data => {
+        this.router.navigateByUrl('');
+      })
+      .catch(
+        error => {
+          // change this later
+          console.log(error);
+        });
+  }
+
 
   checkPath(): void{
     let url = this.router.url;
