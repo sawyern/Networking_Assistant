@@ -1,0 +1,18 @@
+.photo-basics-section {
+  background: #FFFFFF;
+  /*justify-content: center;*/
+  align-items: center;
+  display: flex;
+}
+
+.events-section {
+  background: slategrey;
+}
+
+img {
+  margin: 25px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 310px;
+  width: 100%;
+}

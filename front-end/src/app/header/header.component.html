@@ -1,3 +1,29 @@
-<p>
-  header works!
-</p>
+  <nav class="navbar navbar-expand navbar-default">
+    <a class="navbar-brand" routerLink=""><i class="fas fa-handshake fa-2x"></i></a>
+
+    <div class="nav-container">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" routerLink="home" href="">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="">Starred</a></li>
+        <li class="nav-item"><a class="nav-link" href="">Notes</a></li>
+      </ul>
+    </div>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="profile" href=""><i class="fas fa-user-circle fa-2x fa-fw"></i>Tycho</a>
+          <a class="nav-link" routerLink="login" href="">Login</a>
+          <!--<a class="nav-link" *ngIf="getUser() != ''">Welcome, {{getUser()}}</a>-->
+          <!--<li class="nav-item"><a *ngIf="getUsername() != ''">Logout</a></li>-->
+        </li>
+        <li class="navitem">
+          <!--<a class="nav-link" routerLink="profile" href=""><i class="fas fa-user-circle fa-2x fa-fw"></i>Tycho</a>-->
+          <!--<a class="nav-link" *ngIf="getUsername() != ''" (click)="logout()">Logout</a>-->
+          <a class="nav-link" routerLink="home" href="">Logout</a>
+        </li>
+      </ul>
+  </nav>
+
+  <!--<i class="fas fa-handshake"></i>-->
+
