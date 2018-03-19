@@ -69,5 +69,4 @@ public class RegisterControllerTest {
             .assertThat().body("phone", equalTo(testAccount.getPhone()))
             .assertThat().body("background", equalTo(testAccount.getBackground()));
     }
-
 }

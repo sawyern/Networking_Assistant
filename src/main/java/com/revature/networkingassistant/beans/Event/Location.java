@@ -1,33 +1,42 @@
 package com.revature.networkingassistant.beans.Event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.controllers.DTO.Views;
+
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name="Locations")
-public class Location implements Serializable {
+public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @OneToOne
     @JoinColumn(name = "event_id")
+    @JsonIgnore
     private Event event;
 
+    @JsonView(Views.Public.class)
     @Column(name = "addressNum")
     private String addressNum;
 
+    @JsonView(Views.Public.class)
     @Column(name = "streetName")
     private String streetName;
 
+    @JsonView(Views.Public.class)
     @Column(name = "city")
     private String city;
 
+    @JsonView(Views.Public.class)
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private State state;
 
+    @JsonView(Views.Public.class)
     @Column(name = "zip")
     private String zip;
 
@@ -100,10 +109,9 @@ public class Location implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Location)) return false;
         Location location = (Location) o;
         return id == location.id &&
-                Objects.equals(event, location.event) &&
                 Objects.equals(addressNum, location.addressNum) &&
                 Objects.equals(streetName, location.streetName) &&
                 Objects.equals(city, location.city) &&
@@ -113,14 +121,13 @@ public class Location implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, event, addressNum, streetName, city, state, zip);
+        return Objects.hash(id, addressNum, streetName, city, state, zip);
     }
 
     @Override
     public String toString() {
         return "Location{" +
                 "id=" + id +
-                ", event=" + event +
                 ", addressNum='" + addressNum + '\'' +
                 ", streetName='" + streetName + '\'' +
                 ", city='" + city + '\'' +

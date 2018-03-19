@@ -13,6 +13,7 @@ public interface AccountRepo extends CrudRepository<Account, Integer> {
     Account findByFirstName(String firstName);
 
     void deleteAccountById(int id);
+    void deleteAccountByEmail(String email);
 
     boolean existsByEmail(String email);
     ArrayList<Account> findAccountsByEmailContaining(String partialEmail);

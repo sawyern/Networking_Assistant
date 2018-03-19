@@ -6,8 +6,10 @@ import com.jayway.restassured.http.ContentType;
 import com.revature.networkingassistant.AppConfig;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
+import com.revature.networkingassistant.controllers.TestUtil;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,107 +23,98 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = AppConfig.class)
 @WebAppConfiguration
-class GetAccountControllerTest {
+public class GetAccountControllerTest {
 
     @Autowired
-    private static JsonRequestBody requestBody;
-
-    @Autowired
-    private static Account testAccount;
+    private TestUtil testUtil;
+    private JsonRequestBody<Account> requestBody = new JsonRequestBody<>();
 
     @Before
-    public static void setup() {
-        requestBody = new JsonRequestBody<>();
-        testAccount = new Account();
-        byte[] test = "test".getBytes();
-        testAccount.setEmail("test@test.test");
-        testAccount.setPasswordHash("Pieis3141");
-        testAccount.setFirstName("test");
-        testAccount.setLastName("test");
-        testAccount.setBackground("test");
-        testAccount.setPhone("123-456-7890");
-        testAccount.setZipCode("12345");
-        testAccount.setAttachment(test);
-        requestBody = new JsonRequestBody<>();
-        requestBody.setObject(testAccount);
+    public void setup() {
+        requestBody.setObject(testUtil.createTestAccount());
     }
-    @Test
-    void getByEmail() throws JsonProcessingException {
-        setup();
-        ObjectMapper mapper = new ObjectMapper();
-        given()
-                .body(mapper.writeValueAsString(requestBody))
-                .contentType(ContentType.JSON)
-                .when()
-                .get("/api/account/getByEmail/"+ testAccount.getEmail())
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .assertThat().body("email", equalTo(testAccount.getEmail()));
+
+    @After
+    public void rollback() {
+        testUtil.removeTestAccount(requestBody.getObject());
     }
 
     @Test
-    void getByFirstName() throws JsonProcessingException {
-        setup();
+    public void getByEmail() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/account/getByFirstName/" + testAccount.getFirstName())
+                .get("/api/account/getByEmail/"+ requestBody.getObject().getEmail())
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .assertThat().body("firstName", equalTo(testAccount.getFirstName()));
+                .assertThat().body("email", equalTo(requestBody.getObject().getEmail()));
     }
 
     @Test
-    void getByLastName() throws JsonProcessingException {
-        setup();
+    public void getByFirstName() throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/account/getByLastName/"+ testAccount.getLastName())
+                .get("/api/account/getByFirstName/" + requestBody.getObject().getFirstName())
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .assertThat().body("lastName", equalTo(testAccount.getLastName()));
+                .assertThat().body("firstName", equalTo(requestBody.getObject().getFirstName()));
     }
 
     @Test
-    void getByPartialEmail() throws JsonProcessingException {
-        setup();
+    public void getByLastName() throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/accounts/getByPartialEmail/"+ testAccount.getEmail().substring(0, testAccount.getEmail().length()/2))
+                .get("/api/account/getByLastName/"+ requestBody.getObject().getLastName())
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat().body("lastName", equalTo(requestBody.getObject().getLastName()));
+    }
+
+    @Test
+    public void getByPartialEmail() throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        given()
+                .body(mapper.writeValueAsString(requestBody))
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/accounts/getByPartialEmail/"+ requestBody.getObject().getEmail().substring(0, requestBody.getObject().getEmail().length()/2))
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    void getByPartialFirstName() throws JsonProcessingException {
-        setup();
+    public void getByPartialFirstName() throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/accounts/getByPartialFirstName/"+ testAccount.getFirstName().substring(0, testAccount.getFirstName().length()/2))
+                .get("/api/accounts/getByPartialFirstName/"+ requestBody.getObject().getFirstName().substring(0, requestBody.getObject().getFirstName().length()/2))
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    void getByPartialLastName() throws JsonProcessingException {
-        setup();
+    public void getByPartialLastName() throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
         given()
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/api/accounts/getByPartialLastName/"+ testAccount.getLastName().substring(0, testAccount.getLastName().length()/2))
+                .get("/api/accounts/getByPartialLastName/"+ requestBody.getObject().getLastName().substring(0, requestBody.getObject().getLastName().length()/2))
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }

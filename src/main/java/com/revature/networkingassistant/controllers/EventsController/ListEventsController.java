@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ListEventsController {
 
@@ -19,7 +21,7 @@ public class ListEventsController {
 
     @Transactional
     @RequestMapping(path = "/api/events", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Event>> listEvents(@RequestBody JsonRequestBody requestBody) {
+    public ResponseEntity<List<Event>> listEvents(@RequestBody JsonRequestBody requestBody) {
         return eventsService.listEvents(requestBody);
     }
 }

@@ -6,10 +6,7 @@ import com.revature.networkingassistant.beans.Attendant.Role;
 import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
-import com.revature.networkingassistant.repositories.AccountRepo;
-import com.revature.networkingassistant.repositories.AttendantRepo;
-import com.revature.networkingassistant.repositories.EventRepo;
-import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import com.revature.networkingassistant.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +22,15 @@ public class CreateEventService {
     private AccountRepo accountRepo;
     private SessionTokenRepo tokenRepo;
     private AttendantRepo attendantRepo;
+    private LocationRepo locationRepo;
 
     @Autowired
-    public CreateEventService(EventRepo eventRepo, AccountRepo accountRepo, SessionTokenRepo tokenRepo, AttendantRepo attendantRepo) {
+    public CreateEventService(EventRepo eventRepo, AccountRepo accountRepo, SessionTokenRepo tokenRepo, AttendantRepo attendantRepo, LocationRepo locationRepo) {
         this.eventRepo = eventRepo;
         this.accountRepo = accountRepo;
         this.tokenRepo = tokenRepo;
         this.attendantRepo = attendantRepo;
+        this.locationRepo = locationRepo;
     }
 
     @Transactional
@@ -41,10 +40,9 @@ public class CreateEventService {
             Optional<Account> optional = accountRepo.findById(token.getAccountId());
             //verify token
             if (tokenRepo.existsById(token.getId()) && optional.isPresent()) {
-                //get form information
-                Event toSave = requestBody.getObject();
                 //insert into events table
-                Event event = eventRepo.save(toSave);
+                Event event = eventRepo.save(requestBody.getObject());
+                locationRepo.save(requestBody.getObject().getLocation());
                 //get ids for junction table
                 int accountId = optional.get().getId();
                 int eventId = event.getId();

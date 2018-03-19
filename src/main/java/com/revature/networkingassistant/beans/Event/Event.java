@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Events")
-public class Event implements Serializable {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,8 +20,8 @@ public class Event implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @OneToOne(mappedBy = "event", cascade = CascadeType.REMOVE)
     @JsonView(Views.Public.class)
-    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
     private Location location;
 
     @JsonView(Views.Public.class)
@@ -73,17 +72,16 @@ public class Event implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Event)) return false;
         Event event = (Event) o;
         return id == event.id &&
                 Objects.equals(name, event.name) &&
-                Objects.equals(location, event.location) &&
                 Objects.equals(date, event.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location, date);
+        return Objects.hash(id, name, date);
     }
 
     @Override
@@ -91,7 +89,6 @@ public class Event implements Serializable {
         return "Event{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", location=" + location +
                 ", date=" + date +
                 '}';
     }
