@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService} from "../_services/authentication.service";
+import { AuthenticationService} from "../../_services/authentication/authentication.service";
 
 @Component({
   selector: 'app-header',
@@ -12,32 +12,30 @@ export class HeaderComponent implements OnInit {
   private login: boolean;
   private logout:boolean;
   private tabs:boolean
+  private firstName : string;
 
   id: string;
   accountId: string;
 
   constructor(private router:Router, private authService: AuthenticationService) {
-    this.checkPath();
-    router.events.subscribe(() => {
-      this.checkPath();
+  }
+
+  setUser() {
+    this.authService.getAccountByEmail("").subscribe( account => {
+      this.firstName = account.firstName;
+      console.log("firstname " + account.firstName);
     });
   }
 
-  getUser(): string {
-    console.log(localStorage.getItem('object'));
-    if (localStorage.getItem('object') != null) {
-      return localStorage.get('object.first_name');
-    } else return "";
-  }
-
   ngOnInit() {
+    this.setUser();
   }
 
   onLogoutSubmit() {
     console.log('onLogoutSubmit called');
     this.authService.logout(this.id, this.accountId)
       .then(data => {
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('login');
       })
       .catch(
         error => {
@@ -47,14 +45,8 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  checkPath(): void{
-    let url = this.router.url;
-    if(url=="/login" || url=="/register" || url=="/profile" || url=="/event/dashboard" || url=="/event/new") this.login = false;
-      else this.login = true;
-    if(url == "/" || url=="/login" || url=="/register") this.logout = false;
-      else this.logout = true;
-    if(url == "/" || url=="/login" || url=="/register") this.tabs = false;
-      else this.tabs = true;
+  isLoggedIn() : boolean {
+    return localStorage.getItem('token.id') != null;
   }
 
 }

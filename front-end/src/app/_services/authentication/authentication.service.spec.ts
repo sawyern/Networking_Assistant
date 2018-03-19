@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import {AuthenticationService} from './authentication.service';
-import {LoginComponent} from "../login/login.component";
+import {LoginComponent} from "../../components/login/login.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 

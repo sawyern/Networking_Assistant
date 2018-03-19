@@ -55,6 +55,10 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
+
+/*.login-form-button button:hover, .login-form-button button:active, .login-form-button button:focus{*/
+  /*background: #3262e7;*/
+/*}*/
 .form button:hover,.form button:active,.form button:focus {
   background: #3262e7;
 }

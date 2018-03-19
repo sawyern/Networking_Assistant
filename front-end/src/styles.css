@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 html, body{
   background: #1488CC;
-  background: linear-gradient(#2B32B2, #1488CC 12%, transparent),
+  background: linear-gradient(#2B32B2, #1488CC 90px, transparent 675px),
   url(https://s3.amazonaws.com/nwasquad/hunters-race-408744-unsplash.jpg) no-repeat center center fixed;
 
   /*background: no-repeat center center; !* fallback for old browsers *!*/
