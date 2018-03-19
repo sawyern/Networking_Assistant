@@ -2,6 +2,7 @@ package com.revature.networkingassistant.beans;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -46,13 +47,12 @@ public class Account {
 
     @JsonView(Views.Public.class)
     @Column(name = "attachment")
-    @Lob
-    private Byte[] attachment;
+    private byte[] attachment;
 
     public Account() {
     }
 
-    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, Byte[] attachment) {
+    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, byte[] attachment) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.firstName = firstName;
@@ -127,11 +127,11 @@ public class Account {
         this.zipCode = zipCode;
     }
 
-    public Byte[] getAttachment() {
+    public byte[] getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(Byte[] attachment) {
+    public void setAttachment(byte[] attachment) {
         this.attachment = attachment;
     }
 
@@ -153,7 +153,7 @@ public class Account {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, email, passwordHash, firstName, lastName, phone, background, zipCode);
+        int result = Objects.hash(id, email, passwordHash, phone, background, zipCode);
         result = 31 * result + Arrays.hashCode(attachment);
         return result;
     }
