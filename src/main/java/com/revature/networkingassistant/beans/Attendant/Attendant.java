@@ -1,6 +1,7 @@
 package com.revature.networkingassistant.beans.Attendant;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
@@ -63,7 +64,7 @@ public class Attendant implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Attendant)) return false;
         Attendant attendant = (Attendant) o;
         return eventId == attendant.eventId &&
                 accountId == attendant.accountId &&

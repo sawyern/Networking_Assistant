@@ -1,0 +1,71 @@
+.navbar {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.navbar-default .navbar-brand {
+  color: #FFFFFF;
+}
+
+.navbar-nav li a {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+ }
+
+.navbar-nav li {
+  display: flex;
+}
+
+.navbar-nav > li{
+  margin-left:10px;
+}
+
+li, a {
+  display:inline-block;
+  text-align:center;
+  color: #FFFFFF;
+  width: auto;
+}
+
+ul li {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+a {
+  color: #FFFFFF;
+  position: relative;
+  text-decoration: none;
+  padding-bottom: 8px;
+}
+li a:before, li a:after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #FFFFFF;
+}
+li a:before {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: transform 0s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0s;
+}
+li a:after {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+li a:hover:before, li a:hover:after, li a:focus:before, li a:focus:after {
+  opacity: 1;
+  transform: translateY(0);
+}
+li a:hover:before, li a:focus:before {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+li a:hover:after, li a:focus:after {
+  transition: transform 0s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0s 0.2s;
+}
+
