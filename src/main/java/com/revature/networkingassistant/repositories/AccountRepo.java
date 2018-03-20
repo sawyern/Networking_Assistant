@@ -12,6 +12,9 @@ public interface AccountRepo extends CrudRepository<Account, Integer> {
     Account findByLastName(String lastName);
     Account findByFirstName(String firstName);
 
+    void deleteAccountById(int id);
+    void deleteAccountByEmail(String email);
+
     boolean existsByEmail(String email);
     ArrayList<Account> findAccountsByEmailContaining(String partialEmail);
     ArrayList<Account> findAccountsByFirstNameContaining(String partialFirst);
