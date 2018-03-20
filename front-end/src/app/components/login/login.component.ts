@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
   @Input() remail: string;
   @Input() rpassword: string;
 
+  invalid : boolean = false;
+  errorMsg : string = "";
+
   tokenid = localStorage.getItem('token')
 
   id: string;
@@ -42,11 +45,17 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.email, this.password)
       .then(data => {
         this.router.navigateByUrl('');
+        this.invalid = true;
+        this.errorMsg = "";
       })
       .catch(
     error => {
-      // change this later
-      console.log(error);
+      this.invalid = true;
+      if (error.status >= 400 && error.status < 500)
+        this.errorMsg = "Email and password do not match.";
+      else if (error.status >= 500)
+        this.errorMsg = "Server not responding. Try again later.";
+      else this.errorMsg = "Server not responding. Try again later."
     });
   }
 
@@ -55,27 +64,19 @@ onRegisterSubmit() {
   this.authService.register(this.rfname, this.rlname, this.remail, this.rpassword)
     .then(data => {
       this.router.navigateByUrl('login');
+      this.invalid = true;
+      this.errorMsg = "";
     })
     .catch(
       error => {
-        // change this later
-        console.log(error);
+        this.invalid = true;
+        if (error.status == 400)
+          this.errorMsg = "Email already taken";
+        else if (error.status >= 500)
+          this.errorMsg = "Server not responding. Try again later.";
+        else this.errorMsg = "Server not responding. Try again later."
       });
   }
-
-  onLogoutSubmit() {
-    console.log('onLogoutSubmit called');
-    this.authService.logout(this.id, this.accountId)
-      .then(data => {
-        this.router.navigateByUrl('');
-      })
-      .catch(
-        error => {
-          // change this later
-          console.log(error);
-        });
-  }
-
 }
 
 
