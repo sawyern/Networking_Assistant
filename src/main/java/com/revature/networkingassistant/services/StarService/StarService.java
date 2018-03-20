@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Service
-public class GetStarredService {
+public class StarService {
 
     @Autowired
     private StarredAccountRepo starredAccountRepo;
