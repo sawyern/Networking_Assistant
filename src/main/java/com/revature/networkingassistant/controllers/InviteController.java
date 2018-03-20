@@ -1,5 +1,6 @@
 package com.revature.networkingassistant.controllers;
 
+import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.services.InviteServices.InviteService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class InviteController {
     private InviteService inviteService;
 

@@ -1,5 +1,6 @@
 package com.revature.networkingassistant.controllers.AccountController;
 
+import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.services.AccountServices.GetAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class GetAccountController {
     private GetAccountService getAccountService;
 

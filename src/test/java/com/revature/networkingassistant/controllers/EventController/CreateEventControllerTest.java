@@ -86,7 +86,11 @@ public class CreateEventControllerTest extends AbstractTransactionalJUnit4Spring
             .then()
                 .statusCode(HttpStatus.SC_CREATED)
                 .assertThat().body("location.addressNum", equalTo(requestBody.getObject().getLocation().getAddressNum()))
-                //.assertThat().body("date", is(requestBody.getObject().getDate()))
+                .assertThat().body("location.streetName", equalTo(requestBody.getObject().getLocation().getStreetName()))
+                .assertThat().body("location.city", equalTo(requestBody.getObject().getLocation().getCity()))
+                .assertThat().body("location.state", equalTo(requestBody.getObject().getLocation().getState().toString()))
+                .assertThat().body("location.zip", equalTo(requestBody.getObject().getLocation().getZip()))
+                //.assertThat().body("date", equalTo(requestBody.getObject().getDate().toString()))
                 .assertThat().body("name", equalTo(requestBody.getObject().getName()));
     }
 }

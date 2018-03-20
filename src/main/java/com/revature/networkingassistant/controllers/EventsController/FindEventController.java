@@ -1,5 +1,6 @@
 package com.revature.networkingassistant.controllers.EventsController;
 
+import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.services.EventServices.FindEventService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class FindEventController {
 
     @Autowired
