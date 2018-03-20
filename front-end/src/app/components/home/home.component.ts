@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import {GoToService} from "../_services/go-to.service";
+import {GoToService} from "../../_services/go-to/go-to.service";
 
 @Component({
   selector: 'app-home',

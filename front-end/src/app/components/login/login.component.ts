@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { AuthenticationService} from '../_services/authentication.service';
+import { AuthenticationService} from '../../_services/authentication/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import  * as $ from 'jquery';
-import { GoToService } from "../_services/go-to.service";
+import { GoToService } from "../../_services/go-to/go-to.service";
 
 @Component({
   selector: 'app-login',
@@ -54,7 +54,7 @@ onRegisterSubmit() {
   console.log('onRegisterSubmit called');
   this.authService.register(this.rfname, this.rlname, this.remail, this.rpassword)
     .then(data => {
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('login');
     })
     .catch(
       error => {

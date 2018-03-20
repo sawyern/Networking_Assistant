@@ -8,14 +8,14 @@
       <input [(ngModel)]="remail" type="text" name="remail" placeholder="email address"/>
       <input [(ngModel)]="rpassword" type="password" name="rpassword" placeholder="password"/>
       <input [(ngModel)]="rpassword" type="password" name="rpassword" placeholder="confirm password"/>
-      <button>create</button>
+      <button type="submit">create</button>
       <p class="message">Already registered? <a>Sign In</a></p>
     </form>
 
     <form class="login-form" #loginForm="ngForm" (ngSubmit)="onLoginSubmit()"><i class="fas fa-handshake fa-3x"></i>
-      <input [(ngModel)]="email" type="text" name="email" placeholder="email"/>
-      <input [(ngModel)]="password" type="password" name="password" placeholder="password"/>
-      <button>login</button>
+      <input [(ngModel)]="email" required type="email" name="email" placeholder="email"/>
+      <input [(ngModel)]="password" required type="password" name="password" placeholder="password"/>
+      <button type="submit" [ngClass]="{'login-form-button':true}" [disabled]="!loginForm.form.valid">login</button>
       <p class="message">Not registered? <a>Create an account</a></p>
     </form>
   </div>

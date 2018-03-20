@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 // import { RegisterComponent } from "./register/register.component";
 import { AuthGuard} from './_guards/auth.guard';
-import {HomeComponent} from './home/home.component';
-import {RegisterComponent} from "./register/register.component";
-import {ProfileComponent} from "./profile/profile.component";
-import {EventDashboardComponent} from "./event-dashboard/event-dashboard.component";
-import {NewEventComponent} from "./new-event/new-event.component";
+import {HomeComponent} from './components/home/home.component';
+import {RegisterComponent} from "./components/register/register.component";
+import {ProfileComponent} from "./components/profile/profile.component";
+import {EventDashboardComponent} from "./components/event-dashboard/event-dashboard.component";
+import {NewEventComponent} from "./components/new-event/new-event.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
