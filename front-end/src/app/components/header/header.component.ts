@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService} from "../../_services/authentication/authentication.service";
+import {LogoutService} from "../../_services/authentication/logout/logout.service";
+import {GetAccountService} from "../../_services/getAccount/get-account.service";
 
 @Component({
   selector: 'app-header',
@@ -9,28 +10,32 @@ import { AuthenticationService} from "../../_services/authentication/authenticat
 })
 export class HeaderComponent implements OnInit {
 
-  private login: boolean;
-  private logout:boolean;
-  private tabs:boolean
-  private firstName : string;
+  public firstName : string = "";
 
-  constructor(private router:Router, private authService: AuthenticationService) {
+  constructor(private router:Router, private logoutService: LogoutService, private getAccountService : GetAccountService) {
   }
 
-  setUser() {
-    this.authService.getAccountByEmail("").subscribe( account => {
-      this.firstName = account.firstName;
-      console.log("firstname " + account.firstName);
+  getMyName() : Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this.getAccountService.getAccountById(localStorage.getItem("token.accountId")).toPromise().then(account => {
+        resolve(account.firstName);
+      }).catch(error => {
+        reject(error);
+      });
     });
   }
 
   ngOnInit() {
-    this.setUser();
+    if (this.isLoggedIn()) {
+      this.getMyName().then(name => {
+        this.firstName = name;
+      });
+    }
   }
 
   onLogoutSubmit() {
     console.log('onLogoutSubmit called');
-    this.authService.logout()
+    this.logoutService.logout()
       .then(data => {
         this.router.navigateByUrl('login');
       })

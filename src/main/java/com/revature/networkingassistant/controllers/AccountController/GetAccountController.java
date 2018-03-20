@@ -22,6 +22,11 @@ public class GetAccountController {
         this.getAccountService = getAccountService;
     }
 
+    @RequestMapping(value = "/api/account/getById/{id}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Account> getByEmail(@PathVariable int id) {
+        return getAccountService.getById(id);
+    }
+
     @RequestMapping(value = "/api/account/getByEmail/{email}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Account> getByEmail(@PathVariable String email) {
         return getAccountService.getByEmail(email);

@@ -15,6 +15,17 @@ public class GetAccountService {
     @Autowired
     private AccountRepo accountRepo;
 
+    public ResponseEntity<Account> getById(int id) {
+        try {
+            Account result = accountRepo.findById(id).get();
+            if (result == null) {
+                return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+            } else return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Account(), HttpStatus.BAD_GATEWAY);
+        }
+    }
+
     public ResponseEntity<Account> getByEmail(String email) {
         try {
             Account result = accountRepo.findByEmail(email);
