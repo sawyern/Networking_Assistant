@@ -3,6 +3,7 @@ package com.revature.networkingassistant.controllers.AccountController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.http.ContentType;
+import com.revature.networkingassistant.AppConfig;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
@@ -12,14 +13,21 @@ import com.revature.networkingassistant.services.AccountServices.RegisterService
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
 
 import static com.jayway.restassured.RestAssured.given;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = AppConfig.class)
+@WebAppConfiguration
 class LogoutControllerTest {
 
     private JsonRequestBody<Account> requestBody;
-    private Account testAccount;
 
     @Autowired
     private AccountRepo accountRepo;
@@ -30,7 +38,7 @@ class LogoutControllerTest {
     public void setup() {
         SessionToken sessionToken = new SessionToken();
 
-        testAccount = new Account();
+        Account testAccount = new Account();
         testAccount.setEmail("snovak@test.com");
         testAccount.setPasswordHash(RegisterService.hashPassword("password"));
 
