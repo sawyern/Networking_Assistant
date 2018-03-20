@@ -14,9 +14,6 @@ export class HeaderComponent implements OnInit {
   private tabs:boolean
   private firstName : string;
 
-  id: string;
-  accountId: string;
-
   constructor(private router:Router, private authService: AuthenticationService) {
   }
 
@@ -33,7 +30,7 @@ export class HeaderComponent implements OnInit {
 
   onLogoutSubmit() {
     console.log('onLogoutSubmit called');
-    this.authService.logout(this.id, this.accountId)
+    this.authService.logout()
       .then(data => {
         this.router.navigateByUrl('login');
       })

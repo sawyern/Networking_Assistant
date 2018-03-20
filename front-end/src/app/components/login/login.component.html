@@ -1,13 +1,21 @@
 <div class="login-page">
   <div class="form">
 
+    <div class="errorMsg" [hidden]="!invalid"
+         class="alert alert-danger"
+    >
+      {{errorMsg}}
+    </div>
+
     <form class="register-form" #registerForm="ngForm" (ngSubmit)="onRegisterSubmit()">
       <i class="fas fa-handshake fa-3x"></i>
       <input [(ngModel)]="rfname" type="text" name="rfname" placeholder="first name"/>
       <input [(ngModel)]="rlname" type="text" name="rlname" placeholder="last name"/>
       <input [(ngModel)]="remail" type="text" name="remail" placeholder="email address"/>
       <input [(ngModel)]="rpassword" type="password" name="rpassword" placeholder="password"/>
-      <input [(ngModel)]="rpassword" type="password" name="rpassword" placeholder="confirm password"/>
+      <input type="password" name="rpassword" placeholder="confirm password"/>
+      <!--<div *ngIf="rpassword.errors.required">Password is required</div>-->
+
       <button type="submit">create</button>
       <p class="message">Already registered? <a>Sign In</a></p>
     </form>

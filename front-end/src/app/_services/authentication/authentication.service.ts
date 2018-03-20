@@ -6,6 +6,7 @@ import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
   import {Token} from "../../beans/Token";
   import {Account} from "../../beans/Account";
+  import {JsonRequestBody} from "../../beans/JsonRequestBody";
 
 @Injectable()
 export class AuthenticationService {
@@ -34,8 +35,8 @@ export class AuthenticationService {
         zipCode: "89521",
         attachment: ""
     };
-    return of(obj);
-    //return this.http.put<Token>('http:/localhost:8080/api/register', reqParams)
+    //return of(obj);
+    return this.http.put<Account>('http://localhost:8080/api/register', reqParams)
   }
 
   serverAuth(email: string, password: string): Observable<Token> {
@@ -51,19 +52,19 @@ export class AuthenticationService {
         id: "1234",
         accountId: "1"
     };
-    return of(obj);
-    //return this.http.post<Token>('http:/localhost:8080/api/login', reqParams)
+    //return of(obj);
+    return this.http.post<Token>('http://localhost:8080/api/login', reqParams)
   }
 
-  serverAuthLogout(id: string, accountId: string): Observable<any> {
+  serverAuthLogout(): Observable<any> {
     let reqParams = {
       token: {
-        id: localStorage.getItem(id),
-        accountId: localStorage.getItem(accountId)
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
       },
     };
-    return of({});
-    //return this.http.post<Token>('http:/localhost:8080/api/logout', reqParams)
+    //return of({});
+    return this.http.post<Token>('http://localhost:8080/api/logout', reqParams)
   }
 
   register(fname: string, lname: string, email: string, password: string) {
@@ -78,7 +79,9 @@ export class AuthenticationService {
             console.log('error ' + account);
             rej(account);
           }
-        })
+        }).catch(err => {
+        rej(err);
+      })
     });
   }
 
@@ -97,14 +100,20 @@ export class AuthenticationService {
             console.log('error ' + token);
             rej(token);
           }
-        })
+        }).catch(err => {
+        rej(err);
+      });
     });
   }
 
-  logout(id: string, accountId: string) : Promise<Token> {
+  logout() : Promise<Token> {
     console.log('logout initiated');
+    let token : Token;
+
+    let requestBody : JsonRequestBody<any>;
+
     return new Promise<Token>((res, rej) => {
-      this.serverAuthLogout(id, accountId).toPromise()
+      this.serverAuthLogout().toPromise()
         .then(() => {
           localStorage.removeItem('token.id');
           localStorage.removeItem('token.accountId');
@@ -119,7 +128,7 @@ export class AuthenticationService {
     let account = new Account();
     account.email = "sawyer";
     account.firstName = "Sawyer";
-    return of(account);
-    //return this.http.get<Account>('http://localhost:8080/api/account/getByEmail/' + email);
+    //return of(account);
+    return this.http.get<Account>('http://localhost:8080/api/account/getByEmail/' + email);
   }
 }
