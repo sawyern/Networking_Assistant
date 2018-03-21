@@ -26,21 +26,16 @@ public class FindEventService {
     }
 
     @Transactional
-    public ResponseEntity<Optional<Event>> findEvent(JsonRequestBody requestBody,int id) {
+    public ResponseEntity<Event> findEvent(int id) {
         try {
-            SessionToken token = requestBody.getToken();
-            if (tokenRepo.existsById(token.getId())) {
-                Optional<Event> event = eventRepo.findById(id);
-                if (event.isPresent()) {
-                    return new ResponseEntity<>(event, HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(event, HttpStatus.INTERNAL_SERVER_ERROR);
-                }
+            Optional<Event> event = eventRepo.findById(id);
+            if (event.isPresent()) {
+                return new ResponseEntity<>(event.get(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(Optional.empty(), HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(new Event(), HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(Optional.empty(), HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new Event(), HttpStatus.BAD_GATEWAY);
         }
     }
 }
