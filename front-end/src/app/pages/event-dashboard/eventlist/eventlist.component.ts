@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EagerEvent } from "../../../../eagerEvent";
+import {Event} from "../../../beans/Event";
+import {HttpClient} from "@angular/common/http";
+import {UtilService} from "../../../_services/util/util.service";
+import {utils} from "protractor";
 
 @Component({
   selector: 'app-eventlist',
@@ -8,21 +12,21 @@ import { EagerEvent } from "../../../../eagerEvent";
 })
 export class EventlistComponent implements OnInit {
 
-  events:EagerEvent[];
+  events:Event[];
 
-  constructor() {
-    var event1 = new EagerEvent;
-    event1.name = "Party";
-    var event2 = new EagerEvent;
-    event2.name = "Meetup";
-    var event3 = new EagerEvent;
-    event3.name = "Job Fair";
-    var event4 = new EagerEvent;
-    event4.name = "Event";
-    this.events = [event1,event2,event3,event4];
+  constructor(private http:HttpClient, private utilService:UtilService) {
+    console.log("Constructed");
+    this.getEvents();
   }
 
   ngOnInit() {
   }
 
+  getEvents(){
+    console.log("Retrieving Data");
+    this.http.get<any>(this.utilService.getServerUrl() + "api/events").subscribe(response=>{
+      this.events = response;
+      console.log("Data retrieved");
+    });
+  }
 }

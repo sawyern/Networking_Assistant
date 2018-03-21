@@ -1,6 +1,6 @@
 package com.revature.networkingassistant.controllers.EventsController;
 
-import com.revature.networkingassistant.beans.Event;
+import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.services.EventServices.GetEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
