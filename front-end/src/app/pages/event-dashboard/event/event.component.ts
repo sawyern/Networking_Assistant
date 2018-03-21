@@ -4,6 +4,9 @@ import { Response } from "../../../../location";
 import {Event} from "../../../../Event";
 import {Attendee} from "../../../../Attendee";
 
+import {Location} from "../../../beans/Location";
+import {Event} from "../../../beans/Event"
+import {Attendee} from "../../../beans/Attendee";
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -29,6 +32,15 @@ export class EventComponent implements OnInit {
     event.attendees = attendees;
     event.name="Event";
     event.location="11730 Plaza America Dr, Reston VA";
+    event.name="Event";
+
+    let loc : Location = new Location();
+    loc.addressNum = "11730";
+    loc.streetName = "Plaza America Dr";
+    loc.city = "Reston";
+    loc.state = "VA";
+    loc.zip = "11111"
+    event.location = loc;
     this.event=event;
     this.getAddress();
   }
@@ -37,8 +49,8 @@ export class EventComponent implements OnInit {
   }
 
   getAddress(){
-    //11730 Plaza America Dr #205, Reston, VA 20190
-    this.http.get<Response>("https://maps.googleapis.com/maps/api/geocode/json?address=11730+Plaza+America+Dr,+Reston,+VA&key=AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs").subscribe(response=>{
+    // 11730 Plaza America Dr #205, Reston, VA 20190
+    this.http.get<any>("https://maps.googleapis.com/maps/api/geocode/json?address=11730+Plaza+America+Dr,+Reston,+VA&key=AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs").subscribe(response=>{
         this.lat = response.results[0].geometry.location.lat;
         this.lng = response.results[0].geometry.location.lng;
       }

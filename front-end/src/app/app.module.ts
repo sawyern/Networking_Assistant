@@ -27,6 +27,7 @@ import {GetAccountService} from "./_services/getAccount/get-account.service";
 import { EventComponent } from './pages/event-dashboard/event/event.component';
 import { EventlistComponent } from './pages/event-dashboard/eventlist/eventlist.component';
 import { AgmCoreModule } from '@agm/core';
+import {EventFormComponent} from "./pages/new-event/event-form/event-form.component";
 
 @NgModule({
   declarations: [
@@ -39,10 +40,11 @@ import { AgmCoreModule } from '@agm/core';
     EventDashboardComponent,
     ProfileComponent,
     NewEventComponent,
-    LoginPageComponent
+    LoginPageComponent,
     NewEventComponent,
     EventComponent,
-    EventlistComponent
+    EventlistComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,
@@ -66,3 +68,4 @@ import { AgmCoreModule } from '@agm/core';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

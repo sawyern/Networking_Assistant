@@ -1,0 +1,37 @@
+.form-newEvent {
+  width: 100%;
+  max-width: 600px;
+  display: inline-block;
+  margin-top: 40px;
+  padding: 10px;
+}
+.form-newEvent .checkbox {
+  font-weight: 400;
+}
+.form-newEvent .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  font-size: 16px;
+}
+
+.formLabel {
+  text-align: left;
+  display:block;
+  font-weight:500;
+}
+
+.red {
+  color: red;
+}
+
+button {
+  margin-top: 50px;
+}
+
+#formHead {
+  background-color: #f9f9f9;
+  border-radius: 25px;
+  padding-left: 30px;
+  padding-right: 30px;
+}

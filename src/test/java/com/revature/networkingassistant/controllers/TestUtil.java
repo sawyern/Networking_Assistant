@@ -109,6 +109,12 @@ public class TestUtil {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void removeSessionToken(SessionToken sessionToken) {
+        if (sessionTokenRepo.existsById(sessionToken.getId()))
+            sessionTokenRepo.delete(sessionToken);
+    }
+
+        @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void removeAttendant(Attendant attendant) {
         //attendantRepo.deleteById(eventRepo.findByName(event.getName()).getId());
     }
