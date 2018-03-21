@@ -19,7 +19,7 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should take in correct metrics /w validation and error checking', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

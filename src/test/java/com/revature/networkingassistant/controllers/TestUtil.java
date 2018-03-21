@@ -3,6 +3,8 @@ package com.revature.networkingassistant.controllers;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.beans.Event.Event;
+import com.revature.networkingassistant.beans.Event.Location;
+import com.revature.networkingassistant.beans.Event.State;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.repositories.*;
 import com.revature.networkingassistant.services.AccountServices.LoginService;
@@ -14,6 +16,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 @Service
 public class TestUtil {
 
@@ -24,6 +28,7 @@ public class TestUtil {
     private AnnouncementRepo announcementRepo;
     private InviteRepo inviteRepo;
     private StarredAccountRepo starredAccountRepo;
+    private LocationRepo locationRepo;
 
     public TestUtil(){}
 
@@ -34,7 +39,8 @@ public class TestUtil {
                     AttendantRepo attendantRepo,
                     AnnouncementRepo announcementRepo,
                     InviteRepo inviteRepo,
-                    StarredAccountRepo starredAccountRepo
+                    StarredAccountRepo starredAccountRepo,
+                    LocationRepo locationRepo
     ) {
         this.accountRepo = accountRepo;
         this.sessionTokenRepo = sessionTokenRepo;
@@ -43,6 +49,7 @@ public class TestUtil {
         this.announcementRepo = announcementRepo;
         this.inviteRepo = inviteRepo;
         this.starredAccountRepo = starredAccountRepo;
+        this.locationRepo = locationRepo;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -68,6 +75,26 @@ public class TestUtil {
         account.setPasswordHash(RegisterService.hashPassword(account.getPasswordHash()));
         account = accountRepo.save(account);
         return account;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Event createNewEvent() {
+        //create test event
+        Event testEvent = new Event();
+        testEvent.setName("test event");
+        testEvent.setDate(new Date());
+
+        Location loc = new Location();
+        loc.setEvent(testEvent);
+        loc.setAddressNum("1234");
+        loc.setStreetName("oak street");
+        loc.setCity("San Francisco");
+        loc.setState(State.CA);
+        loc.setZip("95050");
+        testEvent.setLocation(loc);
+        testEvent = eventRepo.save(testEvent);
+        locationRepo.save(loc);
+        return testEvent;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
