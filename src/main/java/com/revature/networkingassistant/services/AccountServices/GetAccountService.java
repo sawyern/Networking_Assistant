@@ -44,14 +44,14 @@ public class GetAccountService {
     }
 
     public ResponseEntity<ArrayList<Account>> getByPartialFirstName(String partialFirstName) {
-        ArrayList<Account> accounts = accountRepo.findAccountsByEmailContaining(partialFirstName);
+        ArrayList<Account> accounts = accountRepo.findAccountsByFirstNameContaining(partialFirstName);
         if (accounts.size() == 0) {
             return new ResponseEntity<>(accounts, HttpStatus.BAD_REQUEST);
         } else return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
     public ResponseEntity<ArrayList<Account>> getByPartialLastName(String partialLastName) {
-        ArrayList<Account> accounts = accountRepo.findAccountsByEmailContaining(partialLastName);
+        ArrayList<Account> accounts = accountRepo.findAccountsByLastNameContaining(partialLastName);
         if (accounts.size() == 0) {
             return new ResponseEntity<>(accounts, HttpStatus.BAD_REQUEST);
         } else return new ResponseEntity<>(accounts, HttpStatus.OK);
