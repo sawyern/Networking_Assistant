@@ -24,6 +24,8 @@ import { LoginPageComponent } from './pages/login/login-page/login-page.componen
 import {RegisterService} from "./_services/authentication/register/register.service";
 import {LogoutService} from "./_services/authentication/logout/logout.service";
 import {GetAccountService} from "./_services/getAccount/get-account.service";
+import { EventListComponent } from './event-list/event-list.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {GetAccountService} from "./_services/getAccount/get-account.service";
     EventDashboardComponent,
     ProfileComponent,
     NewEventComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    EventListComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
