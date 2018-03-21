@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { Response } from "../../../../location";
-import {Event} from "../../../../Event";
-import {Attendee} from "../../../../Attendee";
-
 import {Location} from "../../../beans/Location";
 import {Event} from "../../../beans/Event"
 import {Attendee} from "../../../beans/Attendee";
@@ -19,19 +15,16 @@ export class EventComponent implements OnInit {
   lng: number = 0;
 
   constructor(private http:HttpClient) {
-    var event = new Event();
+    let event = new Event();
     event.description = "An Event";
-    var attendee1 = new Attendee();
+    let attendee1 = new Attendee();
     attendee1.name = "Joe";
-    var attendee2 = new Attendee();
+    let attendee2 = new Attendee();
     attendee2.name = "Sawyer";
-    var attendee3 = new Attendee();
+    let attendee3 = new Attendee();
     attendee3.name = "Jason";
-    var attendees:Attendee[];
+    let attendees:Attendee[];
     attendees = [attendee1,attendee2,attendee3];
-    event.attendees = attendees;
-    event.name="Event";
-    event.location="11730 Plaza America Dr, Reston VA";
     event.name="Event";
 
     let loc : Location = new Location();
