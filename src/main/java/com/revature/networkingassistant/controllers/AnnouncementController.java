@@ -26,6 +26,6 @@ public class AnnouncementController {
 
     @RequestMapping(path = "/api/announcement/create")
     public ResponseEntity<Announcement> makeAnnouncement(@RequestBody JsonRequestBody<Announcement> requestBody) {
-        return announcementService.createAnnouncement(requestBody);
+        return announcementService.makeAnnouncement(requestBody);
     }
 }
