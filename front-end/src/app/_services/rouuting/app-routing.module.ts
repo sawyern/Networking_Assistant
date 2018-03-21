@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   // { path: '', component: LandingComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginPageComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:accountId', component: ProfileComponent },
   { path: 'event/dashboard', component: EventDashboardComponent },
   { path: 'event/new', component: NewEventComponent },
 

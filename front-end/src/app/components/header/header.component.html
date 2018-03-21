@@ -17,7 +17,7 @@
 
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="isLoggedIn()" routerLink="profile"><i class="fas fa-user-circle fa-2x fa-fw"></i>Welcome, {{firstName}}</a>
+          <a class="nav-link" *ngIf="isLoggedIn()" routerLink="profile/{{accountId}}"><i class="fas fa-user-circle fa-2x fa-fw"></i>Welcome, {{firstName}}</a>
           <a class="nav-link" *ngIf="isLoggedIn()" (click)="onLogoutSubmit()">Logout</a>
         </li>
       </ul>

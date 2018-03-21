@@ -14,28 +14,9 @@ import {Observable} from "rxjs/Observable";
 
 export class ProfileComponent implements OnInit {
 
-  email: string;
-  phone: string;
-  background: string;
-  zipcode: string;
-  accountId = localStorage.getItem('token.accountId');
-
-  constructor(private getAccountService: GetAccountService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.getAccount();
-  }
-
-  //GET account info from server
-  getAccount() {
-    console.log('getAccount called');
-    this.getAccountService.getAccountById(this.accountId)
-      .subscribe( data => {
-        this.email = data.email;
-        this.phone = data.phone;
-        this.background = data.background;
-        this.zipcode = data.zipCode;
-      })
   }
 
 }

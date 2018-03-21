@@ -11,6 +11,7 @@ import {GetAccountService} from "../../_services/getAccount/get-account.service"
 export class HeaderComponent implements OnInit {
 
   public firstName : string = "";
+  public accountId : string = "";
 
   constructor(private router:Router, private logoutService: LogoutService, private getAccountService : GetAccountService) {
   }
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
         this.firstName = name;
       });
     }
+    this.accountId = localStorage.getItem('token.accountId');
   }
 
   onLogoutSubmit() {

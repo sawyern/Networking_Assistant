@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -24,8 +23,8 @@ import { LoginPageComponent } from './pages/login/login-page/login-page.componen
 import {RegisterService} from "./_services/authentication/register/register.service";
 import {LogoutService} from "./_services/authentication/logout/logout.service";
 import {GetAccountService} from "./_services/getAccount/get-account.service";
-import { EventListComponent } from './event-list/event-list.component';
-import { UserInfoComponent } from './user-info/user-info.component';
+import { EventListComponent } from './pages/profile/event-list/event-list.component';
+import { UserInfoComponent } from './pages/profile/user-info/user-info.component';
 
 @NgModule({
   declarations: [
