@@ -39,7 +39,7 @@ import { AgmCoreModule } from '@agm/core';
     EventDashboardComponent,
     ProfileComponent,
     NewEventComponent,
-    LoginPageComponent
+    LoginPageComponent,
     NewEventComponent,
     EventComponent,
     EventlistComponent
