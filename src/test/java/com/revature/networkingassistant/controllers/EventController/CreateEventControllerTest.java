@@ -74,6 +74,7 @@ public class CreateEventControllerTest extends AbstractTransactionalJUnit4Spring
     public void rollback() {
         testUtil.removeTestAccount(testAccount);
         testUtil.removeTestEvent(requestBody.getObject());
+        testUtil.removeSessionToken(requestBody.getToken());
     }
 
     @Test

@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from "../../../_services/authentication/login/login.service";
-import  * as $ from 'jquery';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +14,6 @@ export class LoginComponent implements OnInit {
 
   invalid: boolean = false;
   errorMsg: string = "";
-
-  tokenid = localStorage.getItem('token')
 
   id: string;
   accountId: string;
