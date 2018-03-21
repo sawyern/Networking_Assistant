@@ -30,12 +30,11 @@ public class AnnouncementService {
         this.accountRepo = accountRepo;
     }
 
-    public ResponseEntity<Announcement> makeAnnouncement(JsonRequestBody requestBody, int announcerId, int eventId) {
+    public ResponseEntity<Announcement> makeAnnouncement(JsonRequestBody<Announcement> requestBody) {
         SessionToken token = requestBody.getToken();
         if (sessionTokenRepo.existsById(token.getId())) {
-            if (accountRepo.existsById(announcerId)) {
-                Announcement announcement = new Announcement(eventId, announcerId, (String) requestBody.getObject());
-                return new ResponseEntity<>(announcementRepo.save(announcement), HttpStatus.OK);
+            if (accountRepo.existsById(requestBody.getObject().getId())) {
+                return new ResponseEntity<>(announcementRepo.save(requestBody.getObject()), HttpStatus.OK);
             }
             return new ResponseEntity<>(new Announcement(), HttpStatus.BAD_REQUEST);
         }

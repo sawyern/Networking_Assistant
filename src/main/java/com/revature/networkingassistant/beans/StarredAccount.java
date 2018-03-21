@@ -29,8 +29,7 @@ public class StarredAccount {
     public StarredAccount() {
     }
 
-    public StarredAccount(int id, int ownerId, int starredAccountId) {
-        this.id = id;
+    public StarredAccount(int ownerId, int starredAccountId) {
         this.ownerId = ownerId;
         this.starredAccountId = starredAccountId;
     }
