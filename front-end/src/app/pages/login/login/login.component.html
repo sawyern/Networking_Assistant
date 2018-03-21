@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="errorMsg" [hidden]="!invalid"
+       class="alert alert-danger"
+  >
+    {{errorMsg}}
+  </div>
+
+  <form class="login-form" #loginForm="ngForm" (ngSubmit)="onLoginSubmit()"><i class="fas fa-handshake fa-3x"></i>
+    <input [(ngModel)]="email" required type="email" name="email" placeholder="email"/>
+    <input [(ngModel)]="password" required type="password" name="password" placeholder="password"/>
+    <button type="submit" [ngClass]="{'login-form-button':true}" [disabled]="!loginForm.form.valid">login</button>
+    <p class="message">Not registered?
+      <a (click)="callParent()" >Create an account</a>
+    </p>
+  </form>
+</div>

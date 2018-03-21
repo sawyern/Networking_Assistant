@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { Response } from "../../location";
-import {Event} from "../../Event";
-import {Attendee} from "../../Attendee";
+import { Response } from "../../../../location";
+import {Event} from "../../../../Event";
+import {Attendee} from "../../../../Attendee";
 
 @Component({
   selector: 'app-event',

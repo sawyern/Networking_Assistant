@@ -3,24 +3,29 @@ import { NgModule, ApplicationRef } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './pages/login/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { RegisterComponent } from './components/register/register.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { AuthenticationService } from './_services/authentication/authentication.service';
+import { RegisterComponent } from './pages/login/register/register.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './_guards/auth.guard';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import { EventDashboardComponent } from './components/event-dashboard/event-dashboard.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { NewEventComponent } from './components/new-event/new-event.component';
+import { EventDashboardComponent } from './pages/event-dashboard/event-dashboard/event-dashboard.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { NewEventComponent } from './pages/new-event/new-event/new-event.component';
 import {GoToService} from "./_services/go-to/go-to.service";
-import { EventComponent } from './event/event.component';
-import { EventlistComponent } from './eventlist/eventlist.component';
+import {AppRoutingModule} from "./_services/rouuting/app-routing.module";
+import {LoginService} from "./_services/authentication/login/login.service";
+import {UtilService} from "./_services/util/util.service";
+import { LoginPageComponent } from './pages/login/login-page/login-page.component';
+import {RegisterService} from "./_services/authentication/register/register.service";
+import {LogoutService} from "./_services/authentication/logout/logout.service";
+import {GetAccountService} from "./_services/getAccount/get-account.service";
+import { EventComponent } from './pages/event-dashboard/event/event.component';
+import { EventlistComponent } from './pages/event-dashboard/eventlist/eventlist.component';
 import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
@@ -33,6 +38,8 @@ import { AgmCoreModule } from '@agm/core';
     HomeComponent,
     EventDashboardComponent,
     ProfileComponent,
+    NewEventComponent,
+    LoginPageComponent
     NewEventComponent,
     EventComponent,
     EventlistComponent
@@ -48,7 +55,14 @@ import { AgmCoreModule } from '@agm/core';
       apiKey: 'AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs'
     })
   ],
-  providers: [AuthenticationService, AppRoutingModule, GoToService, HttpClient],
+  providers: [
+    GoToService,
+    LoginService,
+    UtilService,
+    RegisterService,
+    LogoutService,
+    GetAccountService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

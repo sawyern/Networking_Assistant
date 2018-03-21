@@ -1,5 +1,6 @@
 package com.revature.networkingassistant.controllers.AccountController;
 
+import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.services.AccountServices.GetAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class GetAccountController {
     private GetAccountService getAccountService;
 
@@ -18,6 +20,11 @@ public class GetAccountController {
     @Autowired
     public GetAccountController(GetAccountService getAccountService) {
         this.getAccountService = getAccountService;
+    }
+
+    @RequestMapping(value = "/api/account/getById/{id}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Account> getByEmail(@PathVariable int id) {
+        return getAccountService.getById(id);
     }
 
     @RequestMapping(value = "/api/account/getByEmail/{email}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})

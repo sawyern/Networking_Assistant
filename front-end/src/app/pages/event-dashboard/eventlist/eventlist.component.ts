@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EagerEvent } from "../../eagerEvent";
+import { EagerEvent } from "../../../../eagerEvent";
 
 @Component({
   selector: 'app-eventlist',

@@ -46,10 +46,10 @@ public class RegisterService {
                 //verify the info
                 assert (jsonRequestBody.getObject().getEmail().matches(emailRegex));
                 assert (jsonRequestBody.getObject().getPasswordHash().matches(passwordRegex));
-                assert (jsonRequestBody.getObject().getPhone().matches(phoneRegex));
-                assert (jsonRequestBody.getObject().getAttachment() != null);
-                assert (jsonRequestBody.getObject().getZipCode().matches(zipRegex));
-                assert (jsonRequestBody.getObject().getBackground() != null);
+                //assert (jsonRequestBody.getObject().getPhone().matches(phoneRegex));
+                //assert (jsonRequestBody.getObject().getAttachment() != null);
+                //assert (jsonRequestBody.getObject().getZipCode().matches(zipRegex));
+                //assert (jsonRequestBody.getObject().getBackground() != null);
                 assert (jsonRequestBody.getObject().getFirstName().matches(nameRegex));
                 assert (jsonRequestBody.getObject().getLastName().matches(nameRegex));
 
