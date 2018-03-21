@@ -1,8 +1,8 @@
-import{ Attendee } from "./Attendee";
+import {Location} from "./Location";
 
 export class Event{
   name:String;
+  date : Date;
   description:string;
-  attendees:Attendee[];
-  location:string;
+  location: Location;
 }
