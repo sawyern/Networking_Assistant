@@ -65,6 +65,7 @@ public class CreateEventControllerTest extends AbstractTransactionalJUnit4Spring
         loc.setState(State.CA);
         loc.setZip("95050");
         testEvent.setLocation(loc);
+        testEvent.setDescription("this is an event description");
 
         //create new body
         requestBody = new JsonRequestBody<>(token, testEvent);
@@ -92,6 +93,7 @@ public class CreateEventControllerTest extends AbstractTransactionalJUnit4Spring
                 .assertThat().body("location.state", equalTo(requestBody.getObject().getLocation().getState().toString()))
                 .assertThat().body("location.zip", equalTo(requestBody.getObject().getLocation().getZip()))
                 //.assertThat().body("date", equalTo(requestBody.getObject().getDate().toString()))
-                .assertThat().body("name", equalTo(requestBody.getObject().getName()));
+                .assertThat().body("name", equalTo(requestBody.getObject().getName()))
+                .assertThat().body("description", equalTo(requestBody.getObject().getDescription()));
     }
 }
