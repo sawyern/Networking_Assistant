@@ -68,3 +68,4 @@ import {EventFormComponent} from "./pages/new-event/event-form/event-form.compon
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
