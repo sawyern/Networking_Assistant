@@ -15,6 +15,17 @@ export class EventComponent implements OnInit {
   lng: number = 0;
 
   constructor(private http:HttpClient) {
+    this.event = new Event();
+    this.event.location = new Location();
+    this.event.location.state="";
+    this.event.location.city="";
+    this.event.location.streetName="";
+    this.event.location.addressNum="";
+    this.event.location.zip="";
+    this.event.id=0;
+    this.event.name="";
+    this.event.description="";
+    this.event.date=new Date();
   }
 
   ngOnInit() {
