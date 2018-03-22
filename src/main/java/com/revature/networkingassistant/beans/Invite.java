@@ -14,7 +14,7 @@ public class Invite implements Serializable{
 
     @Id
     @Column(name = "id")
-    private String id;
+    private int id;
 
     @JsonView(Views.Public.class)
     @JoinColumn(name="Events", updatable = false, nullable = false)
@@ -22,20 +22,27 @@ public class Invite implements Serializable{
 
     @JsonView(Views.Public.class)
     @JoinColumn(name="Accounts", updatable = false, nullable = false)
-    private int inviterId;
+    private int inviter;
 
     @JsonView(Views.Public.class)
     @JoinColumn(name="Accounts", updatable = false, nullable = false)
-    private int inviteeId;
+    private int invitee;
 
     public Invite() {
     }
 
-    public Invite(int eventId, int inviterId, int inviteeId) {
+    public Invite(int eventId, int inviter, int invitee) {
         this.eventId = eventId;
-        this.inviterId = inviterId;
-        this.inviteeId = inviteeId;
-        this.id = String.valueOf(eventId) + "|"  + String.valueOf(inviterId) + "|" + String.valueOf(inviteeId);
+        this.inviter = inviter;
+        this.invitee = invitee;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getEventId() {
@@ -46,20 +53,20 @@ public class Invite implements Serializable{
         this.eventId = eventId;
     }
 
-    public int getInviterId() {
-        return inviterId;
+    public int getInviter() {
+        return inviter;
     }
 
-    public void setInviterId(int inviterId) {
-        this.inviterId = inviterId;
+    public void setInviter(int inviter) {
+        this.inviter = inviter;
     }
 
-    public int getInviteeId() {
-        return inviteeId;
+    public int getInvitee() {
+        return invitee;
     }
 
-    public void setInviteeId(int inviteeId) {
-        this.inviteeId = inviteeId;
+    public void setInvitee(int invitee) {
+        this.invitee = invitee;
     }
 
     @Override
@@ -67,22 +74,24 @@ public class Invite implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invite invite = (Invite) o;
-        return eventId == invite.eventId &&
-                inviterId == invite.inviterId &&
-                inviteeId == invite.inviteeId;
+        return id == invite.id &&
+                eventId == invite.eventId &&
+                inviter == invite.inviter &&
+                invitee == invite.invitee;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(eventId, inviterId, inviteeId);
+        return Objects.hash(id, eventId, inviter, invitee);
     }
 
     @Override
     public String toString() {
         return "Invite{" +
-                "eventId=" + eventId +
-                ", inviterId=" + inviterId +
-                ", inviteeId=" + inviteeId +
+                "id=" + id +
+                ", eventId=" + eventId +
+                ", inviter=" + inviter +
+                ", invitee=" + invitee +
                 '}';
     }
 }

@@ -37,16 +37,17 @@ public class LoginService {
                     if (!sessionTokenRepo.existsByAccountId(account.getId())) {
                         SessionToken token = new SessionToken();
                         token.setAccountId(account.getId());
-                        return new ResponseEntity<>(sessionTokenRepo.save(token), HttpStatus.OK);
+                        token = sessionTokenRepo.save(token);
+                        return new ResponseEntity<>(token, HttpStatus.OK);
                     }
                     //return same token if already exists
                     else return new ResponseEntity<>(sessionTokenRepo.findByAccountId(account.getId()), HttpStatus.OK);
                 }
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new SessionToken(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new SessionToken(), HttpStatus.UNAUTHORIZED);
     }
 
     private boolean checkPassword(String password_plaintext, String stored_hash) {

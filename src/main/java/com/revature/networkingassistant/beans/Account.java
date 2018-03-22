@@ -2,6 +2,7 @@ package com.revature.networkingassistant.beans;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -171,7 +172,7 @@ public class Account {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, email, passwordHash, firstName, lastName, phone, background, zipCode);
+        int result = Objects.hash(id, email, passwordHash, phone, background, zipCode);
         result = 31 * result + Arrays.hashCode(attachment);
         return result;
     }
