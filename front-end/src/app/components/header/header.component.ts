@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
         this.firstName = name;
       });
     }
+    //need this to navigate to /profile/{accountId}
     this.accountId = localStorage.getItem('token.accountId');
   }
 

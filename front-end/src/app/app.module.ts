@@ -25,6 +25,8 @@ import {LogoutService} from "./_services/authentication/logout/logout.service";
 import {GetAccountService} from "./_services/getAccount/get-account.service";
 import { EventListComponent } from './pages/profile/event-list/event-list.component';
 import { UserInfoComponent } from './pages/profile/user-info/user-info.component';
+import {PutAccountService} from "./_services/putAccount/put-account.service";
+import { StarComponent } from './pages/profile/star/star.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { UserInfoComponent } from './pages/profile/user-info/user-info.component
     NewEventComponent,
     LoginPageComponent,
     EventListComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    StarComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { UserInfoComponent } from './pages/profile/user-info/user-info.component
     UtilService,
     RegisterService,
     LogoutService,
-    GetAccountService
+    GetAccountService,
+    PutAccountService
   ],
   bootstrap: [AppComponent]
 })
