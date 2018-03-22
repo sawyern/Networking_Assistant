@@ -7,6 +7,7 @@ import com.revature.networkingassistant.AppConfig;
 import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.controllers.TestUtil;
+import com.revature.networkingassistant.repositories.SessionTokenRepo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,7 @@ public class GetAccountControllerTest {
 
     @Autowired
     private TestUtil testUtil;
+
     private JsonRequestBody<Account> requestBody = new JsonRequestBody<>();
 
     @Before
@@ -40,10 +42,8 @@ public class GetAccountControllerTest {
     }
 
     @Test
-    public void getByEmail() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+    public void getByEmail()  {
         given()
-                .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/account/getByEmail/"+ requestBody.getObject().getEmail())
@@ -53,11 +53,8 @@ public class GetAccountControllerTest {
     }
 
     @Test
-    public void getByFirstName() throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
+    public void getByFirstName()  {
         given()
-                .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/account/getByFirstName/" + requestBody.getObject().getFirstName())
@@ -67,11 +64,8 @@ public class GetAccountControllerTest {
     }
 
     @Test
-    public void getByLastName() throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
+    public void getByLastName()  {
         given()
-                .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/account/getByLastName/"+ requestBody.getObject().getLastName())
@@ -81,11 +75,8 @@ public class GetAccountControllerTest {
     }
 
     @Test
-    public void getByPartialEmail() throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
+    public void getByPartialEmail()  {
         given()
-                .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/accounts/getByPartialEmail/"+ requestBody.getObject().getEmail().substring(0, requestBody.getObject().getEmail().length()/2))
@@ -94,11 +85,8 @@ public class GetAccountControllerTest {
     }
 
     @Test
-    public void getByPartialFirstName() throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
+    public void getByPartialFirstName()  {
         given()
-                .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/accounts/getByPartialFirstName/"+ requestBody.getObject().getFirstName().substring(0, requestBody.getObject().getFirstName().length()/2))
@@ -107,11 +95,8 @@ public class GetAccountControllerTest {
     }
 
     @Test
-    public void getByPartialLastName() throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
+    public void getByPartialLastName()  {
         given()
-                .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/accounts/getByPartialLastName/"+ requestBody.getObject().getLastName().substring(0, requestBody.getObject().getLastName().length()/2))

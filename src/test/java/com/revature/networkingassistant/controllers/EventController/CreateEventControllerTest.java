@@ -35,9 +35,6 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class CreateEventControllerTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
-    private EventRepo eventRepo;
-
-    @Autowired
     private TestUtil testUtil;
 
     private JsonRequestBody<Event> requestBody;
