@@ -5,11 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InviteRepo extends CrudRepository<Invite, String>{
-
-    Iterable<Invite> findByEventId(int eventId);
-
-    Iterable<Invite> findByInviterId(int inviterId);
-
-    Iterable<Invite> findByInviteeId(int inviteeId);
+public interface InviteRepo extends CrudRepository<Invite, Integer>{
+    Invite findByEventId(int eventId);
+    Invite findByInviter(int inviter);
+    Invite findByInvitee(int invitee);
 }

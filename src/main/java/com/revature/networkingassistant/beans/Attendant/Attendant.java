@@ -1,6 +1,7 @@
 package com.revature.networkingassistant.beans.Attendant;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
@@ -9,16 +10,15 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Attendants")
+@IdClass(Attendant.class)
 public class Attendant implements Serializable {
 
     @Id
-    @Column(name = "id")
-    private String id;
-
     @JsonView(Views.Public.class)
     @JoinColumn(name="Events", updatable = false, nullable = false)
     private int eventId;
 
+    @Id
     @JsonView(Views.Public.class)
     @JoinColumn(name="Accounts", updatable = false, nullable = false)
     private int accountId;
@@ -35,7 +35,6 @@ public class Attendant implements Serializable {
         this.eventId = eventId;
         this.accountId = accountId;
         this.role = role;
-        this.id = String.valueOf(eventId) + "|" + String.valueOf(accountId);
     }
 
     public int getEventId() {
@@ -65,7 +64,7 @@ public class Attendant implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Attendant)) return false;
         Attendant attendant = (Attendant) o;
         return eventId == attendant.eventId &&
                 accountId == attendant.accountId &&

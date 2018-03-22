@@ -1,6 +1,6 @@
 package com.revature.networkingassistant.services.EventServices;
 
-import com.revature.networkingassistant.beans.Event;
+import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.EventRepo;
 import com.revature.networkingassistant.repositories.SessionTokenRepo;

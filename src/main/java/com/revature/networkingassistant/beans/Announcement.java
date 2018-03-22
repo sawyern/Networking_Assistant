@@ -6,16 +6,16 @@ import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Announcements")
 public class Announcement implements Serializable{
 
-    //Primary key for junction tables is a String: eventId|accountID
     @Id
     @Column(name = "id")
     @JsonView(Views.Public.class)
-    private String id;
+    private int id;
 
     @Column(name = "eventId")
     @JsonView(Views.Public.class)
@@ -36,11 +36,14 @@ public class Announcement implements Serializable{
         this.eventId = eventId;
         this.accountId = accountId;
         this.message = message;
-        this.id = String.valueOf(eventId) + "|" + String.valueOf(accountId);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getEventId() {
@@ -65,5 +68,31 @@ public class Announcement implements Serializable{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Announcement that = (Announcement) o;
+        return id == that.id &&
+                eventId == that.eventId &&
+                accountId == that.accountId &&
+                Objects.equals(message, that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, eventId, accountId, message);
+    }
+
+    @Override
+    public String toString() {
+        return "Announcement{" +
+                "id=" + id +
+                ", eventId=" + eventId +
+                ", accountId=" + accountId +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

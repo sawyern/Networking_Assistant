@@ -1,0 +1,28 @@
+.photo-basics-section {
+  background: #FFFFFF;
+  /*justify-content: center;*/
+  align-items: center;
+  display: flex;
+}
+
+.basics-section {
+  margin: 25px;
+  padding: 10px;
+  background-color: lightblue;
+}
+.events-section {
+  background: slategrey;
+}
+
+img {
+  margin: 25px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 310px;
+  width: 100%;
+}
+
+.contact-flex {
+  display: flex;
+  justify-content: space-between;
+}

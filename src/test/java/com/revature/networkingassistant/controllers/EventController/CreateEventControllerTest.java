@@ -1,85 +1,99 @@
 package com.revature.networkingassistant.controllers.EventController;
 
-import com.revature.networkingassistant.NetworkingAssistantApplication;
-import com.revature.networkingassistant.beans.Event;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.restassured.http.ContentType;
+import com.revature.networkingassistant.AppConfig;
+import com.revature.networkingassistant.beans.Account;
+import com.revature.networkingassistant.beans.Event.Event;
+import com.revature.networkingassistant.beans.Event.Location;
+import com.revature.networkingassistant.beans.Event.State;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
-import com.revature.networkingassistant.controllers.EventsController.CreateEventController;
+import com.revature.networkingassistant.controllers.TestUtil;
 import com.revature.networkingassistant.repositories.EventRepo;
+import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.persistence.EntityManagerFactory;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.put;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(CreateEventController.class)
-@Transactional
-public class CreateEventControllerTest {
+@SpringBootTest(classes = AppConfig.class)
+@WebAppConfiguration
+public class CreateEventControllerTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
-
-    @MockBean
     private EventRepo eventRepo;
 
+    @Autowired
+    private TestUtil testUtil;
 
-    @Mock
-    private JsonRequestBody<Event> testBody;
-
-    @Test
-    public void createEventTest() throws Exception {
-        given(eventRepo.findById(-1).get()).willReturn(testBody.getObject());
-        Mockito.when(testBody.getToken()).thenReturn(testBody.getToken());
-
-
-        mvc.perform(put("/api/event/create")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect((ResultMatcher) jsonPath("$[1].name", is("test event")));
-    }
-
+    private JsonRequestBody<Event> requestBody;
+    private ObjectMapper mapper;
+    private Account testAccount;
     @Before
     public void setup() {
+
+        mapper = new ObjectMapper();
+        testAccount = testUtil.createTestAccount();
+
         //create test token
-        SessionToken token = new SessionToken();
-        token.setAccountId(-1);
-        token.setId("testToken");
+        SessionToken token = testUtil.loginTestUser(testAccount);
 
         //create test event
         Event testEvent = new Event();
-        testEvent.setId(-1);
         testEvent.setName("test event");
         testEvent.setDate(new Date());
-        testEvent.setLocation("test loc");
+
+        Location loc = new Location();
+        loc.setEvent(testEvent);
+        loc.setAddressNum("1234");
+        loc.setStreetName("oak street");
+        loc.setCity("San Francisco");
+        loc.setState(State.CA);
+        loc.setZip("95050");
+        testEvent.setLocation(loc);
+        testEvent.setDescription("this is an event description");
 
         //create new body
-        testBody = new JsonRequestBody<>(token, testEvent);
+        requestBody = new JsonRequestBody<>(token, testEvent);
+    }
+
+    @After
+    public void rollback() {
+        testUtil.removeTestAccount(testAccount);
+        testUtil.removeTestEvent(requestBody.getObject());
+        testUtil.removeSessionToken(requestBody.getToken());
+    }
+
+    @Test
+    public void createEventTest() throws Exception {
+        given()
+                .body(mapper.writeValueAsString(requestBody))
+                .contentType(ContentType.JSON)
+            .when()
+                .put("/api/event/create")
+            .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .assertThat().body("location.addressNum", equalTo(requestBody.getObject().getLocation().getAddressNum()))
+                .assertThat().body("location.streetName", equalTo(requestBody.getObject().getLocation().getStreetName()))
+                .assertThat().body("location.city", equalTo(requestBody.getObject().getLocation().getCity()))
+                .assertThat().body("location.state", equalTo(requestBody.getObject().getLocation().getState().toString()))
+                .assertThat().body("location.zip", equalTo(requestBody.getObject().getLocation().getZip()))
+                //.assertThat().body("date", equalTo(requestBody.getObject().getDate().toString()))
+                .assertThat().body("name", equalTo(requestBody.getObject().getName()))
+                .assertThat().body("description", equalTo(requestBody.getObject().getDescription()));
     }
 }

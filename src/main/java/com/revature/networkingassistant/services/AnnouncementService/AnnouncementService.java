@@ -17,25 +17,28 @@ import java.util.ArrayList;
 @Service
 public class AnnouncementService {
 
-    @Autowired
-    AnnouncementRepo announcementRepo;
+    private SessionTokenRepo sessionTokenRepo;
+    private AnnouncementRepo announcementRepo;
+    private AccountRepo accountRepo;
+
+    public AnnouncementService() {}
 
     @Autowired
-    AccountRepo accountRepo;
+    public AnnouncementService(SessionTokenRepo sessionTokenRepo, AnnouncementRepo announcementRepo, AccountRepo accountRepo) {
+        this.sessionTokenRepo = sessionTokenRepo;
+        this.announcementRepo = announcementRepo;
+        this.accountRepo = accountRepo;
+    }
 
-    @Autowired
-    SessionTokenRepo tokenRepo;
-
-    public ResponseEntity<Announcement> makeAnnouncement(JsonRequestBody requestBody, int announcerId, int eventId) {
+    public ResponseEntity<Announcement> makeAnnouncement(JsonRequestBody<Announcement> requestBody) {
         SessionToken token = requestBody.getToken();
-        if (tokenRepo.existsById(token.getId())) {
-            if (accountRepo.existsById(announcerId)) {
-                Announcement announcement = new Announcement(eventId, announcerId, (String) requestBody.getObject());
-                return new ResponseEntity<>(announcementRepo.save(announcement), HttpStatus.OK);
+        if (sessionTokenRepo.existsById(token.getId())) {
+            if (accountRepo.existsById(requestBody.getObject().getId())) {
+                return new ResponseEntity<>(announcementRepo.save(requestBody.getObject()), HttpStatus.OK);
             }
-            return new ResponseEntity<>((Announcement)null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Announcement(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>((Announcement)null, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new Announcement(), HttpStatus.UNAUTHORIZED);
     }
 
     @Transactional
