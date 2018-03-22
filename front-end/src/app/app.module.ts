@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login/login.component';
@@ -12,9 +13,9 @@ import { HomeComponent } from './pages/home/home.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import { EventDashboardComponent } from './pages/event-dashboard/event-dashboard.component';
+import { EventDashboardComponent } from './pages/event-dashboard/event-dashboard/event-dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { NewEventComponent } from './pages/new-event/new-event.component';
+import { NewEventComponent } from './pages/new-event/new-event/new-event.component';
 import {GoToService} from "./_services/go-to/go-to.service";
 import {AppRoutingModule} from "./_services/rouuting/app-routing.module";
 import {LoginService} from "./_services/authentication/login/login.service";
@@ -23,10 +24,10 @@ import { LoginPageComponent } from './pages/login/login-page/login-page.componen
 import {RegisterService} from "./_services/authentication/register/register.service";
 import {LogoutService} from "./_services/authentication/logout/logout.service";
 import {GetAccountService} from "./_services/getAccount/get-account.service";
-import { EventListComponent } from './pages/profile/event-list/event-list.component';
-import { UserInfoComponent } from './pages/profile/user-info/user-info.component';
-import {PutAccountService} from "./_services/putAccount/put-account.service";
-import { StarComponent } from './pages/profile/star/star.component';
+import { EventComponent } from './pages/event-dashboard/event/event.component';
+import { EventlistComponent } from './pages/event-dashboard/eventlist/eventlist.component';
+import { AgmCoreModule } from '@agm/core';
+import {EventFormComponent} from "./pages/new-event/event-form/event-form.component";
 
 @NgModule({
   declarations: [
@@ -40,9 +41,10 @@ import { StarComponent } from './pages/profile/star/star.component';
     ProfileComponent,
     NewEventComponent,
     LoginPageComponent,
-    EventListComponent,
-    UserInfoComponent,
-    StarComponent
+    NewEventComponent,
+    EventComponent,
+    EventlistComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,10 @@ import { StarComponent } from './pages/profile/star/star.component';
     AppRoutingModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs'
+    })
   ],
   providers: [
     GoToService,
@@ -58,10 +63,8 @@ import { StarComponent } from './pages/profile/star/star.component';
     UtilService,
     RegisterService,
     LogoutService,
-    GetAccountService,
-    PutAccountService
+    GetAccountService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-

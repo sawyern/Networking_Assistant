@@ -21,8 +21,7 @@ public class FindEventController {
 
     @Transactional
     @RequestMapping(path = "/api/event/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<Event>> findEvent(@RequestBody JsonRequestBody requestBody,
-                                                    @PathVariable("id") int id) {
-        return eventService.findEvent(requestBody, id);
+    public ResponseEntity<Event> findEvent(@PathVariable("id") int id) {
+        return eventService.findEvent(id);
     }
 }

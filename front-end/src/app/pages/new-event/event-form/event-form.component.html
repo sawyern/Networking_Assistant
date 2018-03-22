@@ -1,0 +1,117 @@
+<div class="errorMsg" [hidden]="!invalid"
+     class="alert alert-danger"
+>
+  {{errorMsg}}
+</div>
+
+<form id="formHead" (ngSubmit)="onSubmit()" #newEventForm="ngForm" class="form-newEvent form-group">
+
+  <h1 class="h3 mb-3 font-weight-normal">New Event Form</h1>
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <label for="eventName" class="formLabel">Event Name<span class="red">*</span></label>
+      <input type="text"
+             id="eventName"
+             class="form-control"
+             placeholder="My Really Cool Event"
+             name="eventName"
+             autocomplete="off"
+             required
+             autofocus
+             [(ngModel)]="eventName"
+      >
+    </div>
+    <div class="form-group col-md-4">
+      <label for="date" class="formLabel">Date<span class="red">*</span></label>
+      <input type="date"
+             id="date"
+             class="form-control"
+             name="date"
+             autocomplete="off"
+             required
+             autofocus
+             [(ngModel)]="date"
+      >
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="addressNum" class="formLabel">Address<span class="red">*</span></label>
+      <input type="text"
+             id="addressNum"
+             class="form-control"
+             placeholder="1234"
+             name="addressNum"
+             required
+             autofocus
+             [(ngModel)]="addressNum"
+      >
+    </div>
+    <div class="form-group col-md-10">
+      <label for="streetName" class="formLabel">Street<span class="red">*</span></label>
+      <input type="text"
+             id="streetName"
+             class="form-control"
+             placeholder="Plaza America Drive"
+             name="streetName"
+             required
+             autofocus
+             [(ngModel)]="streetName"
+      >
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-5">
+      <label for="city" class="formLabel">City<span class="red">*</span></label>
+      <input type="text"
+             id="city"
+             class="form-control"
+             placeholder="Reston"
+             name="city"
+             required
+             autofocus
+             [(ngModel)]="city"
+      >
+    </div>
+    <div class="form-group col-md-2">
+      <label for="state" class="formLabel">State<span class="red">*</span></label>
+      <input type="text"
+             id="state"
+             class="form-control"
+             placeholder="VA"
+             name="state"
+             required
+             autofocus
+             [(ngModel)]="state"
+      >
+    </div>
+    <div class="form-group col-md-5">
+      <label for="zip" class="formLabel">Zip Code<span class="red">*</span></label>
+      <input type="text"
+             id="zip"
+             class="form-control"
+             placeholder="95050"
+             name="zip"
+             required
+             autofocus
+             [(ngModel)]="zip"
+      >
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description" class="formLabel">Description<span class="red">*</span></label>
+    <textarea type="text"
+              id="description"
+              class="form-control"
+              placeholder="Business professional dress. Food Provided..."
+              name="description"
+              autocomplete="off"
+              required
+              autofocus
+              [(ngModel)]="description"
+    >
+        </textarea>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit"[disabled]="!newEventForm.form.valid">Submit</button>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+</form>

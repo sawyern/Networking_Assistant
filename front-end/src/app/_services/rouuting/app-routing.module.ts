@@ -7,8 +7,8 @@ import { AuthGuard} from '../../_guards/auth.guard';
 import {HomeComponent} from '../../pages/home/home.component';
 import {RegisterComponent} from "../../pages/login/register/register.component";
 import {ProfileComponent} from "../../pages/profile/profile.component";
-import {EventDashboardComponent} from "../../pages/event-dashboard/event-dashboard.component";
-import {NewEventComponent} from "../../pages/new-event/new-event.component";
+import {EventDashboardComponent} from "../../pages/event-dashboard/event-dashboard/event-dashboard.component";
+import {NewEventComponent} from "../../pages/new-event/new-event/new-event.component";
 import {LoginPageComponent} from "../../pages/login/login-page/login-page.component";
 
 const appRoutes: Routes = [
