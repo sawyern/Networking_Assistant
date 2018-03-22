@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {EventComponent} from "../event/event.component";
 
 @Component({
   selector: 'app-event-dashboard',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventDashboardComponent implements OnInit {
 
+  @ViewChild(EventComponent) event:EventComponent;
+
   constructor() { }
+
+  updateEvent(e){
+    this.event.setEvent(e);
+  }
 
   ngOnInit() {
   }

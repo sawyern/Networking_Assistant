@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Event} from "../../../beans/Event";
 import {HttpClient} from "@angular/common/http";
 import {UtilService} from "../../../_services/util/util.service";
@@ -11,6 +11,8 @@ import {UtilService} from "../../../_services/util/util.service";
 export class EventlistComponent implements OnInit {
 
   events:Event[];
+  @Output()
+  eventId = new EventEmitter<Event>();
 
   constructor(private http:HttpClient, private utilService:UtilService) {
     this.getEvents();
@@ -19,9 +21,14 @@ export class EventlistComponent implements OnInit {
   ngOnInit() {
   }
 
+  sendEventId(id){
+    this.eventId.emit(this.events[id]);
+  }
+
   getEvents(){
     this.http.get<any>(this.utilService.getServerUrl() + "api/events/getAll").subscribe(response=>{
       this.events = response;
+      this.sendEventId(0);
     });
   }
 }
