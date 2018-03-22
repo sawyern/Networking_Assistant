@@ -28,13 +28,18 @@ public class Event {
     @Column(name = "date")
     private Date date;
 
+    @JsonView(Views.Public.class)
+    @Column(name = "description")
+    private String description;
+
     public Event() {
     }
 
-    public Event(String name, Location location, Date date) {
+    public Event(String name, Location location, Date date, String description) {
         this.name = name;
         this.location = location;
         this.date = date;
+        this.description = description;
     }
 
     public int getId() {
@@ -69,6 +74,14 @@ public class Event {
         this.date = date;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,12 +89,13 @@ public class Event {
         Event event = (Event) o;
         return id == event.id &&
                 Objects.equals(name, event.name) &&
-                Objects.equals(date, event.date);
+                Objects.equals(date, event.date) &&
+                Objects.equals(description, event.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, date);
+        return Objects.hash(id, name, date, description);
     }
 
     @Override
@@ -90,6 +104,7 @@ public class Event {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", date=" + date +
+                ", description=" + description +
                 '}';
     }
 }

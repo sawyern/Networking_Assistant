@@ -49,7 +49,7 @@ public class LoginControllerTest {
     @After
     public void rollback() {
         testUtil.removeTestAccount(testAccount);
-        testUtil.removeSessionToken(requestBody.getToken());
+        testUtil.removeSessionToken(sessionTokenRepo.findByAccountId(testAccount.getId()));
     }
 
     @Test

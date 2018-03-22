@@ -5,11 +5,9 @@ import com.revature.networkingassistant.beans.Announcement;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.services.AnnouncementService.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
@@ -24,7 +22,7 @@ public class AnnouncementController {
         this.announcementService = announcementService;
     }
 
-    @RequestMapping(path = "/api/announcement/create")
+    @RequestMapping(path = "/api/announcement/create", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Announcement> makeAnnouncement(@RequestBody JsonRequestBody<Announcement> requestBody) {
         return announcementService.makeAnnouncement(requestBody);
     }
