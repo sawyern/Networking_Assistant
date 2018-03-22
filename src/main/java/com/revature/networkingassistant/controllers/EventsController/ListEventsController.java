@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
+@Deprecated
 public class ListEventsController {
 
     @Autowired

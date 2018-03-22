@@ -1,4 +1,4 @@
-package com.revature.networkingassistant.controllers;
+package com.revature.networkingassistant.controllers.InviteControllers;
 
 import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Invite;
@@ -24,5 +24,10 @@ public class InviteController {
     @RequestMapping(path = "/api/event/invite", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Invite> sendInvite(@RequestBody JsonRequestBody<Invite> requestBody) {
         return inviteService.sendInvite(requestBody);
+    }
+
+    @RequestMapping(path = "/api/account/ignoreInvite", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity ignoreInvite(@RequestBody JsonRequestBody<Invite> requestBody) {
+        return inviteService.ignoreInvite(requestBody);
     }
 }

@@ -4,9 +4,10 @@ import com.revature.networkingassistant.beans.Attendant.Attendant;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Repository
 public interface AttendantRepo extends CrudRepository<Attendant, String> {
-    Iterable<Attendant> findByEventId(int eventId);
-    Iterable<Attendant> findByAccountId(int accountId);
+    ArrayList<Attendant> findByEventId(int eventId);
     Attendant findByAccountIdAndEventId(int accountId, int eventId);
 }

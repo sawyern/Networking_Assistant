@@ -18,13 +18,13 @@ public class StarredAccountController {
     @Autowired
     StarService starService;
 
-    @RequestMapping(path = "/api/starred/starAccount/ownerId/{starredId}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/starred/starAccount/{ownerId}/{starredId}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Account> starAccount(@PathVariable("ownerId") int ownerId, @PathVariable("starredId") int starredId) {
         return starService.starAccount(ownerId, starredId);
     }
 
     @RequestMapping(path = "/api/starred/getStarredAccounts/{ownerId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ArrayList<Account>> getStarredAccounts(@PathVariable("ownerId") int ownerId) {
-        return starService.getStarredAcounts(ownerId);
+        return starService.getStarredAccounts(ownerId);
     }
 }

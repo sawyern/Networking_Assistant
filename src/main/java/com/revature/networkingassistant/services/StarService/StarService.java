@@ -25,12 +25,12 @@ public class StarService {
             if (starredAccount.isPresent()) {
                 ownerAccount.get().getStarredAccounts().add(starredAccount.get());
                 return new ResponseEntity<>(starredAccount.get(), HttpStatus.CREATED);
-            } return new ResponseEntity<>((Account) null, HttpStatus.BAD_REQUEST);
-        } return new ResponseEntity<>((Account) null, HttpStatus.BAD_REQUEST);
+            } return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+        } return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
     }
 
     @Transactional
-    public ResponseEntity<ArrayList<Account>> getStarredAcounts(int id) {
+    public ResponseEntity<ArrayList<Account>> getStarredAccounts(int id) {
         Optional<Account> account = accountRepo.findById(id);
         if (account.isPresent()) {
             ArrayList<Account> starredAccounts = (ArrayList<Account>) account.get().getStarredAccounts();

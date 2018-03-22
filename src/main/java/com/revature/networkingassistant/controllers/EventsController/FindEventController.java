@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
+@Deprecated
 public class FindEventController {
 
     @Autowired

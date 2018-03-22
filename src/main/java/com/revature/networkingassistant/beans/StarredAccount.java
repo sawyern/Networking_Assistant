@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "StarredAccounts")
+@Deprecated
 public class StarredAccount {
 
     @Id
