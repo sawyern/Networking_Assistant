@@ -12,24 +12,13 @@ import { AuthenticationService } from './_services/authentication.service';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './_guards/auth.guard';
 import { HomeComponent } from './home/home.component';
-
-const appRoutes: Routes = [
-  {
-    path: '',
-    // change this later
-    component: HomeComponent
-  },
-  {
-    path: '',
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'register',
-        component: RegisterComponent
-      }
-    ]
-  }
-];
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import { EventDashboardComponent } from './event-dashboard/event-dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NewEventComponent } from './new-event/new-event.component';
+import {GoToService} from "./_services/go-to.service";
 
 @NgModule({
   declarations: [
@@ -38,14 +27,20 @@ const appRoutes: Routes = [
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    EventDashboardComponent,
+    ProfileComponent,
+    NewEventComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    AppRoutingModule
+    RouterModule.forRoot([]),
+    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, AppRoutingModule, GoToService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

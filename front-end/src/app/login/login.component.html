@@ -1,25 +1,17 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm"></div>
-    <div class="col-sm">
-      <form>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter email" required autofocus/>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Password" required/>
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="incorrectLogin">Incorrect Username or Password</div>
-        <div class="form-group text-center">
-          <button type="submit" class="btn btn-primary" id="login">Login</button>
-        </div>
-        <div class="form-group text-center">
-          <button class="btn btn-primary" id="register">Register</button>
-        </div>
-      </form>
-    </div>
-    <div class="col-sm"></div>
+<div class="login-page">
+  <div class="form">
+    <form class="register-form">
+      <input type="text" placeholder="name"/><input type="text" name="email" placeholder="email address"/>
+      <input type="password" name="password" placeholder="password"/>
+
+      <button>create</button>
+      <p class="message">Already registered? <a>Sign In</a></p>
+    </form>
+    <form class="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit()"><h2>Welcome</h2>
+      <input [(ngModel)]="email" type="text" name="email" placeholder="email"/>
+      <input [(ngModel)]="password" type="password" name="password" placeholder="password"/>
+      <button>login</button>
+      <p class="message">Not registered? <a>Create an account</a></p>
+    </form>
   </div>
 </div>
