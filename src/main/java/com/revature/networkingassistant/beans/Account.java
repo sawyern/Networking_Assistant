@@ -1,14 +1,14 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "Accounts")
@@ -20,11 +20,14 @@ public class Account {
     @JsonView(Views.Public.class)
     private int id;
 
-    @ManyToOne
-    private Account owner;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="StarredList",
+            joinColumns = {  @JoinColumn(name="ownerId",referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="starredAccountId",referencedColumnName="id") })
+    private List<Account> myStarredList;
 
-    @OneToMany(mappedBy = "owner")
-    private Collection<Account> starredAccounts;
+    @ManyToMany(mappedBy = "myStarredList")
+    private List<Account> starredMeList;
 
     @JsonView(Views.Public.class)
     @Column(name = "email")
@@ -60,10 +63,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(int id, Collection<Account> starredAccounts, String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, byte[] attachment) {
-        this.id = id;
-        this.owner = this;
-        this.starredAccounts = starredAccounts;
+    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, byte[] attachment) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.firstName = firstName;
@@ -82,12 +82,20 @@ public class Account {
         this.id = id;
     }
 
-    public Collection<Account> getStarredAccounts() {
-        return starredAccounts;
+    public List<Account> getMyStarredList() {
+        return myStarredList;
     }
 
-    public void setStarredAccounts(ArrayList<Account> starredAccounts) {
-        this.starredAccounts = starredAccounts;
+    public void setMyStarredList(List<Account> myStarredList) {
+        this.myStarredList = myStarredList;
+    }
+
+    public List<Account> getStarredMeList() {
+        return starredMeList;
+    }
+
+    public void setStarredMeList(List<Account> starredMeList) {
+        this.starredMeList = starredMeList;
     }
 
     public String getEmail() {

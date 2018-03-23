@@ -1,11 +1,8 @@
 package com.revature.networkingassistant.services.StarService;
 
 import com.revature.networkingassistant.beans.Account;
-import com.revature.networkingassistant.beans.Attendant.Attendant;
-import com.revature.networkingassistant.beans.Event.Event;
+import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.repositories.AccountRepo;
-import com.revature.networkingassistant.repositories.AttendantRepo;
-import com.revature.networkingassistant.repositories.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,32 +15,33 @@ import java.util.Optional;
 @Service
 public class StarService {
 
-    @Autowired
     private AccountRepo accountRepo;
 
-    @Autowired
-    EventRepo eventRepo;
+    public StarService() {}
 
     @Autowired
-    AttendantRepo attendantRepo;
+    public StarService(AccountRepo accountRepo) {
+        this.accountRepo = accountRepo;
+    }
 
     @Transactional
-    public ResponseEntity<Account> starAccount(int ownerId, int starredId) {
-        Optional<Account> starredAccount = accountRepo.findById(ownerId);
-        Optional<Account> ownerAccount = accountRepo.findById(starredId);
+    public ResponseEntity<Account> starAccount(JsonRequestBody<Account> requestBody) {
+        Optional<Account> ownerAccount = accountRepo.findById(requestBody.getToken().getAccountId());
+        Optional<Account> starredAccount = accountRepo.findById(requestBody.getObject().getId());
         if (ownerAccount.isPresent()) {
             if (starredAccount.isPresent()) {
-                ownerAccount.get().getStarredAccounts().add(starredAccount.get());
+                ownerAccount.get().getMyStarredList().add(starredAccount.get());
+                accountRepo.save(ownerAccount.get());
                 return new ResponseEntity<>(starredAccount.get(), HttpStatus.CREATED);
             } return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
         } return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
     }
 
     @Transactional
-    public ResponseEntity<ArrayList<Account>> getStarredAccounts(int id) {
-        Optional<Account> account = accountRepo.findById(id);
+    public ResponseEntity<ArrayList<Account>> getStarredAccounts(JsonRequestBody requestBody) {
+        Optional<Account> account = accountRepo.findById(requestBody.getToken().getAccountId());
         if (account.isPresent()) {
-            ArrayList<Account> starredAccounts = (ArrayList<Account>) account.get().getStarredAccounts();
+            ArrayList<Account> starredAccounts = (ArrayList<Account>) account.get().getMyStarredList();
             if (starredAccounts.size() > 0)
             return new ResponseEntity<>(starredAccounts, HttpStatus.OK);
             else return new ResponseEntity<>(starredAccounts, HttpStatus.NO_CONTENT);
@@ -51,24 +49,10 @@ public class StarService {
     }
 
     @Transactional
-    public ResponseEntity<ArrayList<Account>> getEventStarredAccounts(int eventId, int id) {
-        Optional<Account> account = accountRepo.findById(id);
-        Optional<Event> event = eventRepo.findById(id);
-        ArrayList<Account> eventStarredAccounts = new ArrayList<>();
-        if (account.isPresent() && event.isPresent()) {
-            ArrayList<Attendant> eventAttendants = attendantRepo.findByEventId(eventId);
-            ArrayList<Account> starredAccounts = (ArrayList<Account>) account.get().getStarredAccounts();
-            for (Account starred : starredAccounts) {
-                for (Attendant attendant: eventAttendants) {
-                    if (starred.getId() == attendant.getAccountId()) {
-                        eventStarredAccounts.add(starred);
-                    }
-                }
-            }
-            if (eventStarredAccounts.size() > 0)
-            return new ResponseEntity<>(eventStarredAccounts, HttpStatus.OK);
-            else return new ResponseEntity<>(eventStarredAccounts, HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(eventStarredAccounts, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Boolean> deleteStarredAccount(JsonRequestBody<Account> requestBody) {
+        if (accountRepo.findById(requestBody.getToken().getAccountId()).isPresent()) {
+            Account account = accountRepo.findById(requestBody.getToken().getAccountId()).get();
+            return new ResponseEntity<>(account.getMyStarredList().remove(requestBody.getObject()), HttpStatus.OK);
+        } return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
 }

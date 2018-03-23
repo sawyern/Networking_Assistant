@@ -74,6 +74,12 @@ public class TestUtil {
         return account;
     }
 
+    public Account createTestAccount(String email) {
+        Account account = createTestAccount();
+        account.setEmail(email);
+        return account;
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Event createNewEvent() {
         //create test event

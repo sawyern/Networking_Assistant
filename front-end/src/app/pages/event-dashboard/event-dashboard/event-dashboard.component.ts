@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {EventComponent} from "../event/event.component";
+import {GoToService} from "../../../_services/go-to/go-to.service";
 
 @Component({
   selector: 'app-event-dashboard',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventDashboardComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(EventComponent) event:EventComponent;
+
+  constructor(private goToService:GoToService) { }
+
+  updateEvent(e){
+    this.event.setEvent(e);
+  }
 
   ngOnInit() {
   }

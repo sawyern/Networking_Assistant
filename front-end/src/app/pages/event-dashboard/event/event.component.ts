@@ -15,35 +15,36 @@ export class EventComponent implements OnInit {
   lng: number = 0;
 
   constructor(private http:HttpClient) {
-    let event = new Event();
-    event.description = "An Event";
-    let attendee1 = new Attendee();
-    attendee1.name = "Joe";
-    let attendee2 = new Attendee();
-    attendee2.name = "Sawyer";
-    let attendee3 = new Attendee();
-    attendee3.name = "Jason";
-    let attendees:Attendee[];
-    attendees = [attendee1,attendee2,attendee3];
-    event.name="Event";
-
-    let loc : Location = new Location();
-    loc.addressNum = "11730";
-    loc.streetName = "Plaza America Dr";
-    loc.city = "Reston";
-    loc.state = "VA";
-    loc.zip = "11111"
-    event.location = loc;
-    this.event=event;
-    this.getAddress();
+    this.event = new Event();
+    this.event.location = new Location();
+    this.event.location.state="";
+    this.event.location.city="";
+    this.event.location.streetName="";
+    this.event.location.addressNum="";
+    this.event.location.zip="";
+    this.event.id=0;
+    this.event.name="";
+    this.event.description="";
+    this.event.date=new Date();
   }
 
   ngOnInit() {
   }
 
+  setEvent(event:Event){
+    this.event = event;
+    this.getAddress();
+  }
+
   getAddress(){
     // 11730 Plaza America Dr #205, Reston, VA 20190
-    this.http.get<any>("https://maps.googleapis.com/maps/api/geocode/json?address=11730+Plaza+America+Dr,+Reston,+VA&key=AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs").subscribe(response=>{
+    let streetArr = this.event.location.streetName.split(' ');
+    let street = "";
+    for(let s of streetArr){
+      street += s+"+";
+    }
+    this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.event.location.addressNum}+${street},+${this.event.location.city},
+    +${this.event.location.state}&key=AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs`).subscribe(response=>{
         this.lat = response.results[0].geometry.location.lat;
         this.lng = response.results[0].geometry.location.lng;
       }

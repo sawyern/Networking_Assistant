@@ -1,5 +1,6 @@
 package com.revature.networkingassistant.beans.Event;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
@@ -21,7 +22,7 @@ public class Event {
     private String name;
 
     @OneToOne(mappedBy = "event", cascade = CascadeType.REMOVE)
-    @JsonView(Views.Public.class)
+    @JsonManagedReference
     private Location location;
 
     @JsonView(Views.Public.class)

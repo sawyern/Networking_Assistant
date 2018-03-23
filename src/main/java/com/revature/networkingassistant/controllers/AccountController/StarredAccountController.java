@@ -1,35 +1,42 @@
 package com.revature.networkingassistant.controllers.AccountController;
 
+import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Account;
+import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.services.StarService.StarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class StarredAccountController {
+    private StarService starService;
+
+    public StarredAccountController() {}
 
     @Autowired
-    StarService starService;
-
-    @RequestMapping(path = "/api/starred/starAccount/{ownerId}/{starredId}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Account> starAccount(@PathVariable("ownerId") int ownerId, @PathVariable("starredId") int starredId) {
-        return starService.starAccount(ownerId, starredId);
+    public StarredAccountController(StarService starService) {
+        this.starService = starService;
     }
 
-    @RequestMapping(path = "/api/starred/getStarredAccounts/{ownerId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ArrayList<Account>> getStarredAccounts(@PathVariable("ownerId") int ownerId) {
-        return starService.getStarredAccounts(ownerId);
+    @RequestMapping(path = "/api/account/addStar", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Account> starAccount(@RequestBody JsonRequestBody<Account> requestBody) {
+        return starService.starAccount(requestBody);
     }
 
-    @RequestMapping(path = "/api/starred/getEventStarredAccounts/{eventId}/{ownerId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ArrayList<Account>> getEventStarredAccounts(@PathVariable("eventId") int eventId, @PathVariable("ownerId") int ownerId) {
-        return starService.getEventStarredAccounts(eventId, ownerId);
+    @RequestMapping(path = "/api/account/getStarredAccounts", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ArrayList<Account>> getStarredAccounts(@RequestBody JsonRequestBody requestBody) {
+        return starService.getStarredAccounts(requestBody);
     }
+
+    @RequestMapping(path = "/api/account/deleteStar", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Boolean> deleteStarredAccount(@RequestBody JsonRequestBody<Account> requestBody) {
+        return starService.deleteStarredAccount(requestBody);
+    }
+
 }

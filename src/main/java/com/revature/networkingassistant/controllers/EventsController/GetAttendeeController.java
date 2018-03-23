@@ -18,8 +18,8 @@ public class GetAttendeeController {
     @Autowired
     AttendantService attendeeService;
 
-    @RequestMapping(path = "/api/event/getAttendees/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<Attendant>> getAttendees(@PathVariable("id") int eventId) {
+    @RequestMapping(path = "/api/event/getAttendees/{eventId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<Attendant>> getAttendees(@PathVariable int eventId) {
         return attendeeService.getAttendees(eventId);
     }
 }
