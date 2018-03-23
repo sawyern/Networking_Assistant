@@ -1,6 +1,7 @@
 package com.revature.networkingassistant.controllers.InviteControllers;
 
 import com.revature.networkingassistant.ControllerUtil;
+import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.services.InviteServices.GetInviteService;
@@ -29,8 +30,8 @@ public class GetInviteController {
         return getInviteService.getSentInvites(requestBody);
     }
 
-    @RequestMapping(path = "/api/invites/getReceivedInvites", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<Invite>> getReceivedInvites(@RequestBody JsonRequestBody<Invite> requestBody) {
-        return getInviteService.getRecievedInvites(requestBody);
+    @RequestMapping(path = "/api/invites/getReceivedInvites", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<Event>> getReceivedInvites(@RequestBody JsonRequestBody<Invite> requestBody) {
+        return getInviteService.getReceivedInvites(0);
     }
 }

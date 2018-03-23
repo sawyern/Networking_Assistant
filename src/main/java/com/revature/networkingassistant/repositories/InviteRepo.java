@@ -9,6 +9,7 @@ import java.util.ArrayList;
 @Repository
 public interface InviteRepo extends CrudRepository<Invite, Integer>{
     ArrayList<Invite> findByEventId(int eventId);
+    ArrayList<Invite> findByInvitee(int invitee);
     ArrayList<Invite> findByInviterAndEventId(int inviter, int eventId);
-    ArrayList<Invite> findByInviteeAndEventId(int invitee, int eventId);
+    Invite findByInviteeAndEventId(int invitee, int eventId);
 }
