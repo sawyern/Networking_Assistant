@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { EagerEvent } from "../../../../eagerEvent";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: "my-events",
@@ -13,13 +14,14 @@ export class MyEventsComponent implements OnInit {
   starred: Observable<any[]> = undefined;
   getDetails = false;
   constructor(private http: HttpClient) {
-      this.events = http.get<any[]>("localhost:8080/api/events/getAttendantEvents/"+localStorage.getItem('token.accountId'));
+      this.events = http.get<any[]>("localhost:8080/api/attendant/getEvents/"+localStorage.getItem('token.accountId'));
   }
 
   ngOnInit() {}
 
   details(eventId:number) {
-    this.starred = this.http.get<any[]>("/api/starred/getEventStarredAccounts/"+eventId+"/"+localStorage.getItem('token.accountId'));
+    this.getDetails = false;
+    this.starred = this.http.get<any[]>("/api/starred/getEventStarred/"+eventId+"/"+localStorage.getItem('token.accountId'));
     this.getDetails = true;
   }
 }

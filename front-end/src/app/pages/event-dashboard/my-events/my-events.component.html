@@ -8,9 +8,9 @@
         <th>Date</th>
         <th>Description</th>
     </tr>
-    <tr *ngFor="let event of events" (click)="details(event.id)">
+    <tr *ngFor="let event of events | async" (click)="details(event.id)">
         <td>{{event.name}}</td>
-        <td>{{event.location.addressNum}} {{event.location.streetName}}</td>
+        <td>{{event.location.addressNum}}_{{event.location.streetName}}</td>
         <td>{{event.location.city}}</td>
         <td>{{event.location.state}}</td>
         <td>{{event.location.zip}}</td>
@@ -24,7 +24,7 @@
             <th>Email</th>
             <th>Phone</th>
         </tr>
-        <tr *ngFor="let account of starred">
+        <tr *ngFor="let account of starred  | async">
             <td>{{account.firstName}}</td>
             <td>{{account.lastName}}</td>
             <td>{{account.email}}</td>
