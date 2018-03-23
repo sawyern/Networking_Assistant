@@ -5,6 +5,7 @@ import {Event} from "../../../beans/Event"
 import {Attendee} from "../../../beans/Attendee";
 import {UtilService} from "../../../_services/util/util.service";
 import {Announcement} from "../../../beans/Announcement";
+import {GoToService} from "../../../_services/go-to/go-to.service";
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -18,7 +19,7 @@ export class EventComponent implements OnInit {
   lat: number = 0;
   lng: number = 0;
 
-  constructor(private http:HttpClient, private utilService:UtilService) {
+  constructor(private http:HttpClient, private utilService:UtilService, private goToService:GoToService) {
     this.event = new Event();
     this.event.location = new Location();
     this.event.location.state="";
@@ -30,6 +31,7 @@ export class EventComponent implements OnInit {
     this.event.name="";
     this.event.description="";
     this.event.date=new Date();
+    this.attendees = [];
   }
 
   ngOnInit() {
@@ -42,10 +44,20 @@ export class EventComponent implements OnInit {
   }
 
   getAttendees(event:Event){
+    this.attendees = [];
     let url = this.utilService.getServerUrl() + "/api/event/getAttendees/" + event.id;
     this.http.get<any>(url).subscribe(response=>{
-      this.attendees = response;
+      for(let s of response){
+        url = this.utilService.getServerUrl() + "/api/account/getById/" + s.accountId;
+        this.http.get<any>(url).subscribe(response1=>{
+          this.attendees.push(response1);
+        });
+      }
     })
+  }
+
+  getAnnouncements(event:Event){
+    this.announcements = [];
   }
 
   getAddress(){
