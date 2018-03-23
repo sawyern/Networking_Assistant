@@ -31,8 +31,8 @@ public class InviteController {
         return inviteService.acceptInvite(requestBody);
     }
 
-    @RequestMapping(path = "/api/account/ignoreInvite/{invitee}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity ignoreInvite(@RequestBody JsonRequestBody<Invite> requestBody, @PathVariable("invitee") int invitee) {
-        return inviteService.ignoreInvite(requestBody, invitee);
+    @RequestMapping(path = "/api/account/ignoreInvite", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity ignoreInvite(@RequestBody JsonRequestBody<Invite> requestBody) {
+        return inviteService.ignoreInvite(requestBody);
     }
 }

@@ -77,7 +77,7 @@ public class InviteService {
     }
 
     @Transactional
-    public ResponseEntity ignoreInvite(JsonRequestBody<Invite> requestBody, int invitee) {
+    public ResponseEntity ignoreInvite(JsonRequestBody<Invite> requestBody) {
         try {
             SessionToken token = requestBody.getToken();
             Invite invite = requestBody.getObject();
