@@ -29,5 +29,4 @@ public class AttendeeService {
             else return new ResponseEntity<>(attendants, HttpStatus.NO_CONTENT);
         } else return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_GATEWAY);
     }
-
 }
