@@ -28,6 +28,7 @@ import { EventComponent } from './pages/event-dashboard/event/event.component';
 import { EventlistComponent } from './pages/event-dashboard/eventlist/eventlist.component';
 import { AgmCoreModule } from '@agm/core';
 import {EventFormComponent} from "./pages/new-event/event-form/event-form.component";
+import { MyEventsComponent } from './pages/event-dashboard/my-events/my-events.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {EventFormComponent} from "./pages/new-event/event-form/event-form.compon
     NewEventComponent,
     EventComponent,
     EventlistComponent,
-    EventFormComponent
+    EventFormComponent,
+    MyEventsComponent
   ],
   imports: [
     BrowserModule,

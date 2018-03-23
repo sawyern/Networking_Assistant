@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { EagerEvent } from "../../../../eagerEvent";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/of';
 import { AsyncPipe } from "@angular/common";
 
 @Component({
@@ -10,6 +11,9 @@ import { AsyncPipe } from "@angular/common";
   styleUrls: ["./my-events.component.css"]
 })
 export class MyEventsComponent implements OnInit {
+  loadedUpcoming = false;
+  loadedPast = false;
+  loadedInvited = false;
   pastEvents:any[] = [];
   upcomingEvents:any[] = [];
   invitedEvents:any[] =[];
@@ -19,10 +23,13 @@ export class MyEventsComponent implements OnInit {
   @Input() accountId:number;
 
   constructor(private http: HttpClient) {
+  }
+
+  ngOnInit() {
     const date = new Date().getDate();
 
-    http.get<any[]>(
-      "localhost:8080/api/attendant/getEvents/" +
+    this.http.get<any[]>(
+      "http://localhost:8080/api/attendant/getEvents/" +
         localStorage.getItem("token.accountId")
     ).subscribe(events => {
       for (let event in events) {
@@ -31,9 +38,12 @@ export class MyEventsComponent implements OnInit {
           this.upcomingEvents.push(events[event]);
         } else this.pastEvents.push(events[event]);
       }
+      console.log(this.upcomingEvents);
+      if (this.pastEvents.length > 0) this.loadedPast = true;
+      if (this.upcomingEvents.length > 0) this.loadedUpcoming = true;
     });
 
-    http.get<any>("localhost:8080/api/account/getById/"+localStorage.getItem("token.accountId"))
+    this.http.get<any>("http://localhost:8080/api/account/getById/"+localStorage.getItem("token.accountId"))
     .subscribe((account) => {
       if (account.role == "attendant") this.coordinator = false;
       else this.coordinator = true;
@@ -47,14 +57,13 @@ export class MyEventsComponent implements OnInit {
         invitee:localStorage.getItem("token.accountId")
       }
     }
-    http.get<any[]>("localhost:8080/api/invites/getReceivedInvites"+localStorage.getItem("token.accountId")).subscribe((invites) =>{
+    this.http.get<any[]>("http://localhost:8080/api/invites/getReceivedInvites/"+localStorage.getItem("token.accountId")).subscribe((invites) =>{
       for (let invite in invites) {
         this.invitedEvents.push(invites[invite]);
       }
+      if (this.invitedEvents.length > 0) this.loadedInvited = true;
     });
   }
-
-  ngOnInit() {}
 
   details(eventId: number) {
     this.getDetails = false;
