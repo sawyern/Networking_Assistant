@@ -12,6 +12,8 @@ import {ActivatedRoute} from "@angular/router";
 export class StarComponent implements OnInit {
 
   currentUserId = localStorage.getItem('token.accountId');
+  accountId: string;
+  starredId: string;
   isStarred: boolean;
   @Input() starred: Starred;
 
@@ -21,7 +23,7 @@ export class StarComponent implements OnInit {
 
   ngOnInit() {
     this.getStarred();
-    // this.starredId = accountId;
+    this.starredId = this.accountId;
   }
 
   //GET starred info from server

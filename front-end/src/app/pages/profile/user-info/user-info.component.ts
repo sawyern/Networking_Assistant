@@ -15,6 +15,7 @@ export class UserInfoComponent implements OnInit {
   currentUserId = localStorage.getItem('token.accountId');
   canEdit:boolean = false;
   @Input() account: Account;
+  selectedFile: File;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +26,15 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     this.getAccount();
+  }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0]
+  }
+
+  onUpload() {
+    this.http.post('http://localhost:8080/api/account/update', this.selectedFile)
+      .subscribe(...);
   }
 
   //GET account info from server

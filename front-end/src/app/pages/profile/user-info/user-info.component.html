@@ -1,25 +1,36 @@
 <div class="basics-section d-inline-block">
 
-  <ul *ngIf="account && !canEdit">
-    <li>About: {{account.background}}</li>
-    <li>Phone: {{account.phone}}</li>
-    <li>Email: {{account.email}}</li>
-    <li>Location: {{account.zipCode}}</li>
+  <h2 *ngIf="account && !canEdit">About</h2>
+
+  <ul class="" *ngIf="account && !canEdit">
+    <li class="">{{account.background}}</li>
+    <h2 *ngIf="account && !canEdit">Contact</h2>
+    <div class="">
+      <li class="">Phone: {{account.phone}}</li>
+      <li class="">Email: {{account.email}}</li>
+      <li class="">Location: {{account.zipCode}}</li>
+    </div>
     <!--<li>Attachment: {{account.attachment}}</li>-->
   </ul>
 
   <!--If Edit button pressed and profile matches accountId token-->
   <form class="editForm" *ngIf="account && canEdit && account.id == currentUserId" (ngSubmit)="editSubmit()" #editform="ngForm">
-    <ul>
-      <li>About: <input [(ngModel)]="account.background" type="text" name="background" value="{{account.background}}" /></li>
-      <li>Phone: <input [(ngModel)]="account.phone" type="text" name="phone" value="{{account.phone}}" /></li>
-      <li>Email: <input [(ngModel)]="account.email" type="text" name="email" value="{{account.email}}" /></li>
-      <li>Location: <input [(ngModel)]="account.zipCode" type="text" name="zipCode" value="{{account.zipCode}}" /></li>
-      <!--<li>Attachment: <input [(ngModel)]="account.attachment" type="file" name="attachment" value="{{account.attachment}}" /></li>-->
-    </ul>
+    <div class="input-group mb-3">
+      <ul>
+        <h2 *ngIf="account && canEdit">About</h2>
+      <li><input class="form-control" [(ngModel)]="account.background" type="text" name="background" id="about" value="{{account.background}}" /></li>
+        <h2 *ngIf="account && canEdit">Contact</h2>
+      <li>Phone: <input class="form-control" [(ngModel)]="account.phone" type="text" name="phone" value="{{account.phone}}" /></li>
+      <li>Email: <input class="form-control" [(ngModel)]="account.email" type="text" name="email" value="{{account.email}}" /></li>
+      <li>Location: <input class="form-control" [(ngModel)]="account.zipCode" type="text" name="zipCode" value="{{account.zipCode}}" /></li>
+      <li>Attachment: <input [(ngModel)]="account.attachment" (change)="onFileChanged($event)" type="file" name="attachment" value="{{account.attachment}}" /></li>
+      </ul>
+  </div>
     <button class="btn btn-primary" *ngIf="account && account.id == currentUserId" type="submit">Save</button>
   </form>
 
   <button class="btn btn-primary" *ngIf="account && account.id == currentUserId" (click)="toggleEdit()" >Edit</button>
 
 </div>
+
+<!--style="width: 600px; height: 100px;"-->
