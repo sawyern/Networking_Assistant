@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Input} from "@angular/core";
 import {Event} from "../../../beans/Event";
 import {Location} from "../../../beans/Location";
+import {HttpClient} from "@angular/common/http";
+import {UtilService} from "../../../_services/util/util.service";
 
 @Component({
   selector: 'app-event-form',
@@ -41,9 +43,16 @@ export class EventFormComponent implements OnInit {
     // }).catch(errorMsg => {
     //   this.router.navigateByUrl("/events/loadError");
     // });
+    // console.log(event);
+    // console.log(this.utilService.getServerUrl()+"api/event/create");
+    // let toSend = {
+    // };
+    // this.http.put(this.utilService.getServerUrl()+"api/event/create",event).subscribe(response=>{
+    //   console.log(response);
+    // });
   }
 
-  constructor() {
+  constructor(private http:HttpClient, private utilService:UtilService) {
   }
   ngOnInit() {
   }
