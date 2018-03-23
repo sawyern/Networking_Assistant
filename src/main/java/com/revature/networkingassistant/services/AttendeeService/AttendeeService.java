@@ -12,13 +12,22 @@ import java.util.ArrayList;
 @Service
 public class AttendeeService {
 
+    private AttendantRepo attendantRepo;
+
+    public AttendeeService() {}
+
     @Autowired
-    AttendantRepo attendantRepo;
+    public AttendeeService(AttendantRepo attendantRepo) {
+        this.attendantRepo = attendantRepo;
+    }
 
     public ResponseEntity<ArrayList<Attendant>> getAttendees(int eventId) {
-        ArrayList<Attendant> attendants = (ArrayList<Attendant>) attendantRepo.findByEventId(eventId);
-        if (attendants.size() > 0) return new ResponseEntity<>(attendants, HttpStatus.OK);
-        else return new ResponseEntity<>(attendants, HttpStatus.NO_CONTENT);
+        ArrayList<Attendant> attendants = attendantRepo.findByEventId(eventId);
+        if (attendants != null) {
+            if (attendants.size() > 0)
+                return new ResponseEntity<>(attendants, HttpStatus.OK);
+            else return new ResponseEntity<>(attendants, HttpStatus.NO_CONTENT);
+        } else return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_GATEWAY);
     }
 
 }

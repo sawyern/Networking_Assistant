@@ -24,17 +24,17 @@ public class StarredAccountController {
         this.starService = starService;
     }
 
-    @RequestMapping(path = "/api/starred/starAccount", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/account/addStar", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Account> starAccount(@RequestBody JsonRequestBody<Account> requestBody) {
         return starService.starAccount(requestBody);
     }
 
-    @RequestMapping(path = "/api/starred/getStarredAccounts", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/account/getStarredAccounts", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ArrayList<Account>> getStarredAccounts(@RequestBody JsonRequestBody requestBody) {
         return starService.getStarredAccounts(requestBody);
     }
 
-    @RequestMapping(path = "/api/starred/deleteStarredAccount", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/account/deleteStar", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Boolean> deleteStarredAccount(@RequestBody JsonRequestBody<Account> requestBody) {
         return starService.deleteStarredAccount(requestBody);
     }
