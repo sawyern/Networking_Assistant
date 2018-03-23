@@ -21,7 +21,7 @@ export class StarServiceService {
     star.starredAccountId = starredId;
 
     body.object = star;
-    return this.http.post<Starred>(this.util.getServerUrl() + 'api/account/update', body)
+    return this.http.post<Starred>(this.util.getServerUrl() + 'api/account/addStar', body)
   }
   // to remove Star
   // removeStarred (starredId: string): Observable<Starred> {
@@ -34,9 +34,11 @@ export class StarServiceService {
   //   return this.http.delete<Starred>(this.util.getServerUrl() + 'api/account/delete', body)
   // }
 
-  getIsStarredById(id : string) : Observable<boolean> {
-    return of(true);
-    // return this.http.get<boolean>(this.util.getServerUrl() + '/api/starred/getById/' + id);
-  }
+  // getStarredAccount(id : string) : Observable<boolean> {
+  //   // return of(true);
+  //   let body : JsonRequestBody<Starred> = new JsonRequestBody();
+  //   body.token = localStorage.getItem('token.accountId');
+  //   return this.http.get<boolean>(this.util.getServerUrl() + 'api/account/getStarredAccounts/', body);
+  // }
 
 }

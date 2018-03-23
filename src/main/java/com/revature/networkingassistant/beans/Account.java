@@ -1,12 +1,14 @@
 package com.revature.networkingassistant.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.revature.networkingassistant.controllers.DTO.Views;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "Accounts")
@@ -17,6 +19,15 @@ public class Account {
     @Column(name = "id", updatable = false, nullable = false)
     @JsonView(Views.Public.class)
     private int id;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="StarredList",
+            joinColumns = {  @JoinColumn(name="ownerId",referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="starredAccountId",referencedColumnName="id") })
+    private List<Account> myStarredList;
+
+    @ManyToMany(mappedBy = "myStarredList")
+    private List<Account> starredMeList;
 
     @JsonView(Views.Public.class)
     @Column(name = "email")
@@ -69,6 +80,22 @@ public class Account {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Account> getMyStarredList() {
+        return myStarredList;
+    }
+
+    public void setMyStarredList(List<Account> myStarredList) {
+        this.myStarredList = myStarredList;
+    }
+
+    public List<Account> getStarredMeList() {
+        return starredMeList;
+    }
+
+    public void setStarredMeList(List<Account> starredMeList) {
+        this.starredMeList = starredMeList;
     }
 
     public String getEmail() {

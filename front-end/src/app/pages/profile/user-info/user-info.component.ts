@@ -32,10 +32,10 @@ export class UserInfoComponent implements OnInit {
     this.selectedFile = event.target.files[0]
   }
 
-  onUpload() {
-    this.http.post('http://localhost:8080/api/account/update', this.selectedFile)
-      .subscribe(...);
-  }
+  // onUpload() {
+  //   this.http.post('http://localhost:8080/api/account/update', this.selectedFile)
+  //     .subscribe(...);
+  // }
 
   //GET account info from server
   getAccount(): void {
