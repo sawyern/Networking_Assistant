@@ -77,7 +77,7 @@ public class StarredAccountControllerTest {
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
         .when()
-                .get("/api/account/isStarredById/" + testAccount2.getId())
+                .post("/api/account/isStarredById/" + testAccount2.getId())
         .then()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat().body("id", equalTo(testAccount2.getId()));

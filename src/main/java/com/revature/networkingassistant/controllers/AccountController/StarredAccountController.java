@@ -39,7 +39,7 @@ public class StarredAccountController {
         return starService.deleteStarredAccount(requestBody);
     }
 
-    @RequestMapping(path = "/api/account/isStarredById/{accountId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/account/isStarredById/{accountId}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Account> isStarredById(@RequestBody JsonRequestBody requestBody, @PathVariable int accountId) {
         return starService.isStarredById(requestBody, accountId);
     }
