@@ -8,9 +8,18 @@
   <div class="row">
     <div class="col-sm">
       <p>Invited Members</p>
-      <!--<ul>-->
-        <!--<li *ngFor="let attendee of event.attendees">{{attendee.name}}</li>-->
-      <!--</ul>-->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let attendee of attendees" (click)="goToService.goTo('/profile')">
+          <td>{{attendee.firstName + " " + attendee.lastName}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
     <div class="col-sm">
       <!-- this creates a google map on the page with the given lat/lng from -->
@@ -18,6 +27,22 @@
       <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12">
         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
       </agm-map>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Announcements</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let announcement of announcements">
+          <td>{{announcement.text}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
