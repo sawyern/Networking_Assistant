@@ -1,17 +1,17 @@
 package com.revature.networkingassistant.services.InviteServices;
 
+import com.revature.networkingassistant.beans.Account;
+import com.revature.networkingassistant.beans.Attendant.Attendant;
+import com.revature.networkingassistant.beans.Attendant.Role;
 import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
-import com.revature.networkingassistant.repositories.AccountRepo;
-import com.revature.networkingassistant.repositories.EventRepo;
-import com.revature.networkingassistant.repositories.InviteRepo;
-import com.revature.networkingassistant.repositories.SessionTokenRepo;
+import com.revature.networkingassistant.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class InviteService {
@@ -20,18 +20,22 @@ public class InviteService {
     private InviteRepo inviteRepo;
     private AccountRepo accountRepo;
     private EventRepo eventRepo;
+    private AttendantRepo attendantRepo;
 
-    public InviteService() {}
+    public InviteService() {
+    }
 
     @Autowired
-    public InviteService(SessionTokenRepo sessionTokenRepo, InviteRepo inviteRepo, AccountRepo accountRepo, EventRepo eventRepo) {
+    public InviteService(SessionTokenRepo sessionTokenRepo, InviteRepo inviteRepo, AccountRepo accountRepo, EventRepo eventRepo, AttendantRepo attendantRepo) {
         this.sessionTokenRepo = sessionTokenRepo;
         this.inviteRepo = inviteRepo;
         this.accountRepo = accountRepo;
         this.eventRepo = eventRepo;
+        this.attendantRepo = attendantRepo;
     }
 
-    public ResponseEntity<Invite> sendInvite(@RequestBody JsonRequestBody<Invite> requestBody) {
+    @Transactional
+    public ResponseEntity<Invite> sendInvite(JsonRequestBody<Invite> requestBody) {
         try {
             SessionToken token = requestBody.getToken();
             Invite invite = requestBody.getObject();
@@ -44,6 +48,51 @@ public class InviteService {
             return new ResponseEntity<>(new Invite(), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             return new ResponseEntity<>(new Invite(), HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<Account> acceptInvite(JsonRequestBody<Invite> requestBody) {
+        try {
+            SessionToken token = requestBody.getToken();
+            Invite invite = requestBody.getObject();
+            //validate token
+            if (sessionTokenRepo.existsById(token.getId())) {
+                //if invite exists
+                if (inviteRepo.existsById(invite.getId())) {
+                    //if invitee is not already an attendant
+                    if (attendantRepo.findByAccountIdAndEventId(invite.getInvitee(), invite.getEventId()) == null) {
+                        attendantRepo.save(new Attendant(invite.getEventId(), invite.getInvitee(), Role.ATTENDANT));
+                        inviteRepo.delete(invite);
+                        return new ResponseEntity<>(accountRepo.findById(invite.getInvitee()).get(), HttpStatus.OK);
+                    }
+                    return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST); //if invitee is already an attendant
+                }
+                return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST); //if invite does not exist
+            }
+            return new ResponseEntity<>(new Account(), HttpStatus.UNAUTHORIZED); //if token invalid
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Account(), HttpStatus.BAD_GATEWAY); //other complications
+        }
+    }
+
+    @Transactional
+    public ResponseEntity ignoreInvite(JsonRequestBody<Invite> requestBody) {
+        try {
+            SessionToken token = requestBody.getToken();
+            Invite invite = requestBody.getObject();
+            //validate token
+            if (sessionTokenRepo.existsById(token.getId())) {
+                //if invite exists
+                if (inviteRepo.existsById(invite.getId())) {
+                    inviteRepo.delete(invite);
+                    return new ResponseEntity(HttpStatus.OK);
+                }
+                return new ResponseEntity(HttpStatus.NO_CONTENT); //if invite does not exist
+            }
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED); //if token invalid
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_GATEWAY); //other complications
         }
     }
 }

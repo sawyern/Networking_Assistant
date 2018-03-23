@@ -5,7 +5,9 @@ import com.revature.networkingassistant.controllers.DTO.Views;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +19,12 @@ public class Account {
     @Column(name = "id", updatable = false, nullable = false)
     @JsonView(Views.Public.class)
     private int id;
+
+    @ManyToOne
+    private Account owner;
+
+    @OneToMany(mappedBy = "owner")
+    private Collection<Account> starredAccounts;
 
     @JsonView(Views.Public.class)
     @Column(name = "email")
@@ -52,7 +60,10 @@ public class Account {
     public Account() {
     }
 
-    public Account(String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, byte[] attachment) {
+    public Account(int id, Collection<Account> starredAccounts, String email, String passwordHash, String firstName, String lastName, String phone, String background, String zipCode, byte[] attachment) {
+        this.id = id;
+        this.owner = this;
+        this.starredAccounts = starredAccounts;
         this.email = email;
         this.passwordHash = passwordHash;
         this.firstName = firstName;
@@ -69,6 +80,14 @@ public class Account {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Collection<Account> getStarredAccounts() {
+        return starredAccounts;
+    }
+
+    public void setStarredAccounts(ArrayList<Account> starredAccounts) {
+        this.starredAccounts = starredAccounts;
     }
 
     public String getEmail() {

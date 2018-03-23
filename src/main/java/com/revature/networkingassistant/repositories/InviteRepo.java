@@ -4,9 +4,11 @@ import com.revature.networkingassistant.beans.Invite;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Repository
 public interface InviteRepo extends CrudRepository<Invite, Integer>{
-    Invite findByEventId(int eventId);
-    Invite findByInviter(int inviter);
-    Invite findByInvitee(int invitee);
+    ArrayList<Invite> findByEventId(int eventId);
+    ArrayList<Invite> findByInviterAndEventId(int inviter, int eventId);
+    ArrayList<Invite> findByInviteeAndEventId(int invitee, int eventId);
 }

@@ -65,6 +65,6 @@ public class LoginControllerTest {
         .then()
             .statusCode(HttpStatus.SC_OK)
             .assertThat().body("id", equalTo(sessionTokenRepo.findByAccountId(testAccount.getId()).getId()))
-                .assertThat().body("accountId", equalTo(sessionTokenRepo.findByAccountId(testAccount.getId()).getAccountId()));
+            .assertThat().body("accountId", equalTo(sessionTokenRepo.findByAccountId(testAccount.getId()).getAccountId()));
     }
 }

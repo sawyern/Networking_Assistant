@@ -30,6 +30,7 @@ public class AnnouncementService {
         this.accountRepo = accountRepo;
     }
 
+    @Transactional
     public ResponseEntity<Announcement> makeAnnouncement(JsonRequestBody<Announcement> requestBody) {
         SessionToken token = requestBody.getToken();
         if (sessionTokenRepo.existsById(token.getId())) {

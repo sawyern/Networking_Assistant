@@ -27,7 +27,6 @@ public class TestUtil {
     private AttendantRepo attendantRepo;
     private AnnouncementRepo announcementRepo;
     private InviteRepo inviteRepo;
-    private StarredAccountRepo starredAccountRepo;
     private LocationRepo locationRepo;
 
     public TestUtil(){}
@@ -39,7 +38,6 @@ public class TestUtil {
                     AttendantRepo attendantRepo,
                     AnnouncementRepo announcementRepo,
                     InviteRepo inviteRepo,
-                    StarredAccountRepo starredAccountRepo,
                     LocationRepo locationRepo
     ) {
         this.accountRepo = accountRepo;
@@ -48,7 +46,6 @@ public class TestUtil {
         this.attendantRepo = attendantRepo;
         this.announcementRepo = announcementRepo;
         this.inviteRepo = inviteRepo;
-        this.starredAccountRepo = starredAccountRepo;
         this.locationRepo = locationRepo;
     }
 

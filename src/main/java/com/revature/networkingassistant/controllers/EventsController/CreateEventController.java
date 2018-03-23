@@ -14,12 +14,19 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class CreateEventController {
 
+    private CreateEventService createEventService;
+
+    public CreateEventController() {
+    }
+
     @Autowired
-    private CreateEventService eventService;
+    public CreateEventController(CreateEventService createEventService) {
+        this.createEventService = createEventService;
+    }
 
     @Transactional
     @RequestMapping(path = "/api/event/create", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> createEvent(@RequestBody JsonRequestBody<Event> requestBody) {
-        return eventService.createEvent(requestBody);
+        return createEventService.createEvent(requestBody);
     }
 }
