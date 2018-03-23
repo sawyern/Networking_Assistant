@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Account} from "../../beans/Account";
+import {Account} from "../../../beans/Account";
 import {Observable} from "rxjs/Observable";
-import {UtilService} from '../util/util.service';
+import {UtilService} from '../../util/util.service';
 
 @Injectable()
 export class GetAccountService {

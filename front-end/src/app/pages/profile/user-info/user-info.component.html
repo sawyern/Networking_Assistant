@@ -1,27 +1,25 @@
 <div class="basics-section d-inline-block">
-  <!--<h1>Sawyer Novak</h1>-->
-  <!--<h3>About</h3>-->
-  <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. I'm such a god Ab doloribus ducimus omnis rerum saepe, sapien</p>-->
-  <!--<h3>Contact</h3>-->
-  <!--<div class="contact-flex">-->
-  <!--<p>About: </p>-->
-  <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur dicta incidunt ipsam neque quaerat qui saepe! Ab, amet cum cupiditate, deleniti dolorem illo nobis nulla optio possimus quidem suscipit voluptatem!</p>-->
 
   <ul *ngIf="account && !canEdit">
     <li>About: {{account.background}}</li>
     <li>Phone: {{account.phone}}</li>
     <li>Email: {{account.email}}</li>
     <li>Location: {{account.zipCode}}</li>
+    <!--<li>Attachment: {{account.attachment}}</li>-->
   </ul>
 
   <!--If Edit button pressed and profile matches accountId token-->
-  <ul *ngIf="account && canEdit && account.id == currentUserId">
-    <li>About: <input type="text" value="{{account.background}}" /></li>
-    <li>Phone: <input type="text" value="{{account.phone}}" /></li>
-    <li>Email: <input type="text" value="{{account.email}}" /></li>
-    <li>Location: <input type="text" value="{{account.zipCode}}" /></li>
-  </ul>
+  <form class="editForm" *ngIf="account && canEdit && account.id == currentUserId" (ngSubmit)="editSubmit()" #editform="ngForm">
+    <ul>
+      <li>About: <input [(ngModel)]="account.background" type="text" name="background" value="{{account.background}}" /></li>
+      <li>Phone: <input [(ngModel)]="account.phone" type="text" name="phone" value="{{account.phone}}" /></li>
+      <li>Email: <input [(ngModel)]="account.email" type="text" name="email" value="{{account.email}}" /></li>
+      <li>Location: <input [(ngModel)]="account.zipCode" type="text" name="zipCode" value="{{account.zipCode}}" /></li>
+      <!--<li>Attachment: <input [(ngModel)]="account.attachment" type="file" name="attachment" value="{{account.attachment}}" /></li>-->
+    </ul>
+    <button class="btn btn-primary" *ngIf="account && account.id == currentUserId" type="submit">Save</button>
+  </form>
 
-  <button *ngIf="account && account.id == currentUserId" (click)="toggleEdit()" >edit</button>
-  <button *ngIf="account && account.id == currentUserId" (click)="save()">save</button>
+  <button class="btn btn-primary" *ngIf="account && account.id == currentUserId" (click)="toggleEdit()" >Edit</button>
+
 </div>

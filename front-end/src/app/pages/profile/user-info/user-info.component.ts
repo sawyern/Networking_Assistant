@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GetAccountService} from "../../../_services/getAccount/get-account.service";
-import { PutAccountService } from "../../../_services/putAccount/put-account.service";
+import {GetAccountService} from "../../../_services/AccountServices/getAccount/get-account.service";
+import { PutAccountService } from "../../../_services/AccountServices/putAccount/put-account.service";
 import { ActivatedRoute} from "@angular/router";
 import { Account } from "../../../beans/Account";
 import { Location } from "@angular/common"
@@ -12,9 +12,9 @@ import { Location } from "@angular/common"
 })
 export class UserInfoComponent implements OnInit {
 
-  currentUserId = localStorage.getItem('token.accountId')
+  currentUserId = localStorage.getItem('token.accountId');
   canEdit:boolean = false;
-  @Input() account: any;
+  @Input() account: Account;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +38,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   goBack(): void {
+    console.log('goback called');
     this.location.back();
   }
 
@@ -45,9 +46,13 @@ export class UserInfoComponent implements OnInit {
     this.canEdit = !(this.canEdit);
   }
 
-  save(): void {
+// Edit form submit
+  editSubmit(): void {
+    console.log('edit form submitted!');
     this.putAccountService.updateAccount(this.account)
-      .subscribe(() => this.goBack());
+      .subscribe(() => {
+      this.toggleEdit()
+      });
   }
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {LogoutService} from "../../_services/authentication/logout/logout.service";
-import {GetAccountService} from "../../_services/getAccount/get-account.service";
+import {GetAccountService} from "../../_services/AccountServices/getAccount/get-account.service";
 
 @Component({
   selector: 'app-header',

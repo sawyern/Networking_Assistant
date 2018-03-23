@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Account } from "../../../beans/Account";
+import { StarServiceService} from "../../../_services/AccountServices/star-service.service";
+import {Starred} from "../../../beans/Starred";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-star',
@@ -9,15 +12,38 @@ import { Account } from "../../../beans/Account";
 export class StarComponent implements OnInit {
 
   currentUserId = localStorage.getItem('token.accountId');
-  account: Account;
+  isStarred: boolean;
+  @Input() starred: Starred;
 
-  constructor() { }
+
+  constructor(private route: ActivatedRoute,
+              private starService: StarServiceService) { }
 
   ngOnInit() {
+    this.getStarred();
+    // this.starredId = accountId;
   }
 
-  toggleStar() {
+  //GET starred info from server
+  getStarred(): void {
+    console.log('getStarred called');
+    const accountId = this.route.snapshot.paramMap.get('accountId');
+    this.starService.getIsStarredById(accountId)
+      .subscribe( isStarred => {
+        this.isStarred = isStarred;
+      })
+  }
+
+  toggleStar(starredId: string): void {
     console.log('Star toggle!');
+    // const starredId = this.route.snapshot.paramMap.get('accountId');
+    if (!this.isStarred) {
+      console.log('updated');
+      // this.starService.updateStarred(starredId);
+    } else {
+      console.log('deleted');
+      // this.starService.removeStarred(starredId);
+    }
   }
 
 }
