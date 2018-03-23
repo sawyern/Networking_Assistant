@@ -34,8 +34,8 @@ public class AnnouncementService {
     public ResponseEntity<Announcement> makeAnnouncement(JsonRequestBody<Announcement> requestBody) {
         SessionToken token = requestBody.getToken();
         if (sessionTokenRepo.existsById(token.getId())) {
-            if (accountRepo.existsById(requestBody.getObject().getId())) {
-                return new ResponseEntity<>(announcementRepo.save(requestBody.getObject()), HttpStatus.OK);
+            if (accountRepo.existsById(requestBody.getObject().getAccountId())) {
+                return new ResponseEntity<>(announcementRepo.save(requestBody.getObject()), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(new Announcement(), HttpStatus.BAD_REQUEST);
         }

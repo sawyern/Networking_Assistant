@@ -1,6 +1,7 @@
 package com.revature.networkingassistant.controllers;
 
 import com.revature.networkingassistant.beans.Account;
+import com.revature.networkingassistant.beans.Announcement;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.beans.Event.Location;
@@ -101,6 +102,15 @@ public class TestUtil {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Announcement createTestAnnouncement(Event event, Account account) {
+        Announcement announcement = new Announcement();
+        announcement.setEventId(event.getId());
+        announcement.setAccountId(account.getId());
+        announcement.setMessage("test message");
+        return announcementRepo.save(announcement);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void removeTestAccount(Account account) {
         accountRepo.deleteAccountByEmail(account.getEmail());
     }
@@ -117,9 +127,13 @@ public class TestUtil {
             sessionTokenRepo.delete(sessionToken);
     }
 
-        @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void removeAttendant(Attendant attendant) {
         //attendantRepo.deleteById(eventRepo.findByName(event.getName()).getId());
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void removeAnnouncement(Announcement announcement) {
+        announcementRepo.delete(announcement);
+    }
 }
