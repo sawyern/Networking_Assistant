@@ -7,8 +7,7 @@ import {UtilService} from "../../util/util.service";
 @Injectable()
 export class LoginService {
 
-  constructor(private http: HttpClient, private util : UtilService) {
-  }
+  constructor(private http: HttpClient, private util : UtilService) {}
 
   public login(email: string, password: string): Promise<Token> {
     console.log('authservice.login called');

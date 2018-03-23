@@ -1,17 +1,28 @@
 .photo-basics-section {
   background: #FFFFFF;
+  opacity: .95;
+  border-radius: 20px;
+  margin: 30px;
   /*justify-content: center;*/
-  align-items: center;
-  display: flex;
+  /*align-items: center;*/
+  /*display: flex;*/
 }
 
-.basics-section {
-  margin: 25px;
-  padding: 10px;
-  background-color: lightblue;
-}
-.events-section {
-  background: slategrey;
+/*.basics-section {*/
+  /*margin: 25px;*/
+  /*padding: 10px;*/
+  /*background-color: lightblue;*/
+/*}*/
+/*.events-section {*/
+  /*background: slategrey;*/
+/*}*/
+
+.d-inline-block {
+  padding: 20px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  vertical-align: top;
 }
 
 img {
@@ -22,7 +33,7 @@ img {
   width: 100%;
 }
 
-.contact-flex {
-  display: flex;
-  justify-content: space-between;
-}
+/*.contact-flex {*/
+  /*display: flex;*/
+  /*justify-content: space-between;*/
+/*}*/

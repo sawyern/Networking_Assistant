@@ -23,11 +23,15 @@ import {UtilService} from "./_services/util/util.service";
 import { LoginPageComponent } from './pages/login/login-page/login-page.component';
 import {RegisterService} from "./_services/authentication/register/register.service";
 import {LogoutService} from "./_services/authentication/logout/logout.service";
-import {GetAccountService} from "./_services/getAccount/get-account.service";
+import {GetAccountService} from "./_services/AccountServices/getAccount/get-account.service";
 import { EventComponent } from './pages/event-dashboard/event/event.component';
 import { EventlistComponent } from './pages/event-dashboard/eventlist/eventlist.component';
 import { AgmCoreModule } from '@agm/core';
 import {EventFormComponent} from "./pages/new-event/event-form/event-form.component";
+import {UserInfoComponent} from "./pages/profile/user-info/user-info.component";
+import {StarComponent} from "./pages/profile/star/star.component";
+import {PutAccountService} from "./_services/AccountServices/putAccount/put-account.service";
+import {StarServiceService} from "./_services/AccountServices/star-service.service";
 
 @NgModule({
   declarations: [
@@ -44,7 +48,9 @@ import {EventFormComponent} from "./pages/new-event/event-form/event-form.compon
     NewEventComponent,
     EventComponent,
     EventlistComponent,
-    EventFormComponent
+    EventFormComponent,
+    UserInfoComponent,
+    StarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +69,9 @@ import {EventFormComponent} from "./pages/new-event/event-form/event-form.compon
     UtilService,
     RegisterService,
     LogoutService,
-    GetAccountService
+    GetAccountService,
+    PutAccountService,
+    StarServiceService
   ],
   bootstrap: [AppComponent]
 })

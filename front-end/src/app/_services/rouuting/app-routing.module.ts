@@ -10,12 +10,14 @@ import {ProfileComponent} from "../../pages/profile/profile.component";
 import {EventDashboardComponent} from "../../pages/event-dashboard/event-dashboard/event-dashboard.component";
 import {NewEventComponent} from "../../pages/new-event/new-event/new-event.component";
 import {LoginPageComponent} from "../../pages/login/login-page/login-page.component";
+import {StarComponent} from "../../pages/profile/star/star.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   // { path: '', component: LandingComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginPageComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:accountId', component: ProfileComponent },
+  { path: 'profile/:accountId/starred', component: StarComponent },
   { path: 'event/dashboard', component: EventDashboardComponent },
   { path: 'event/new', component: NewEventComponent },
 
