@@ -1,0 +1,34 @@
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th>Date</th>
+        <th>Description</th>
+    </tr>
+    <tr *ngFor="let event of events" (click)="details(event.id)">
+        <td>{{event.name}}</td>
+        <td>{{event.location.addressNum}} {{event.location.streetName}}</td>
+        <td>{{event.location.city}}</td>
+        <td>{{event.location.state}}</td>
+        <td>{{event.location.zip}}</td>
+        <td>{{event.date}}</td>
+        <td>{{event.description}}</td>
+    </tr>
+    <table *ngIf="getDetails">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        <tr *ngFor="let account of starred">
+            <td>{{account.firstName}}</td>
+            <td>{{account.lastName}}</td>
+            <td>{{account.email}}</td>
+            <td>{{account.phone}}</td>
+        </tr>
+    </table>
+</table>

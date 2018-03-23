@@ -27,4 +27,9 @@ public class StarredAccountController {
     public ResponseEntity<ArrayList<Account>> getStarredAccounts(@PathVariable("ownerId") int ownerId) {
         return starService.getStarredAccounts(ownerId);
     }
+
+    @RequestMapping(path = "/api/starred/getEventStarredAccounts/{eventId}/{ownerId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ArrayList<Account>> getEventStarredAccounts(@PathVariable("eventId") int eventId, @PathVariable("ownerId") int ownerId) {
+        return starService.getEventStarredAccounts(eventId, ownerId);
+    }
 }

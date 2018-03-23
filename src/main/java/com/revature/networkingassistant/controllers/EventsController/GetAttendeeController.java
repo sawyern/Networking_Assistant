@@ -1,7 +1,7 @@
 package com.revature.networkingassistant.controllers.EventsController;
 
 import com.revature.networkingassistant.beans.Attendant.Attendant;
-import com.revature.networkingassistant.services.AttendeeService.AttendeeService;
+import com.revature.networkingassistant.services.AttendantService.AttendantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class GetAttendeeController {
 
     @Autowired
-    AttendeeService attendeeService;
+    AttendantService attendeeService;
 
     @RequestMapping(path = "/api/event/getAttendees/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Attendant>> getAttendees(@PathVariable("id") int eventId) {
