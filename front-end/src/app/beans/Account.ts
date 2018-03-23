@@ -7,6 +7,6 @@ export class Account {
   phone: string;
   background: string;
   zipCode: string;
-  attachment: string;
+  attachment: "";
   constructor(){}
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {LogoutService} from "../../_services/authentication/logout/logout.service";
-import {GetAccountService} from "../../_services/getAccount/get-account.service";
+import {GetAccountService} from "../../_services/AccountServices/getAccount/get-account.service";
 
 @Component({
   selector: 'app-header',
@@ -11,6 +11,7 @@ import {GetAccountService} from "../../_services/getAccount/get-account.service"
 export class HeaderComponent implements OnInit {
 
   public firstName : string = "";
+  public accountId : string = "";
 
   constructor(private router:Router, private logoutService: LogoutService, private getAccountService : GetAccountService) {
   }
@@ -31,6 +32,8 @@ export class HeaderComponent implements OnInit {
         this.firstName = name;
       });
     }
+    //need this to navigate to /profile/{accountId}
+    this.accountId = localStorage.getItem('token.accountId');
   }
 
   onLogoutSubmit() {

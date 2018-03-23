@@ -1,5 +1,6 @@
 package com.revature.networkingassistant.beans.Event;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -17,7 +18,7 @@ public class Location {
 
     @OneToOne
     @JoinColumn(name = "event_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Event event;
 
     @JsonView(Views.Public.class)

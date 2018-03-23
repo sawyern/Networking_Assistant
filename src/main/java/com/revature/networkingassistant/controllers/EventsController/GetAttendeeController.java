@@ -1,18 +1,17 @@
 package com.revature.networkingassistant.controllers.EventsController;
 
+import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.services.AttendantService.AttendantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @RestController
+@CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class GetAttendeeController {
 
     @Autowired

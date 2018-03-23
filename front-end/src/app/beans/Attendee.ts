@@ -1,3 +1,7 @@
 export class Attendee{
-  name:String;
+  id:Number;
+  background:String;
+  email:String;
+  firstName:String;
+  lastName:String;
 }
