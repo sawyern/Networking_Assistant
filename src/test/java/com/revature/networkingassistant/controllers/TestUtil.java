@@ -107,8 +107,8 @@ public class TestUtil {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void removeTestEvent(Event event) {
-        if (eventRepo.existsByName(event.getName()))
-            eventRepo.deleteById(eventRepo.findByName(event.getName()).getId());
+        if (eventRepo.existsById(event.getId()))
+            eventRepo.deleteById(eventRepo.findById(event.getId()).get().getId());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

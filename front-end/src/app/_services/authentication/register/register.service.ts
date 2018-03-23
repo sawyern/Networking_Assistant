@@ -47,7 +47,7 @@ export class RegisterService {
       phone: "808-222-2222",
       background: "I love revature",
       zipCode: "89521",
-      attachment: new File()
+      attachment: ""
     };
     //return of(obj);
     return this.http.put<Account>(this.util.getServerUrl() + 'api/register', reqParams)

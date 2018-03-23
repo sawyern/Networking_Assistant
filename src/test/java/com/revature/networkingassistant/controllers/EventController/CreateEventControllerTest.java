@@ -77,7 +77,7 @@ public class CreateEventControllerTest extends AbstractTransactionalJUnit4Spring
 
     @Test
     public void createEventTest() throws Exception {
-        given()
+        requestBody.getObject().setId(given()
                 .body(mapper.writeValueAsString(requestBody))
                 .contentType(ContentType.JSON)
             .when()
@@ -91,6 +91,7 @@ public class CreateEventControllerTest extends AbstractTransactionalJUnit4Spring
                 .assertThat().body("location.zip", equalTo(requestBody.getObject().getLocation().getZip()))
                 //.assertThat().body("date", equalTo(requestBody.getObject().getDate().toString()))
                 .assertThat().body("name", equalTo(requestBody.getObject().getName()))
-                .assertThat().body("description", equalTo(requestBody.getObject().getDescription()));
+                .assertThat().body("description", equalTo(requestBody.getObject().getDescription()))
+                .extract().path("id"));
     }
 }
