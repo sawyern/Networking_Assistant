@@ -4,6 +4,7 @@ import {Event} from "../../../beans/Event";
 import {Location} from "../../../beans/Location";
 import {HttpClient} from "@angular/common/http";
 import {UtilService} from "../../../_services/util/util.service";
+import {GoToService} from "../../../_services/go-to/go-to.service";
 
 @Component({
   selector: 'app-event-form',
@@ -28,6 +29,7 @@ export class EventFormComponent implements OnInit {
   onSubmit() {
     let event = new Event();
     event.name = this.eventName;
+    event.description = this.description;
     let loc = new Location();
     loc.addressNum = this.addressNum;
     loc.streetName = this.streetName;
@@ -43,16 +45,20 @@ export class EventFormComponent implements OnInit {
     // }).catch(errorMsg => {
     //   this.router.navigateByUrl("/events/loadError");
     // });
-    // console.log(event);
-    // console.log(this.utilService.getServerUrl()+"api/event/create");
-    // let toSend = {
-    // };
-    // this.http.put(this.utilService.getServerUrl()+"api/event/create",event).subscribe(response=>{
-    //   console.log(response);
-    // });
+    let toSend = {
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
+      },
+      object:event
+    };
+    this.http.put(this.utilService.getServerUrl()+"api/event/create",toSend).subscribe(response=>{
+      console.log(response);
+      this.goToService.goTo('/event/dashboard');
+    });
   }
 
-  constructor(private http:HttpClient, private utilService:UtilService) {
+  constructor(private http:HttpClient, private utilService:UtilService, private goToService:GoToService) {
   }
   ngOnInit() {
   }
