@@ -1,0 +1,25 @@
+<div class="starredTable container">
+    <div *ngIf="!loadedStarred">Loading Starred Accounts</div>
+    <div *ngIf="loadedStarred && starredAccounts.length > 0">
+        <table class="table">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Zip Code</th>
+            </tr>
+            <tr *ngFor="let account of starredAccounts" (click)="accountInfo(account.id)">
+                <td>{{account.firstName}}</td>
+                <td>{{account.lastName}}</td>
+                <td>{{account.email}}</td>
+                <td>{{account.phone}}</td>
+                <td>{{account.zipCode}}</td>
+                <table *ngIf="details">               
+                    <tr> {{account.background}} </tr>
+                </table>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="loadedStarred && starredAccounts.length == 0">No Starred Accounts</div>
+</div>
