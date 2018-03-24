@@ -14,13 +14,16 @@ import {StarComponent} from "../../pages/profile/star/star.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  // { path: '', component: LandingComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginPageComponent },
-  { path: 'profile/:accountId', component: ProfileComponent },
-  { path: 'profile/:accountId/starred', component: StarComponent },
-  { path: 'event/dashboard', component: EventDashboardComponent },
-  { path: 'event/new', component: NewEventComponent },
-
+  { path: '',
+    canActivate: [AuthGuard],
+    children:[
+      { path: 'profile/:accountId', component: ProfileComponent },
+      { path: 'profile/:accountId/starred', component: StarComponent },
+      { path: 'event/dashboard', component: EventDashboardComponent },
+      { path: 'event/new', component: NewEventComponent },
+    ]
+  },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];
