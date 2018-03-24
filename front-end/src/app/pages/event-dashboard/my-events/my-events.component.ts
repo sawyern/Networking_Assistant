@@ -17,7 +17,7 @@ export class MyEventsComponent implements OnInit {
   pastEvents:any[] = [];
   upcomingEvents:any[] = [];
   invitedEvents:any[] =[];
-  starred: Observable<any[]> = undefined;
+  starred: Observable<any[]>;
   getDetails = false;
   coordinator:boolean;
   @Input() accountId:number;
@@ -26,26 +26,27 @@ export class MyEventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const date = new Date().getDate();
+    const date = new Date;
 
     this.http.get<any[]>(
       "http://localhost:8080/api/attendant/getEvents/" +
         localStorage.getItem("token.accountId")
     ).subscribe(events => {
       for (let event in events) {
-        let eventDate: Date = events[event].date;
+        let eventDate: Date = new Date(events[event].date);
+        console.log(date);
+        console.log(eventDate);
         if (eventDate.valueOf() > date.valueOf()) {
           this.upcomingEvents.push(events[event]);
         } else this.pastEvents.push(events[event]);
       }
-      console.log(this.upcomingEvents);
       if (this.pastEvents.length > 0) this.loadedPast = true;
       if (this.upcomingEvents.length > 0) this.loadedUpcoming = true;
     });
 
     this.http.get<any>("http://localhost:8080/api/account/getById/"+localStorage.getItem("token.accountId"))
     .subscribe((account) => {
-      if (account.role == "attendant") this.coordinator = false;
+      if (account.role == "ATTENDANT") this.coordinator = false;
       else this.coordinator = true;
     });
 

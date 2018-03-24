@@ -24,9 +24,10 @@ public class AttendantService {
     public AttendantService() {}
 
     @Autowired
-    public AttendantService(AttendantRepo attendantRepo, AccountRepo accountRepo) {
+    public AttendantService(AttendantRepo attendantRepo, AccountRepo accountRepo, EventRepo eventRepo) {
         this.attendantRepo = attendantRepo;
         this.accountRepo = accountRepo;
+        this.eventRepo = eventRepo;
     }
 
     public ResponseEntity<ArrayList<Attendant>> getAttendees(int eventId) {

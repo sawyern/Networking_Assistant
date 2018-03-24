@@ -19,12 +19,9 @@
         <td>{{event.location.zip}}</td>
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
-        <td *ngIf="coordinator; then this;else nothing">
-            <ng-template #this>
+        <td *ngIf="coordinator">
                 <input type="text" placeholder="ID" name="accountId" id="accountId" [(ngModel)]="accountId" />
                 <button onclick="invite(accountId, event.id)">Invite</button>
-            </ng-template>
-            <ng-template #nothing></ng-template>
         </td>
     </tr>
 </table>
