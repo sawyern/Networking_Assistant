@@ -14,6 +14,9 @@ export class HeaderComponent implements OnInit {
   public accountId : string = "";
 
   constructor(private router:Router, private logoutService: LogoutService, private getAccountService : GetAccountService) {
+    this.router.events.subscribe(()=>{
+      this.detectLoggedIn();
+    });
   }
 
   getMyName() : Promise<string> {
@@ -27,6 +30,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.detectLoggedIn();
+  }
+
+  detectLoggedIn(){
     if (this.isLoggedIn()) {
       this.getMyName().then(name => {
         this.firstName = name;

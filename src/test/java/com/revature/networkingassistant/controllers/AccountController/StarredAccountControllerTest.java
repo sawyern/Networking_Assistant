@@ -80,6 +80,6 @@ public class StarredAccountControllerTest {
                 .post("/api/account/isStarredById/" + testAccount2.getId())
         .then()
                 .statusCode(HttpStatus.SC_OK)
-                .assertThat().body("id", equalTo(testAccount2.getId()));
+                .assertThat().body("id", equalTo(testAccount.getId()));
     }
 }

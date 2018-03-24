@@ -3,6 +3,7 @@
   <h2 *ngIf="account && !canEdit">About</h2>
 
   <ul class="" *ngIf="account && !canEdit">
+    <li class="">{{account.firstName + " " + account.lastName}}</li>
     <li class="">{{account.background}}</li>
     <h2 *ngIf="account && !canEdit">Contact</h2>
     <div class="">

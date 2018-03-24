@@ -6,17 +6,16 @@
     <p>{{event.description}}</p>
   </div>
   <div class="row">
-    <div class="col-sm">
-      <p>Invited Members</p>
+    <div class="col-sm attendees">
       <table class="table">
         <thead>
         <tr>
-          <th scope="col">Name</th>
+          <th scope="col">Invited Members</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let attendee of attendees" (click)="goToService.goTo('/profile')">
-          <td>{{attendee.firstName + " " + attendee.lastName}}</td>
+        <tr *ngFor="let attendee of attendees" (click)="goToProfile($event)">
+          <td [attr.accountId]="attendee.id">{{attendee.firstName + " " + attendee.lastName}}</td>
         </tr>
         </tbody>
       </table>
@@ -29,6 +28,19 @@
       </agm-map>
     </div>
   </div>
+  <div class="row text-center" *ngIf="coordinatorLogged">
+    <p>Make Announcement</p>
+    <div class="announcements">
+      <form (submit)="putAnnouncement($event)">
+        <div class="form-group">
+          <textarea class="announcements" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm">
       <table class="table">
@@ -39,7 +51,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let announcement of announcements">
-          <td>{{announcement.text}}</td>
+          <td>{{announcement.message}}</td>
         </tr>
         </tbody>
       </table>

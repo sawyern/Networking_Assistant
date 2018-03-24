@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Invite implements Serializable{
 
     @Id
+    @GeneratedValue
     @Column(name = "id")
     private int id;
 

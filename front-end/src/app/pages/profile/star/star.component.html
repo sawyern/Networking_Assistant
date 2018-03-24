@@ -1,8 +1,7 @@
-<!--<figcaption align="center">-->
-  <!--<button class="btn btn-primary" (click)="toggleStar()">-->
-    <!--<i *ngIf="isStarred == false" class="fas fa-star"></i>-->
-    <!--<i *ngIf="isStarred == true" class="fas fa-star" style="color:yellow"></i> Profile-->
-  <!--</button>-->
-<!--</figcaption>-->
+<figcaption align="center">
+  <button *ngIf="!isOwnerProfile" class="btn btn-primary" (click)="toggleStar()">
+    <i class="fas fa-star" [ngStyle]="{'color' : isStarred ? 'yellow':'white'}"></i> Profile
+  </button>
+</figcaption>
 
 <!--*ngIf="accountId != currentUserId"-->

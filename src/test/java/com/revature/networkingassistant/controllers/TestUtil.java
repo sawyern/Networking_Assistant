@@ -6,6 +6,7 @@ import com.revature.networkingassistant.beans.Attendant.Attendant;
 import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.beans.Event.Location;
 import com.revature.networkingassistant.beans.Event.State;
+import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.beans.SessionToken;
 import com.revature.networkingassistant.repositories.*;
 import com.revature.networkingassistant.services.AccountServices.LoginService;
@@ -136,4 +137,10 @@ public class TestUtil {
     public void removeAnnouncement(Announcement announcement) {
         announcementRepo.delete(announcement);
     }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void removeInvitation(Invite invite) {
+        inviteRepo.delete(invite);
+    }
+
 }

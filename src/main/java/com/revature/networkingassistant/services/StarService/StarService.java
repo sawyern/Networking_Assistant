@@ -55,7 +55,7 @@ public class StarService {
     public ResponseEntity<Account> deleteStarredAccount(JsonRequestBody<Account> requestBody) {
         if (accountRepo.findById(requestBody.getToken().getAccountId()).isPresent()) {
             Account account = accountRepo.findById(requestBody.getToken().getAccountId()).get();
-            account.getMyStarredList().remove(requestBody.getObject());
+            account.getMyStarredList().remove(accountRepo.findById(requestBody.getObject().getId()).get());
             return new ResponseEntity<>(requestBody.getObject(), HttpStatus.OK);
         }
         return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
@@ -63,8 +63,10 @@ public class StarService {
 
     @Transactional
     public ResponseEntity<Account> isStarredById(JsonRequestBody requestBody, int accountId) {
-        if (accountRepo.findById(accountId).isPresent()) {
-            return new ResponseEntity<>(accountRepo.findById(accountId).get(), HttpStatus.OK);
-        } else return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+        if (accountRepo.findById(requestBody.getToken().getAccountId()).isPresent()
+                && accountRepo.findById(accountId).isPresent()
+                && accountRepo.findById(requestBody.getToken().getAccountId()).get().getMyStarredList().contains(accountRepo.findById(accountId).get())) {
+            return new ResponseEntity<>(accountRepo.findById(requestBody.getToken().getAccountId()).get(), HttpStatus.OK);
+        } else return new ResponseEntity<>(new Account(), HttpStatus.OK);
     }
 }

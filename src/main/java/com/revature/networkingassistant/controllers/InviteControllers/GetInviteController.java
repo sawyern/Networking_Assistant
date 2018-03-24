@@ -25,13 +25,13 @@ public class GetInviteController {
         this.getInviteService = getInviteService;
     }
 
-    @RequestMapping(path = "/api/invites/getSentInvites", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/api/invites/getSentInvites", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Invite>> getSentInvites(@RequestBody JsonRequestBody<Invite> requestBody) {
         return getInviteService.getSentInvites(requestBody);
     }
 
-    @RequestMapping(path = "/api/invites/getReceivedInvites/{accountId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<Event>> getReceivedInvites(@PathVariable("accountId") int id) {
-        return getInviteService.getReceivedInvites(id);
+    @RequestMapping(path = "/api/invites/getReceivedInvites", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<Event>> getReceivedInvites(@RequestBody JsonRequestBody<Invite> requestBody) {
+        return getInviteService.getReceivedInvites(requestBody);
     }
 }

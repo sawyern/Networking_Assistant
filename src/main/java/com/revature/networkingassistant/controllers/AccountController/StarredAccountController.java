@@ -29,12 +29,12 @@ public class StarredAccountController {
         return starService.starAccount(requestBody);
     }
 
-    @RequestMapping(path = "/api/account/getStarredAccounts", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/account/getStarredAccounts", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ArrayList<Account>> getStarredAccounts(@RequestBody JsonRequestBody requestBody) {
         return starService.getStarredAccounts(requestBody);
     }
 
-    @RequestMapping(path = "/api/account/deleteStar", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = "/api/account/deleteStar", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Account> deleteStarredAccount(@RequestBody JsonRequestBody<Account> requestBody) {
         return starService.deleteStarredAccount(requestBody);
     }

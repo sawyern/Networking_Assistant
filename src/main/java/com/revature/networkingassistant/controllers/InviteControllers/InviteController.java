@@ -31,8 +31,8 @@ public class InviteController {
         return inviteService.acceptInvite(requestBody);
     }
 
-    @RequestMapping(path = "/api/account/ignoreInvite", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity ignoreInvite(@RequestBody JsonRequestBody<Invite> requestBody) {
+    @RequestMapping(path = "/api/account/ignoreInvite", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Invite> ignoreInvite(@RequestBody JsonRequestBody<Invite> requestBody) {
         return inviteService.ignoreInvite(requestBody);
     }
 }

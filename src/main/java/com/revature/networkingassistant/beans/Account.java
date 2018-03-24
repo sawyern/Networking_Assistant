@@ -22,11 +22,13 @@ public class Account {
     private int id;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinTable(name="StarredList",
             joinColumns = {  @JoinColumn(name="ownerId",referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name="starredAccountId",referencedColumnName="id") })
     private List<Account> myStarredList;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "myStarredList")
     private List<Account> starredMeList;
 

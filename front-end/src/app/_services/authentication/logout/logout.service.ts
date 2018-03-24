@@ -12,12 +12,14 @@ export class LogoutService {
 
   logout() : Promise<Token> {
     console.log('logout initiated');
+    console.log(localStorage.getItem('token.id'));
     return new Promise<Token>((res, rej) => {
       this.serverAuthLogout().toPromise()
         .then(() => {
           localStorage.removeItem('token.id');
           localStorage.removeItem('token.accountId');
           res();
+          console.log(localStorage.getItem('token.id'));
         }).catch(() => {
         rej();
       });
