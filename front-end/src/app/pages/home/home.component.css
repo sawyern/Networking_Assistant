@@ -1,4 +1,7 @@
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+h1 {
+  padding: 10px;
+}
 
 p {
   font-size: 22px;
@@ -22,21 +25,12 @@ p {
 .welcome-section {
   color: #FFFFFF;
   min-height: 700px;
+  /*justify-content: center;*/
 }
 
 .about-section {
   background-color: #FFFFFF;
-}
-
-.about-section-background {
-  height: 500px;
-}
-
-.easy-section {
-  background-color: #383f49;
-}
-
-.easy-section-background {
+  opacity: .95;
   height: 500px;
 }
 
