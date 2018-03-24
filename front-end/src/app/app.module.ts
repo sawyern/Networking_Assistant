@@ -34,6 +34,8 @@ import {StarComponent} from "./pages/profile/star/star.component";
 import {PutAccountService} from "./_services/AccountServices/putAccount/put-account.service";
 import {StarServiceService} from "./_services/AccountServices/star-service.service";
 import { StarredComponent } from './pages/profile/starred/starred.component';
+import { EventFilter, StarFilter } from './filter.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,9 @@ import { StarredComponent } from './pages/profile/starred/starred.component';
     EventFormComponent,
     UserInfoComponent,
     StarComponent,
-    StarredComponent
+    StarredComponent,
+    EventFilter,
+    StarFilter
   ],
   imports: [
     BrowserModule,

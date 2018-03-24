@@ -14,7 +14,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let event of events; let i = index" [attr.data-index]="i" (click)="sendEventId(i)">
+          <input [(ngModel)]="searchText" placeholder="Search Event Names"/>
+          <tr *ngFor="let event of events | eventFilter : searchText; let i = index" [attr.data-index]="i" (click)="sendEventId(i)" class="event">
             <th scope=""row>{{i+1}}</th>
             <td>{{event.name}}</td>
           </tr>
