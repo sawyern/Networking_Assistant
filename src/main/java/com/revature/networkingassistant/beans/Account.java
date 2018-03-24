@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.controllers.DTO.Views;
 import org.hibernate.annotations.Type;
 

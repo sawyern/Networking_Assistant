@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.io.IOException;
+
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -67,5 +69,17 @@ public class StarredAccountControllerTest {
                 .statusCode(HttpStatus.SC_CREATED)
                 .assertThat().body("id", equalTo(testAccount2.getId()));
 //        Assert.assertTrue(accountRepo.findById(testAccount.getId()).get().getMyStarredList().contains(testAccount2));
+    }
+
+    @Test
+    public void isStarredByIdTest() throws IOException {
+        given()
+                .body(mapper.writeValueAsString(requestBody))
+                .contentType(ContentType.JSON)
+        .when()
+                .post("/api/account/isStarredById/" + testAccount2.getId())
+        .then()
+                .statusCode(HttpStatus.SC_OK)
+                .assertThat().body("id", equalTo(testAccount2.getId()));
     }
 }

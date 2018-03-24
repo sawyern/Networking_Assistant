@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Announcement implements Serializable{
 
     @Id
+    @GeneratedValue
     @Column(name = "id")
     @JsonView(Views.Public.class)
     private int id;
