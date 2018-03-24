@@ -10,6 +10,7 @@
         <th>Zip</th>
         <th>Date</th>
         <th>Description</th>
+        <th *ngIf="coordinator">Invite</th>
     </tr>
     <tr *ngFor="let event of upcomingEvents">
         <td>{{event.name}}</td>

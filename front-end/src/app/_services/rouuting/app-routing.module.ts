@@ -12,6 +12,7 @@ import {NewEventComponent} from "../../pages/new-event/new-event/new-event.compo
 import {LoginPageComponent} from "../../pages/login/login-page/login-page.component";
 import {StarComponent} from "../../pages/profile/star/star.component";
 import {MyEventsComponent} from "../../pages/event-dashboard/my-events/my-events.component";
+import { StarredComponent } from '../../pages/profile/starred/starred.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
       { path: 'profile/:accountId/starred', component: StarComponent },
       { path: 'event/dashboard', component: EventDashboardComponent },
       { path: 'event/new', component: NewEventComponent },
+      { path: 'account/starred', component: StarredComponent}
       { path: 'event/my-events', component: MyEventsComponent}
     ]
   },
