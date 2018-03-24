@@ -1,4 +1,5 @@
 <div class="starredTable container">
+    <input [(ngModel)]="searchText" placeholder="Search" />
     <div *ngIf="!loadedStarred">Loading Starred Accounts</div>
     <div *ngIf="loadedStarred && starredAccounts.length > 0">
         <table class="table">
@@ -9,13 +10,13 @@
                 <th>Phone</th>
                 <th>Zip Code</th>
             </tr>
-            <tr *ngFor="let account of starredAccounts" (click)="accountInfo(account.id)">
+            <tr *ngFor="let account of starredAccounts | starFilter : searchText;" (click)="accountInfo(account.id)">
                 <td>{{account.firstName}}</td>
                 <td>{{account.lastName}}</td>
                 <td>{{account.email}}</td>
                 <td>{{account.phone}}</td>
                 <td>{{account.zipCode}}</td>
-                <table *ngIf="details">               
+                <table *ngIf="details">
                     <tr> {{account.background}} </tr>
                 </table>
             </tr>
