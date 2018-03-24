@@ -6,6 +6,8 @@ import {JsonRequestBody} from "../../beans/JsonRequestBody";
 import {Starred} from "../../beans/Starred";
 import {ActivatedRoute} from "@angular/router";
 import {of} from 'rxjs/observable/of';
+import {Token} from "../../beans/Token";
+import {Account} from "../../beans/Account";
 
 @Injectable()
 export class StarServiceService {
@@ -14,31 +16,48 @@ export class StarServiceService {
               private http: HttpClient,
               private util : UtilService) { }
 
-  updateStarred (starredId: string): Observable<Starred> {
-    let body : JsonRequestBody<Starred> = new JsonRequestBody();
-    let star : Starred;
-    star.ownerId = localStorage.getItem('token.accountId');
-    star.starredAccountId = starredId;
+  updateStarred (accountId : string): Observable<Account> {
+    let body : JsonRequestBody<Account> = new JsonRequestBody();
 
-    body.object = star;
-    return this.http.post<Starred>(this.util.getServerUrl() + 'api/account/addStar', body)
+    let token : Token = new Token();
+    token.id = localStorage.getItem('token.id');
+    token.accountId = localStorage.getItem('token.accountId');
+
+    body.token = token;
+    let account : Account = new Account();
+    account.id = accountId;
+    body.object = account;
+
+    return this.http.put<Account>(this.util.getServerUrl() + 'api/account/addStar', body)
   }
-  // to remove Star
-  // removeStarred (starredId: string): Observable<Starred> {
-  //   let body : JsonRequestBody<Starred> = new JsonRequestBody();
-  //   let star : Starred;
-  //   star.ownerId = localStorage.getItem('token.accountId');
-  //   star.starredAccountId = starredId;
-  //
-  //   body.object = star;
-  //   return this.http.delete<Starred>(this.util.getServerUrl() + 'api/account/delete', body)
-  // }
 
-  // getStarredAccount(id : string) : Observable<boolean> {
-  //   // return of(true);
-  //   let body : JsonRequestBody<Starred> = new JsonRequestBody();
-  //   body.token = localStorage.getItem('token.accountId');
-  //   return this.http.get<boolean>(this.util.getServerUrl() + 'api/account/getStarredAccounts/', body);
-  // }
+  //to remove Star
+  deleteStarredAccount (accountId : string): Observable<Account> {
+    let body : JsonRequestBody<Account> = new JsonRequestBody();
+
+    let token : Token = new Token();
+    token.id = localStorage.getItem('token.id');
+    token.accountId = localStorage.getItem('token.accountId');
+
+    body.token = token;
+    let account : Account = new Account();
+    account.id = accountId;
+
+    return this.http.post<Account>(this.util.getServerUrl() + 'api/account/deleteStar', body)
+  }
+
+  isStarredById(id : string) : Observable<Account> {
+    let accountId: string;
+    let body : JsonRequestBody<any> = new JsonRequestBody();
+    let star : any;
+
+    let token : Token = new Token();
+    token.id = localStorage.getItem('token.id');
+    token.accountId = localStorage.getItem('token.accountId');
+    // star.ownerId = localStorage.getItem('token.accountId');
+
+    body.token = token;
+    return this.http.post<Account>(this.util.getServerUrl() + 'api/account/isStarredById/' + id, body);
+  }
 
 }

@@ -12,9 +12,8 @@ import {ActivatedRoute} from "@angular/router";
 export class StarComponent implements OnInit {
 
   currentUserId = localStorage.getItem('token.accountId');
-  accountId: string;
-  starredId: string;
   isStarred: boolean;
+  isOwnerProfile: boolean;
   @Input() starred: Starred;
 
 
@@ -22,31 +21,36 @@ export class StarComponent implements OnInit {
               private starService: StarServiceService) { }
 
   ngOnInit() {
-    // this.getStarred();
+    this.getStarred();
     // this.starredId = this.accountId;
   }
 
-  //GET starred info from server
-  // getStarred(): void {
-  //   console.log('getStarred called');
-  //   const accountId = this.route.snapshot.paramMap.get('accountId');
-  //   this.starService.getStarredAccounts(accountId)
-  //     .subscribe( isStarred => {
-  //       this.isStarred = isStarred;
-  //       console.log(isStarred);
-  //     })
-  // }
-
-  toggleStar(starredId: string): void {
-    console.log('Star toggle!');
-    // const starredId = this.route.snapshot.paramMap.get('accountId');
-    if (!this.isStarred) {
-      console.log('updated');
-      this.starService.updateStarred(starredId);
-    } else {
-      console.log('deleted');
-      // this.starService.removeStarred(starredId);
-    }
+  // GET starred info from server
+  getStarred(): void {
+    console.log('getStarred called');
+    const accountId = this.route.snapshot.paramMap.get('accountId');
+    this.starService.isStarredById(accountId)
+      .toPromise().then( isStarred => {
+        this.isOwnerProfile = accountId == this.currentUserId;
+        console.log("is starred resp" + isStarred);
+        this.isStarred = isStarred.id == this.currentUserId;
+        console.log(accountId);
+        console.log(this.isStarred);
+      });
   }
 
+  toggleStar(): void {
+    console.log('Star toggle!');
+    const starredId = this.route.snapshot.paramMap.get('accountId');
+    if (!this.isStarred) {
+      console.log('updated');
+      this.starService.updateStarred(starredId).toPromise().then(starredAccount => {
+        console.log(starredAccount);
+        this.getStarred();
+      });
+    } else {
+      console.log('deleted');
+      //this.starService.deleteStarredAccount(starredId);
+    }
+  }
 }

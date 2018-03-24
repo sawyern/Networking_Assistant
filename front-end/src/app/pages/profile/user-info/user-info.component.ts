@@ -61,6 +61,7 @@ export class UserInfoComponent implements OnInit {
     console.log('edit form submitted!');
     this.putAccountService.updateAccount(this.account)
       .subscribe(() => {
+        console.log(this.account);
       this.toggleEdit()
       });
   }

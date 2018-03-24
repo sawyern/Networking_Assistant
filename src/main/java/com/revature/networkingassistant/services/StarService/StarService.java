@@ -63,8 +63,9 @@ public class StarService {
 
     @Transactional
     public ResponseEntity<Account> isStarredById(JsonRequestBody requestBody, int accountId) {
-        if (accountRepo.findById(accountId).isPresent()) {
-            return new ResponseEntity<>(accountRepo.findById(accountId).get(), HttpStatus.OK);
-        } else return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+        Account acct = accountRepo.findById(requestBody.getToken().getAccountId()).get();
+        if (accountRepo.findById(requestBody.getToken().getAccountId()).isPresent() && accountRepo.findById(requestBody.getToken().getAccountId()).get().getMyStarredList().contains(accountRepo.findById(accountId).get())) {
+            return new ResponseEntity<>(accountRepo.findById(requestBody.getToken().getAccountId()).get(), HttpStatus.OK);
+        } else return new ResponseEntity<>(new Account(), HttpStatus.OK);
     }
 }
