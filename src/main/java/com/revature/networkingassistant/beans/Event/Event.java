@@ -2,10 +2,12 @@ package com.revature.networkingassistant.beans.Event;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.revature.networkingassistant.beans.Account;
 import com.revature.networkingassistant.controllers.DTO.Views;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity

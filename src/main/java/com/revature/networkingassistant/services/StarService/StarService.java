@@ -17,7 +17,8 @@ public class StarService {
 
     private AccountRepo accountRepo;
 
-    public StarService() {}
+    public StarService() {
+    }
 
     @Autowired
     public StarService(AccountRepo accountRepo) {
@@ -33,8 +34,10 @@ public class StarService {
                 ownerAccount.get().getMyStarredList().add(starredAccount.get());
                 accountRepo.save(ownerAccount.get());
                 return new ResponseEntity<>(starredAccount.get(), HttpStatus.CREATED);
-            } return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
-        } return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
     }
 
     @Transactional
@@ -43,16 +46,25 @@ public class StarService {
         if (account.isPresent()) {
             ArrayList<Account> starredAccounts = (ArrayList<Account>) account.get().getMyStarredList();
             if (starredAccounts.size() > 0)
-            return new ResponseEntity<>(starredAccounts, HttpStatus.OK);
+                return new ResponseEntity<>(starredAccounts, HttpStatus.OK);
             else return new ResponseEntity<>(starredAccounts, HttpStatus.NO_CONTENT);
         } else return new ResponseEntity<>(new ArrayList<Account>(), HttpStatus.BAD_REQUEST);
     }
 
     @Transactional
-    public ResponseEntity<Boolean> deleteStarredAccount(JsonRequestBody<Account> requestBody) {
+    public ResponseEntity<Account> deleteStarredAccount(JsonRequestBody<Account> requestBody) {
         if (accountRepo.findById(requestBody.getToken().getAccountId()).isPresent()) {
             Account account = accountRepo.findById(requestBody.getToken().getAccountId()).get();
-            return new ResponseEntity<>(account.getMyStarredList().remove(requestBody.getObject()), HttpStatus.OK);
-        } return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            account.getMyStarredList().remove(requestBody.getObject());
+            return new ResponseEntity<>(requestBody.getObject(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Transactional
+    public ResponseEntity<Account> isStarredById(JsonRequestBody requestBody, int accountId) {
+        if (accountRepo.findById(accountId).isPresent()) {
+            return new ResponseEntity<>(accountRepo.findById(accountId).get(), HttpStatus.OK);
+        } else return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);
     }
 }
