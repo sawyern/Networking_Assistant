@@ -52,12 +52,13 @@ public class GetInviteService {
     }
 
     @Transactional
-    public ResponseEntity<ArrayList<Event>> getReceivedInvites(JsonRequestBody<Invite> requestBody) {
-        ArrayList<Invite> invites = inviteRepo.findByInvitee(requestBody.getObject().getInvitee());
+    public ResponseEntity<ArrayList<Event>> getReceivedInvites(JsonRequestBody requestBody) {
+        ArrayList<Invite> invites = inviteRepo.findByInvitee(requestBody.getToken().getAccountId());
         ArrayList<Event> events = new ArrayList<>();
         for (Invite invite : invites) {
             Optional<Event> event = eventRepo.findById(invite.getEventId());
-            if (event.isPresent()) events.add(eventRepo.findById(invite.getEventId()).get());
+            if (event.isPresent())
+                events.add(event.get());
         }
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
