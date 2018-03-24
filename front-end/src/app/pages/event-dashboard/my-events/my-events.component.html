@@ -1,5 +1,5 @@
 <div class="container">
-    <p *ngIf="!loadedUpcoming || !loadedPast || !loadedInvited">Loading Events</p>
+    <p *ngIf="!loadedUpcoming && !loadedPast && !loadedInvited">Loading Events</p>
     <div class="row">
         <p *ngIf="upcomingEvents.length == 0">No Upcoming Events</p>
         <table *ngIf="loadedUpcoming" class="table">
