@@ -12,4 +12,6 @@ public interface InviteRepo extends CrudRepository<Invite, Integer>{
     ArrayList<Invite> findByInvitee(int invitee);
     ArrayList<Invite> findByInviterAndEventId(int inviter, int eventId);
     Invite findByInviteeAndEventId(int invitee, int eventId);
+
+    void deleteByInviteeAndEventId(int invitee, int eventId);
 }

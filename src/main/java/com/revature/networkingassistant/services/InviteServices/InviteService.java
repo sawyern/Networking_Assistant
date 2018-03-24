@@ -59,11 +59,11 @@ public class InviteService {
             //validate token
             if (sessionTokenRepo.existsById(token.getId())) {
                 //if invite exists
-                if (inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getId()) != null) {
+                if (inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getEventId()) != null) {
                     //if invitee is not already an attendant
                     if (attendantRepo.findByAccountIdAndEventId(invite.getInvitee(), invite.getEventId()) == null) {
                         attendantRepo.save(new Attendant(invite.getEventId(), invite.getInvitee(), Role.ATTENDANT));
-                        inviteRepo.delete(invite);
+                        inviteRepo.deleteByInviteeAndEventId(invite.getInvitee(), invite.getEventId());
                         return new ResponseEntity<>(accountRepo.findById(invite.getInvitee()).get(), HttpStatus.OK);
                     }
                     return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST); //if invitee is already an attendant
@@ -84,9 +84,9 @@ public class InviteService {
             //validate token
             if (sessionTokenRepo.existsById(token.getId())) {
                 //if invite exists
-                if (inviteRepo.existsById(invite.getId())) {
-                    invite = inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getId());
-                    inviteRepo.delete(invite);
+                if (inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getEventId()) != null) {
+                    invite = inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getEventId());
+                    inviteRepo.deleteByInviteeAndEventId(invite.getInvitee(), invite.getEventId());
                     return new ResponseEntity<>(invite, HttpStatus.OK);
                 }
                 return new ResponseEntity<>(invite, HttpStatus.NO_CONTENT); //if invite does not exist
