@@ -1,6 +1,7 @@
 package com.revature.networkingassistant.controllers.InviteControllers;
 
 import com.revature.networkingassistant.ControllerUtil;
+import com.revature.networkingassistant.beans.Event.Event;
 import com.revature.networkingassistant.beans.Invite;
 import com.revature.networkingassistant.controllers.DTO.JsonRequestBody;
 import com.revature.networkingassistant.services.InviteServices.GetInviteService;

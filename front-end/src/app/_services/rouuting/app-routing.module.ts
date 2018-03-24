@@ -10,6 +10,7 @@ import {ProfileComponent} from "../../pages/profile/profile.component";
 import {EventDashboardComponent} from "../../pages/event-dashboard/event-dashboard/event-dashboard.component";
 import {NewEventComponent} from "../../pages/new-event/new-event/new-event.component";
 import {LoginPageComponent} from "../../pages/login/login-page/login-page.component";
+import { MyEventsComponent } from '../../pages/event-dashboard/my-events/my-events.component';
 import {StarComponent} from "../../pages/profile/star/star.component";
 
 const appRoutes: Routes = [
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   { path: 'profile/:accountId/starred', component: StarComponent },
   { path: 'event/dashboard', component: EventDashboardComponent },
   { path: 'event/new', component: NewEventComponent },
+  { path: 'event/my-events', component: MyEventsComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

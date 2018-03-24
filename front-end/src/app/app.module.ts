@@ -28,6 +28,7 @@ import { EventComponent } from './pages/event-dashboard/event/event.component';
 import { EventlistComponent } from './pages/event-dashboard/eventlist/eventlist.component';
 import { AgmCoreModule } from '@agm/core';
 import {EventFormComponent} from "./pages/new-event/event-form/event-form.component";
+import { MyEventsComponent } from './pages/event-dashboard/my-events/my-events.component';
 import {UserInfoComponent} from "./pages/profile/user-info/user-info.component";
 import {StarComponent} from "./pages/profile/star/star.component";
 import {PutAccountService} from "./_services/AccountServices/putAccount/put-account.service";
@@ -48,6 +49,8 @@ import {StarServiceService} from "./_services/AccountServices/star-service.servi
     NewEventComponent,
     EventComponent,
     EventlistComponent,
+    EventFormComponent,
+    MyEventsComponent
     EventFormComponent,
     UserInfoComponent,
     StarComponent

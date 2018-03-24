@@ -59,7 +59,7 @@ public class InviteService {
             //validate token
             if (sessionTokenRepo.existsById(token.getId())) {
                 //if invite exists
-                if (inviteRepo.existsById(invite.getId())) {
+                if (inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getId()) != null) {
                     //if invitee is not already an attendant
                     if (attendantRepo.findByAccountIdAndEventId(invite.getInvitee(), invite.getEventId()) == null) {
                         attendantRepo.save(new Attendant(invite.getEventId(), invite.getInvitee(), Role.ATTENDANT));
@@ -85,6 +85,7 @@ public class InviteService {
             if (sessionTokenRepo.existsById(token.getId())) {
                 //if invite exists
                 if (inviteRepo.existsById(invite.getId())) {
+                    invite = inviteRepo.findByInviteeAndEventId(invite.getInvitee(), invite.getId());
                     inviteRepo.delete(invite);
                     return new ResponseEntity<>(invite, HttpStatus.OK);
                 }

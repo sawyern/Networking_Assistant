@@ -27,7 +27,7 @@ export class EventComponent implements OnInit {
     this.event.location.streetName="";
     this.event.location.addressNum="";
     this.event.location.zip="";
-    this.event.id=0;
+    // this.event.id=0;
     this.event.name="";
     this.event.description="";
     this.event.date=new Date();

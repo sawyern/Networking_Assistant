@@ -9,5 +9,6 @@ import java.util.ArrayList;
 @Repository
 public interface AttendantRepo extends CrudRepository<Attendant, String> {
     ArrayList<Attendant> findByEventId(int eventId);
+    ArrayList<Attendant> findByAccountId(int accountId);
     Attendant findByAccountIdAndEventId(int accountId, int eventId);
 }

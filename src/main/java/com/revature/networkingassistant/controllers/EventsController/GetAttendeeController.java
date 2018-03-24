@@ -2,7 +2,7 @@ package com.revature.networkingassistant.controllers.EventsController;
 
 import com.revature.networkingassistant.ControllerUtil;
 import com.revature.networkingassistant.beans.Attendant.Attendant;
-import com.revature.networkingassistant.services.AttendeeService.AttendeeService;
+import com.revature.networkingassistant.services.AttendantService.AttendantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class GetAttendeeController {
     public GetAttendeeController(AttendeeService attendeeService) {
         this.attendeeService = attendeeService;
     }
-
+  
     @RequestMapping(path = "/api/event/getAttendees/{eventId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Attendant>> getAttendees(@PathVariable int eventId) {
         return attendeeService.getAttendees(eventId);
