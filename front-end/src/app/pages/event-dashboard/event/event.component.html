@@ -15,8 +15,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let attendee of attendees" (click)="goToService.goTo('/profile')">
-          <td>{{attendee.firstName + " " + attendee.lastName}}</td>
+        <tr *ngFor="let attendee of attendees" (click)="goToProfile($event)">
+          <td [attr.accountId]="attendee.id">{{attendee.firstName + " " + attendee.lastName}}</td>
         </tr>
         </tbody>
       </table>

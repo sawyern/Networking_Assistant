@@ -1,6 +1,8 @@
-li{
-  border:1px solid black;
-  padding-left:6px;
+table{
+  background-color: #f9f9f9;
+  /*border-radius: 25px;*/
+  padding-left: 30px;
+  padding-right: 30px;
   margin-top:2px;
   margin-bottom:2px;
   margin-left:-5%;
@@ -11,5 +13,3 @@ ol{
   border:1px solid black;
   margin-top:20px;
 }
-
-

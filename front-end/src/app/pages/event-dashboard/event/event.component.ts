@@ -41,6 +41,7 @@ export class EventComponent implements OnInit {
     this.event = event;
     this.getAttendees(event);
     this.getAddress();
+    this.getAnnouncements(event);
   }
 
   getAttendees(event:Event){
@@ -56,8 +57,17 @@ export class EventComponent implements OnInit {
     })
   }
 
+  goToProfile(e){
+    let profile = e.target.attributes[1].value;
+    this.goToService.goTo('/profile/'+profile);
+  }
+
   getAnnouncements(event:Event){
     this.announcements = [];
+    let url = this.utilService.getServerUrl() + "announcements/getByEventId/"+event.id;
+    this.http.get<any>(url).subscribe(response=>{
+      this.announcements = response;
+    });
   }
 
   getAddress(){
