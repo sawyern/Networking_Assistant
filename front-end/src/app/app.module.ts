@@ -33,7 +33,7 @@ import {UserInfoComponent} from "./pages/profile/user-info/user-info.component";
 import {StarComponent} from "./pages/profile/star/star.component";
 import {PutAccountService} from "./_services/AccountServices/putAccount/put-account.service";
 import {StarServiceService} from "./_services/AccountServices/star-service.service";
-
+import { StarredComponent } from './pages/profile/starred/starred.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +53,8 @@ import {StarServiceService} from "./_services/AccountServices/star-service.servi
     MyEventsComponent,
     EventFormComponent,
     UserInfoComponent,
-    StarComponent
+    StarComponent,
+    StarredComponent
   ],
   imports: [
     BrowserModule,
