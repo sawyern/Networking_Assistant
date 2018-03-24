@@ -25,3 +25,12 @@ li{
 .row{
   padding:2%;
 }
+
+.attendees{
+  height:200px;
+  overflow:scroll;
+}
+
+.announcements{
+  width:100%;
+}
