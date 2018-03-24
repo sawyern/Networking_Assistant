@@ -11,6 +11,7 @@ import {EventDashboardComponent} from "../../pages/event-dashboard/event-dashboa
 import {NewEventComponent} from "../../pages/new-event/new-event/new-event.component";
 import {LoginPageComponent} from "../../pages/login/login-page/login-page.component";
 import {StarComponent} from "../../pages/profile/star/star.component";
+import { StarredComponent } from '../../pages/profile/starred/starred.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
       { path: 'profile/:accountId/starred', component: StarComponent },
       { path: 'event/dashboard', component: EventDashboardComponent },
       { path: 'event/new', component: NewEventComponent },
+      { path: 'account/starred', component: StarredComponent}
     ]
   },
   // otherwise redirect to home
