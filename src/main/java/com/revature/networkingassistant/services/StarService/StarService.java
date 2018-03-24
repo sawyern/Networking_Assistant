@@ -55,7 +55,7 @@ public class StarService {
     public ResponseEntity<Account> deleteStarredAccount(JsonRequestBody<Account> requestBody) {
         if (accountRepo.findById(requestBody.getToken().getAccountId()).isPresent()) {
             Account account = accountRepo.findById(requestBody.getToken().getAccountId()).get();
-            account.getMyStarredList().remove(requestBody.getObject());
+            account.getMyStarredList().remove(accountRepo.findById(requestBody.getObject().getId()).get());
             return new ResponseEntity<>(requestBody.getObject(), HttpStatus.OK);
         }
         return new ResponseEntity<>(new Account(), HttpStatus.BAD_REQUEST);

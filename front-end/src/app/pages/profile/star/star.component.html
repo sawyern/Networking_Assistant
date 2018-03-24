@@ -1,7 +1,6 @@
 <figcaption align="center">
   <button *ngIf="!isOwnerProfile" class="btn btn-primary" (click)="toggleStar()">
-    <i *ngIf="!isStarred" class="fas fa-star"></i>
-    <i *ngIf="isStarred" class="fas fa-star" style="color:yellow"></i> Profile
+    <i class="fas fa-star" [ngStyle]="{'color' : isStarred ? 'yellow':'white'}"></i> Profile
   </button>
 </figcaption>
 

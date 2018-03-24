@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Account } from "../../../beans/Account";
 import { StarServiceService} from "../../../_services/AccountServices/star-service.service";
-import {Starred} from "../../../beans/Starred";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -12,10 +10,8 @@ import {ActivatedRoute} from "@angular/router";
 export class StarComponent implements OnInit {
 
   currentUserId = localStorage.getItem('token.accountId');
-  isStarred: boolean;
+  @Input() isStarred: boolean;
   isOwnerProfile: boolean;
-  @Input() starred: Starred;
-
 
   constructor(private route: ActivatedRoute,
               private starService: StarServiceService) { }
@@ -50,7 +46,10 @@ export class StarComponent implements OnInit {
       });
     } else {
       console.log('deleted');
-      //this.starService.deleteStarredAccount(starredId);
+      this.starService.deleteStarredAccount(starredId).toPromise().then(starredAccount => {
+        console.log(starredAccount);
+        this.getStarred();
+      });
     }
   }
 }

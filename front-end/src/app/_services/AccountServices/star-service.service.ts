@@ -42,6 +42,7 @@ export class StarServiceService {
     body.token = token;
     let account : Account = new Account();
     account.id = accountId;
+    body.object = account;
 
     return this.http.post<Account>(this.util.getServerUrl() + 'api/account/deleteStar', body)
   }
