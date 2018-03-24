@@ -15,6 +15,8 @@ export class EventComponent implements OnInit {
 
   event:Event;
   attendees:Attendee[];
+  coordinatorId:number;
+  coordinatorLogged = false;
   announcements:Announcement[];
   lat: number = 0;
   lng: number = 0;
@@ -41,6 +43,7 @@ export class EventComponent implements OnInit {
     this.event = event;
     this.getAttendees(event);
     this.getAddress();
+    this.getAnnouncements(event);
   }
 
   getAttendees(event:Event){
@@ -48,16 +51,50 @@ export class EventComponent implements OnInit {
     let url = this.utilService.getServerUrl() + "/api/event/getAttendees/" + event.id;
     this.http.get<any>(url).subscribe(response=>{
       for(let s of response){
+        if(s.role == "COORDINATOR") this.coordinatorId = s.accountId;
         url = this.utilService.getServerUrl() + "/api/account/getById/" + s.accountId;
         this.http.get<any>(url).subscribe(response1=>{
           this.attendees.push(response1);
         });
       }
+      if(this.coordinatorId == parseInt(localStorage.getItem('token.accountId'))) this.coordinatorLogged = true;
+      else this.coordinatorLogged = false;
     })
+  }
+
+  goToProfile(e){
+    let profile = e.target.attributes[1].value;
+    this.goToService.goTo('/profile/'+profile);
   }
 
   getAnnouncements(event:Event){
     this.announcements = [];
+    let url = this.utilService.getServerUrl() + "api/announcements/getByEventId/"+event.id;
+    this.http.get<any>(url).subscribe(response=>{
+      this.announcements = response;
+    });
+  }
+
+  putAnnouncement(e){
+    e.preventDefault();
+    let url = this.utilService.getServerUrl() + "api/announcement/create";
+    var eventId = this.event.id;
+    let toSend = {
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
+      },
+      object: {
+        eventId:eventId,
+        accountId:this.coordinatorId,
+        message:e.target[0].value
+      }
+    };
+    console.log(toSend);
+    this.http.put<any>(url,toSend).subscribe(response=>{
+      console.log(response);
+      this.getAnnouncements(this.event);
+    });
   }
 
   getAddress(){

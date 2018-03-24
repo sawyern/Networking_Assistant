@@ -1,3 +1,3 @@
 export class Announcement{
-  text:string;
+  message:string;
 }
