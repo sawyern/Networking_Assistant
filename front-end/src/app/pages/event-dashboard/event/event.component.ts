@@ -14,6 +14,7 @@ import {GoToService} from "../../../_services/go-to/go-to.service";
 export class EventComponent implements OnInit {
 
   event:Event;
+  date:string;
   attendees:Attendee[];
   coordinatorId:number;
   coordinatorLogged = false;
@@ -41,6 +42,9 @@ export class EventComponent implements OnInit {
 
   setEvent(event:Event){
     this.event = event;
+    let dateS = event.date.toString().substr(0,10);
+    let dates = dateS.split('-');
+    this.date = dates[1] + "/" + dates[2] + "/" + dates[0];
     this.getAttendees(event);
     this.getAddress();
     this.getAnnouncements(event);
