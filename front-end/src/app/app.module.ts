@@ -50,7 +50,7 @@ import {StarServiceService} from "./_services/AccountServices/star-service.servi
     EventComponent,
     EventlistComponent,
     EventFormComponent,
-    MyEventsComponent
+    MyEventsComponent,
     EventFormComponent,
     UserInfoComponent,
     StarComponent

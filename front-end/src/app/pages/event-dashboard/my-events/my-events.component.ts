@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import { AsyncPipe } from "@angular/common";
+import {UtilService} from "../../../_services/util/util.service";
 
 @Component({
   selector: "my-events",
@@ -22,7 +23,7 @@ export class MyEventsComponent implements OnInit {
   coordinator:boolean;
   @Input() accountId:number;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private utilService:UtilService) {
   }
 
   ngOnInit() {
@@ -51,14 +52,13 @@ export class MyEventsComponent implements OnInit {
     });
 
     const req = {
-      token:localStorage.getItem("token.id"),
-      invite:{
-        id:null,
-        inviter:null,
-        invitee:localStorage.getItem("token.accountId")
-      }
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
+      },
+      object:{}
     }
-    this.http.get<any[]>("http://localhost:8080/api/invites/getReceivedInvites/"+localStorage.getItem("token.accountId")).subscribe((invites) =>{
+    this.http.post<any[]>(this.utilService.getServerUrl() + "api/invites/getReceivedInvites",req).subscribe((invites) =>{
       for (let invite in invites) {
         this.invitedEvents.push(invites[invite]);
       }
@@ -77,14 +77,22 @@ export class MyEventsComponent implements OnInit {
     this.getDetails = true;
   }
 
-  invite(accountId:number, eventId:number) {
+  invite(e, eventId:number) {
+    e.preventDefault();
     const invite = {
-      id:eventId,
-      inviter:localStorage.getItem("token.accountId"),
-      invitee:accountId,
-      token:localStorage.getItem("token.id")
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
+      },
+      object:{
+        eventId:eventId,
+        inviter:localStorage.getItem("token.accountId"),
+        invitee:e.target[0].value
+      }
     }
-    this.http.put("localhost:8080/api/event/invite", invite)
+    this.http.put(this.utilService.getServerUrl() + "api/event/invite", invite).subscribe(response=>{
+      console.log(response);
+    });
   }
 
   accept(eventId:number) {

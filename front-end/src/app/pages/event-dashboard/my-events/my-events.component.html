@@ -1,4 +1,4 @@
-<table *ngIf="loadedUpcoming">
+<table *ngIf="loadedUpcoming" class="table">
     <tr>
         <th>Upcoming Events</th>
     </tr>
@@ -20,8 +20,10 @@
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
         <td *ngIf="coordinator">
-                <input type="text" placeholder="ID" name="accountId" id="accountId" [(ngModel)]="accountId" />
-                <button onclick="invite(accountId, event.id)">Invite</button>
+          <form (submit)="invite($event,event.id)">
+            <input type="text" placeholder="ID" name="accountId" id="accountId"/>
+            <button type="submit">Invite</button>
+          </form>
         </td>
     </tr>
 </table>
