@@ -14,6 +14,7 @@ public class Announcement implements Serializable{
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     @JsonView(Views.Public.class)
     private int id;
 

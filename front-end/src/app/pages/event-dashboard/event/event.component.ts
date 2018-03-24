@@ -90,6 +90,7 @@ export class EventComponent implements OnInit {
         message:e.target[0].value
       }
     };
+    console.log(toSend);
     this.http.put<any>(url,toSend).subscribe(response=>{
       console.log(response);
       this.getAnnouncements(this.event);
