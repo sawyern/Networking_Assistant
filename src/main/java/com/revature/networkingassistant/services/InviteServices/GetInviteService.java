@@ -52,8 +52,8 @@ public class GetInviteService {
     }
 
     @Transactional
-    public ResponseEntity<ArrayList<Event>> getReceivedInvites(int accountId) {
-        ArrayList<Invite> invites = inviteRepo.findByInvitee(accountId);
+    public ResponseEntity<ArrayList<Event>> getReceivedInvites(JsonRequestBody<Invite> requestBody) {
+        ArrayList<Invite> invites = inviteRepo.findByInvitee(requestBody.getObject().getInvitee());
         ArrayList<Event> events = new ArrayList<>();
         for (Invite invite : invites) {
             Optional<Event> event = eventRepo.findById(invite.getEventId());

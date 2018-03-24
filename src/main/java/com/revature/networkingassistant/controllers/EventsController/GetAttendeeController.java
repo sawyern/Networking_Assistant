@@ -14,17 +14,17 @@ import java.util.ArrayList;
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class GetAttendeeController {
 
-    private AttendeeService attendeeService;
+    private AttendantService attendantService;
 
     public GetAttendeeController() {}
 
     @Autowired
-    public GetAttendeeController(AttendeeService attendeeService) {
-        this.attendeeService = attendeeService;
+    public GetAttendeeController(AttendantService attendantService) {
+        this.attendantService = attendantService;
     }
   
     @RequestMapping(path = "/api/event/getAttendees/{eventId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Attendant>> getAttendees(@PathVariable int eventId) {
-        return attendeeService.getAttendees(eventId);
+        return attendantService.getAttendees(eventId);
     }
 }

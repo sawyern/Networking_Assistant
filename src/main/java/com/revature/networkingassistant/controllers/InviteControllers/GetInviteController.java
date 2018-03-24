@@ -31,7 +31,7 @@ public class GetInviteController {
     }
 
     @RequestMapping(path = "/api/invites/getReceivedInvites", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<Invite>> getReceivedInvites(@RequestBody JsonRequestBody<Invite> requestBody) {
-        return getInviteService.getRecievedInvites(requestBody);
+    public ResponseEntity<ArrayList<Event>> getReceivedInvites(@RequestBody JsonRequestBody<Invite> requestBody) {
+        return getInviteService.getReceivedInvites(requestBody);
     }
 }
