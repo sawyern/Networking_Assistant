@@ -71,7 +71,8 @@ import {StarServiceService} from "./_services/AccountServices/star-service.servi
     LogoutService,
     GetAccountService,
     PutAccountService,
-    StarServiceService
+    StarServiceService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

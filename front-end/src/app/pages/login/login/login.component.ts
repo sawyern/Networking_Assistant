@@ -37,8 +37,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.email, this.password)
       .then(data => {
         this.router.navigateByUrl('');
-        this.invalid = true;
-        this.errorMsg = "";
+        this.invalid = false;
       })
       .catch(
         error => {

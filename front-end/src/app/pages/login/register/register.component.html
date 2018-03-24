@@ -5,13 +5,20 @@
     {{errorMsg}}
   </div>
 
+  <div class="container">
+    <div class="successMsg" [hidden]="!valid"
+         class="alert alert-success"
+    >
+      {{successMsg}}
+    </div>
+
   <form class="register-form" #registerForm="ngForm" (ngSubmit)="onRegisterSubmit()">
     <i class="fas fa-handshake fa-3x"></i>
     <input [(ngModel)]="rfname" type="text" name="rfname" placeholder="first name"/>
     <input [(ngModel)]="rlname" type="text" name="rlname" placeholder="last name"/>
     <input [(ngModel)]="remail" type="text" name="remail" placeholder="email address"/>
-    <input [(ngModel)]="rpassword" type="password" name="rpassword" placeholder="password"/>
-    <input type="password" name="rpassword" placeholder="confirm password"/>
+    <input [(ngModel)]="rpassword1" type="password" name="rpassword1" placeholder="password"/>
+    <input [(ngModel)]="rpassword2" type="password" name="rpassword2" placeholder="confirm password"/>
     <!--<div *ngIf="rpassword.errors.required">Password is required</div>-->
 
     <button type="submit">create</button>

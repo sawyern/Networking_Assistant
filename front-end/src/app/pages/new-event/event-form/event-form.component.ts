@@ -15,7 +15,7 @@ export class EventFormComponent implements OnInit {
 
   invalid : boolean = false;
   success : boolean = false;
-  errMsg : string;
+  errorMsg : string;
 
   @Input() eventName : string;
   @Input() date : Date;
@@ -52,10 +52,17 @@ export class EventFormComponent implements OnInit {
       },
       object:event
     };
-    this.http.put(this.utilService.getServerUrl()+"api/event/create",toSend).subscribe(response=>{
-      console.log(response);
-      this.goToService.goTo('/event/dashboard');
-    });
+    this.http.put(this.utilService.getServerUrl()+"api/event/create",toSend).subscribe(
+      success=>{
+      console.log(success);
+      this.invalid = false;
+      this.goToService.goTo('/event/dashboard');},
+      error=>{
+        if(error.state == 400) this.errorMsg = "Information Incorrect.";
+        if(error.state >= 500) this.errorMsg = "Server Not Responding. Please Try Again Later";
+        this.invalid = true;
+      }
+      );
   }
 
   constructor(private http:HttpClient, private utilService:UtilService, private goToService:GoToService) {
