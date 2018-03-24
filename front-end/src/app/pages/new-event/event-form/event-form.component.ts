@@ -45,24 +45,44 @@ export class EventFormComponent implements OnInit {
     // }).catch(errorMsg => {
     //   this.router.navigateByUrl("/events/loadError");
     // });
-    let toSend = {
-      token: {
-        id: localStorage.getItem("token.id"),
-        accountId: localStorage.getItem("token.accountId")
+
+    let locationString = this.addressNum + "+" + this.streetName + ",+" + this.city + ",+" + this.state;
+    this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationString}&key=AIzaSyBsUeBPaFr-gmdDk-LmZE-nb67aC-5x1Qs`).subscribe(response=>{
+        if(response.status == "ZERO_RESULTS"){
+          this.invalid = true;
+          this.success = false;
+          this.errorMsg = "Invalid Location. Please try again";
+        }
+        else{
+          this.success = true;
+          this.invalid = false;
+          let toSend = {
+            token: {
+              id: localStorage.getItem("token.id"),
+              accountId: localStorage.getItem("token.accountId")
+            },
+            object:event
+          };
+          this.http.put(this.utilService.getServerUrl()+"api/event/create",toSend).subscribe(
+            success=>{
+              console.log(success);
+              this.invalid = false;
+              this.goToService.goTo('/event/dashboard');},
+            error=>{
+              if(error.state == 400) this.errorMsg = "Information Incorrect.";
+              if(error.state >= 500) this.errorMsg = "Server Not Responding. Please Try Again Later";
+              this.invalid = true;
+            }
+          );
+        }
       },
-      object:event
-    };
-    this.http.put(this.utilService.getServerUrl()+"api/event/create",toSend).subscribe(
-      success=>{
-      console.log(success);
-      this.invalid = false;
-      this.goToService.goTo('/event/dashboard');},
       error=>{
-        if(error.state == 400) this.errorMsg = "Information Incorrect.";
-        if(error.state >= 500) this.errorMsg = "Server Not Responding. Please Try Again Later";
+        console.log('error');
         this.invalid = true;
+        this.success = false;
+        this.errorMsg = "Invalid Location. Please try again";
       }
-      );
+    );
   }
 
   constructor(private http:HttpClient, private utilService:UtilService, private goToService:GoToService) {
