@@ -14,12 +14,12 @@ import {StarredComponent} from "../../pages/profile/starred/starred.component";
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginPageComponent },
+  { path: 'profile/:accountId', component: ProfileComponent },
+  { path: 'event/dashboard', component: EventDashboardComponent },
   { path: '',
     canActivate: [AuthGuard],
     children:[
-      { path: 'profile/:accountId', component: ProfileComponent },
       { path: 'profile/:accountId/starred', component: StarComponent },
-      { path: 'event/dashboard', component: EventDashboardComponent },
       { path: 'event/new', component: NewEventComponent },
       { path: 'account/starred', component: StarredComponent},
       { path: 'event/my-events', component: MyEventsComponent}

@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 import { AsyncPipe } from "@angular/common";
 import {UtilService} from "../../../_services/util/util.service";
+import {Account} from "../../../beans/Account";
 
 @Component({
   selector: "my-events",
@@ -18,7 +19,8 @@ export class MyEventsComponent implements OnInit {
   pastEvents:any[] = [];
   upcomingEvents:any[] = [];
   invitedEvents:any[] =[];
-  starred: Observable<any[]>;
+  starred:any[] = [];
+  attendees:any[] = [];
   getDetails = false;
   coordinator:boolean;
   @Input() accountId:number;
@@ -27,14 +29,27 @@ export class MyEventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const date = new Date;
+    this.getEvents();
 
+    this.http.get<any>(this.utilService.getServerUrl() + "api/account/getById/"+localStorage.getItem("token.accountId"))
+    .subscribe((account) => {
+      if (account.role == "ATTENDANT") this.coordinator = false;
+      else this.coordinator = true;
+    });
+
+    this.getInvites();
+  }
+
+  getEvents(){
+    const date = new Date;
     this.http.get<any[]>(
-      "http://localhost:8080/api/attendant/getEvents/" +
-        localStorage.getItem("token.accountId")
+      this.utilService.getServerUrl() + "api/attendant/getEvents/" +
+      localStorage.getItem("token.accountId")
     ).subscribe(events => {
       for (let event in events) {
         let eventDate: Date = new Date(events[event].date);
+        console.log(date);
+        console.log(eventDate);
         if (eventDate.valueOf() > date.valueOf()) {
           this.upcomingEvents.push(events[event]);
         } else this.pastEvents.push(events[event]);
@@ -42,14 +57,19 @@ export class MyEventsComponent implements OnInit {
       if (this.pastEvents.length > 0) this.loadedPast = true;
       if (this.upcomingEvents.length > 0) this.loadedUpcoming = true;
     });
+  }
 
-    this.http.get<any>("http://localhost:8080/api/account/getById/"+localStorage.getItem("token.accountId"))
-    .subscribe((account) => {
-      if (account.role == "ATTENDANT") this.coordinator = false;
-      else this.coordinator = true;
-    });
-
-    this.http.get<any[]>("http://localhost:8080/api/invites/getReceivedInvites/"+localStorage.getItem("token.accountId")).subscribe((invites) =>{
+  getInvites(){
+    this.invitedEvents = [];
+    const req = {
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
+      },
+      object:{}
+    }
+    this.http.post<any[]>(this.utilService.getServerUrl() + "api/invites/getReceivedInvites",req).subscribe((invites) =>{
+      console.log(invites);
       for (let invite in invites) {
         this.invitedEvents.push(invites[invite]);
       }
@@ -58,13 +78,18 @@ export class MyEventsComponent implements OnInit {
   }
 
   details(eventId: number) {
-    this.getDetails = false;
-    this.starred = this.http.get<any[]>(
-      "/api/starred/getEventStarred/" +
-        eventId +
-        "/" +
-        localStorage.getItem("token.accountId")
-    );
+    this.starred = [];
+    this.attendees = [];
+    let url = this.utilService.getServerUrl() + "/api/event/getAttendees/" + eventId;
+    this.http.get<any>(url).subscribe(response=>{
+      this.starred = response;
+      for(let s of this.starred){
+        url = this.utilService.getServerUrl() + "/api/account/getById/" + s.accountId;
+        this.http.get<any>(url).subscribe(response1=>{
+          this.attendees.push(response1);
+        });
+      }
+    });
     this.getDetails = true;
   }
 
@@ -88,23 +113,37 @@ export class MyEventsComponent implements OnInit {
 
   accept(eventId:number) {
     const invite = {
-      invite:{
-        id:eventId,
-        invitee:localStorage.getItem("token.accountId")
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
       },
-      token:localStorage.getItem("token.id")
-    }
-    this.http.put("localhost:8080/api/event/acceptInvite", invite)
+      object:{
+        eventId:eventId,
+        invitee:localStorage.getItem("token.accountId")
+      }
+    };
+    this.http.put(this.utilService.getServerUrl() + "api/account/acceptInvite", invite).subscribe(response=>{
+      console.log(response);
+      this.getInvites();
+      this.getEvents();
+    });
   }
 
   ignore(eventId:number) {
     const invite = {
-      invite:{
-        id:eventId,
-        invitee:localStorage.getItem("token.accountId"),
+      token: {
+        id: localStorage.getItem("token.id"),
+        accountId: localStorage.getItem("token.accountId")
       },
-      token:localStorage.getItem("token.id"),
-    }
-    this.http.put("localhost:8080/api/event/ignoreInvite"+localStorage.getItem("token.accountId"), invite)
+      object:{
+        eventId:eventId,
+        invitee:localStorage.getItem("token.accountId")
+      }
+    };
+    this.http.post(this.utilService.getServerUrl() + "api/account/ignoreInvite", invite).subscribe(response=>{
+      console.log(response);
+      this.getInvites();
+      this.getEvents();
+    });
   }
 }

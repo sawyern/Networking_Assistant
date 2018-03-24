@@ -1,8 +1,10 @@
-<table *ngIf="loadedUpcoming" class="table">
-    <tr>
+<div class="container">
+  <div class="row">
+    <table *ngIf="loadedUpcoming" class="table">
+      <tr>
         <th>Upcoming Events</th>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <th>Name</th>
         <th>Address</th>
         <th>City</th>
@@ -10,9 +12,8 @@
         <th>Zip</th>
         <th>Date</th>
         <th>Description</th>
-        <th *ngIf="coordinator">Invite</th>
-    </tr>
-    <tr *ngFor="let event of upcomingEvents">
+      </tr>
+      <tr *ngFor="let event of upcomingEvents" (click)="details(event.id)">
         <td>{{event.name}}</td>
         <td>{{event.location.addressNum}} {{event.location.streetName}}</td>
         <td>{{event.location.city}}</td>
@@ -21,18 +22,20 @@
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
         <td *ngIf="coordinator">
-          <form (submit)="invite($event,event.id)">
+          <form (submit)="invite($event,event.id)" class="text-right">
             <input type="text" placeholder="ID" name="accountId" id="accountId"/>
-            <button type="submit">Invite</button>
+            <button type="submit" class="btn btn-primary">Invite</button>
           </form>
         </td>
-    </tr>
-</table>
-<table *ngIf="loadedPast">
-    <tr>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <table *ngIf="loadedPast" class="table">
+      <tr>
         <th>Past Events</th>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <th>Name</th>
         <th>Address</th>
         <th>City</th>
@@ -40,8 +43,8 @@
         <th>Zip</th>
         <th>Date</th>
         <th>Description</th>
-    </tr>
-    <tr *ngFor="let event of pastEvents" (click)="details(event.id)">
+      </tr>
+      <tr *ngFor="let event of pastEvents" (click)="details(event.id)">
         <td>{{event.name}}</td>
         <td>{{event.location.addressNum}} {{event.location.streetName}}</td>
         <td>{{event.location.city}}</td>
@@ -49,27 +52,15 @@
         <td>{{event.location.zip}}</td>
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
-    </tr>
-    <table *ngIf="getDetails">
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-        </tr>
-        <tr *ngFor="let account of starred">
-            <td>{{account.firstName}}</td>
-            <td>{{account.lastName}}</td>
-            <td>{{account.email}}</td>
-            <td>{{account.phone}}</td>
-        </tr>
+      </tr>
     </table>
-</table>
-<table *ngIf="loadedInvited">
-    <tr>
+  </div>
+  <div class="row">
+    <table *ngIf="loadedInvited" class="table">
+      <tr>
         <th>Invited Events</th>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <th>Name</th>
         <th>Address</th>
         <th>City</th>
@@ -77,8 +68,8 @@
         <th>Zip</th>
         <th>Date</th>
         <th>Description</th>
-    </tr>
-    <tr *ngFor="let event of invitedEvents">
+      </tr>
+      <tr *ngFor="let event of invitedEvents">
         <td>{{event.name}}</td>
         <td>{{event.location.addressNum}} {{event.location.streetName}}</td>
         <td>{{event.location.city}}</td>
@@ -87,8 +78,31 @@
         <td>{{event.date}}</td>
         <td>{{event.description}}</td>
         <td>
-            <button onclick="accept(event.id)">Accept</button>
-            <button onclick="ingore(event.id)">Ignore</button>
+          <button (click)="accept(event.id)" class="btn btn-primary">Accept</button>
+          <button (click)="ignore(event.id)" class="btn btn-danger">Ignore</button>
         </td>
-    </tr>
-</table>
+      </tr>
+    </table>
+  </div>
+  <div class="row" *ngIf="getDetails">
+    <div class="container">
+      <h3>Event Attendants</h3>
+    </div>
+    <div class="container">
+      <table class="table">
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+        <tr *ngFor="let account of attendees">
+          <td>{{account.firstName}}</td>
+          <td>{{account.lastName}}</td>
+          <td>{{account.email}}</td>
+          <td>{{account.phone}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

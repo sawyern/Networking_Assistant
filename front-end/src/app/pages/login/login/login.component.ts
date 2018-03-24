@@ -32,6 +32,12 @@ export class LoginComponent implements OnInit {
     this.toggleEvent.emit();
   }
 
+  notLoggedIn(){
+    console.log("Not logged");
+    this.invalid = true;
+    this.errorMsg = "Please Login to Access";
+  }
+
   onLoginSubmit() {
     console.log('onLoginSubmit called');
     this.loginService.login(this.email, this.password)

@@ -27,10 +27,11 @@ public class GetInviteService {
     public GetInviteService(){}
 
     @Autowired
-    public GetInviteService(SessionTokenRepo tokenRepo, AccountRepo accountRepo, InviteRepo inviteRepo) {
+    public GetInviteService(SessionTokenRepo tokenRepo, AccountRepo accountRepo, InviteRepo inviteRepo, EventRepo eventRepo) {
         this.tokenRepo = tokenRepo;
         this.accountRepo = accountRepo;
         this.inviteRepo = inviteRepo;
+        this.eventRepo = eventRepo;
     }
 
     @Transactional
