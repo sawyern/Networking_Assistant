@@ -1,12 +1,12 @@
 <div class="basics-section d-inline-block">
-
   <h2 *ngIf="account && !canEdit">About</h2>
 
   <ul class="" *ngIf="account && !canEdit">
-    <li class="">{{account.firstName + " " + account.lastName}}</li>
+
     <li class="">{{account.background}}</li>
     <h2 *ngIf="account && !canEdit">Contact</h2>
     <div class="">
+      <li class="">Name: {{account.firstName + " " + account.lastName}}</li>
       <li class="">Phone: {{account.phone}}</li>
       <li class="">Email: {{account.email}}</li>
       <li class="">Location: {{account.zipCode}}</li>
@@ -21,6 +21,8 @@
         <h2 *ngIf="account && canEdit">About</h2>
       <li><input class="form-control" [(ngModel)]="account.background" type="text" name="background" id="about" value="{{account.background}}" /></li>
         <h2 *ngIf="account && canEdit">Contact</h2>
+        <li>First Name: <input class="form-control" [(ngModel)]="account.firstName" type="text" name="firstName" value="{{account.firstName}}" /></li>
+        <li>Last Name: <input class="form-control" [(ngModel)]="account.lastName" type="text" name="lastName" value="{{account.lastName}}" /></li>
       <li>Phone: <input class="form-control" [(ngModel)]="account.phone" type="text" name="phone" value="{{account.phone}}" /></li>
       <li>Email: <input class="form-control" [(ngModel)]="account.email" type="text" name="email" value="{{account.email}}" /></li>
       <li>Location: <input class="form-control" [(ngModel)]="account.zipCode" type="text" name="zipCode" value="{{account.zipCode}}" /></li>
