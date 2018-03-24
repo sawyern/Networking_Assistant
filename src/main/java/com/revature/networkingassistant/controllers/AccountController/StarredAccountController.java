@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
@@ -30,7 +31,7 @@ public class StarredAccountController {
     }
 
     @RequestMapping(path = "/api/account/getStarredAccounts", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ArrayList<Account>> getStarredAccounts(@RequestBody JsonRequestBody requestBody) {
+    public ResponseEntity<List<Account>> getStarredAccounts(@RequestBody JsonRequestBody requestBody) {
         return starService.getStarredAccounts(requestBody);
     }
 

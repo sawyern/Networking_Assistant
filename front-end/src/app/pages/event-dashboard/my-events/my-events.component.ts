@@ -34,8 +34,6 @@ export class MyEventsComponent implements OnInit {
     ).subscribe(events => {
       for (let event in events) {
         let eventDate: Date = new Date(events[event].date);
-        console.log(date);
-        console.log(eventDate);
         if (eventDate.valueOf() > date.valueOf()) {
           this.upcomingEvents.push(events[event]);
         } else this.pastEvents.push(events[event]);
@@ -50,14 +48,6 @@ export class MyEventsComponent implements OnInit {
       else this.coordinator = true;
     });
 
-    const req = {
-      token:localStorage.getItem("token.id"),
-      invite:{
-        id:null,
-        inviter:null,
-        invitee:localStorage.getItem("token.accountId")
-      }
-    }
     this.http.get<any[]>("http://localhost:8080/api/invites/getReceivedInvites/"+localStorage.getItem("token.accountId")).subscribe((invites) =>{
       for (let invite in invites) {
         this.invitedEvents.push(invites[invite]);

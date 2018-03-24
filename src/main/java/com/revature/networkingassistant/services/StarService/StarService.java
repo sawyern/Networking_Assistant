@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,10 +42,10 @@ public class StarService {
     }
 
     @Transactional
-    public ResponseEntity<ArrayList<Account>> getStarredAccounts(JsonRequestBody requestBody) {
+    public ResponseEntity<List<Account>> getStarredAccounts(JsonRequestBody requestBody) {
         Optional<Account> account = accountRepo.findById(requestBody.getToken().getAccountId());
         if (account.isPresent()) {
-            ArrayList<Account> starredAccounts = (ArrayList<Account>) account.get().getMyStarredList();
+            List<Account> starredAccounts = account.get().getMyStarredList();
             if (starredAccounts.size() > 0)
                 return new ResponseEntity<>(starredAccounts, HttpStatus.OK);
             else return new ResponseEntity<>(starredAccounts, HttpStatus.NO_CONTENT);
