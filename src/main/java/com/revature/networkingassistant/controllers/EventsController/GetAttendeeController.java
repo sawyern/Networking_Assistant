@@ -14,9 +14,15 @@ import java.util.ArrayList;
 @CrossOrigin(origins = ControllerUtil.CORS_ALLOW)
 public class GetAttendeeController {
 
-    @Autowired
-    AttendantService attendeeService;
+    private AttendeeService attendeeService;
 
+    public GetAttendeeController() {}
+
+    @Autowired
+    public GetAttendeeController(AttendeeService attendeeService) {
+        this.attendeeService = attendeeService;
+    }
+  
     @RequestMapping(path = "/api/event/getAttendees/{eventId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Attendant>> getAttendees(@PathVariable int eventId) {
         return attendeeService.getAttendees(eventId);
