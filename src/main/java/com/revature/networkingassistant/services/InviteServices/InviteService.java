@@ -77,7 +77,7 @@ public class InviteService {
     }
 
     @Transactional
-    public ResponseEntity ignoreInvite(JsonRequestBody<Invite> requestBody) {
+    public ResponseEntity<Invite> ignoreInvite(JsonRequestBody<Invite> requestBody) {
         try {
             SessionToken token = requestBody.getToken();
             Invite invite = requestBody.getObject();
@@ -86,13 +86,13 @@ public class InviteService {
                 //if invite exists
                 if (inviteRepo.existsById(invite.getId())) {
                     inviteRepo.delete(invite);
-                    return new ResponseEntity(HttpStatus.OK);
+                    return new ResponseEntity<>(invite, HttpStatus.OK);
                 }
-                return new ResponseEntity(HttpStatus.NO_CONTENT); //if invite does not exist
+                return new ResponseEntity<>(invite, HttpStatus.NO_CONTENT); //if invite does not exist
             }
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED); //if token invalid
+            return new ResponseEntity<>(new Invite(), HttpStatus.UNAUTHORIZED); //if token invalid
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.BAD_GATEWAY); //other complications
+            return new ResponseEntity<>(new Invite(), HttpStatus.BAD_GATEWAY); //other complications
         }
     }
 }
